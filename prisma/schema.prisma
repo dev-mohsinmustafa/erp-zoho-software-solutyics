@@ -1,0 +1,422 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+// Item Model
+model Item {
+  id                       String                    @id @default(auto()) @map("_id") @db.ObjectId
+  title                    String
+  description              String?
+  category                 Category                  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId               String                    @db.ObjectId
+  sku                      String                    @unique
+  barcode                  String?
+  quantity                 Int
+  unit                     Unit                      @relation(fields: [unitId], references: [id])
+  unitId                   String                    @db.ObjectId
+  brand                    Brand                     @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  brandId                  String                    @db.ObjectId
+  sellingPrice             Float
+  buyingPrice              Float
+  supplier                 Supplier                  @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  supplierId               String                    @db.ObjectId
+  reOrderPoint             Int
+  location                 String?
+  imageUrl                 String
+  weight                   Float?
+  dimensions               String?
+  taxRate                  Float
+  notes                    String?
+  // Relationships
+  addStockAdjustments      AddStockAdjustment[]
+  transferStockAdjustments TransferStockAdjustment[]
+
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+  warehouseId String    @db.ObjectId
+
+  sales Sale[]
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Add Stock 
+// Category Modal
+model Category {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  description     String?
+  items           Item[]
+  sales           Sale[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  PurchaseRequest PurchaseRequest[]
+  PurchaseOrder   PurchaseOrder[]
+  products   Product[]
+
+}
+
+// Brand Modal
+model Brand {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  items           Item[]
+  sales           Sale[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  PurchaseRequest PurchaseRequest[]
+  PurchaseOrder   PurchaseOrder[]
+  products   Product[]
+}
+
+// Warehouse Model
+model Warehouse {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  location      String?
+  description   String?
+  warehouseType String
+
+  // Relationships
+  addStockAdjustments      AddStockAdjustment[]
+  transferStockAdjustments TransferStockAdjustment[]
+
+  // Relationship  after adding warehouse in Item Schema
+  items Item[]
+
+  // Now add Stock Quantity to Warehouse
+  stockQty Int @default(0)
+
+  sales Sale[]
+
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  PurchaseRequest PurchaseRequest[]
+  PurchaseOrder   PurchaseOrder[]
+  products   Product[]
+}
+
+// Unit Model
+model Unit {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  abbreviation    String
+  items           Item[]
+  sales           Sale[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  PurchaseRequest PurchaseRequest[]
+  PurchaseOrder   PurchaseOrder[]
+  products   Product[]
+}
+
+// Create Relationship of AddStockAdjustment and TransferStockAdjustment
+// Add Stock Adjustment Model
+model AddStockAdjustment {
+  id              String  @id @default(auto()) @map("_id") @db.ObjectId
+  addStockQty     Int
+  notes           String?
+  referenceNumber String
+
+  // Warehouse Relation
+  receivingWarehouseId String
+  warehouse            Warehouse @relation(fields: [receivingWarehouseId], references: [id])
+
+  // Item Relation
+  itemId String @db.ObjectId
+  item   Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  // Also need Supplier
+  supplierId String   @db.ObjectId
+  supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Transfer Stock Adjustment Model
+model TransferStockAdjustment {
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  transferStockQty Int
+  notes            String?
+  referenceNumber  String
+
+  // Warehouse Relations
+  receivingWarehouseId String
+  //receivingWarehouse        Warehouse @relation(fields: [receivingWarehouseId], references: [id])
+
+  givingWarehouseId String
+  //givingWarehouse        Warehouse @relation(fields: [givingWarehouseId], references: [id])
+
+  // Item Relation
+  itemId String @db.ObjectId
+  item   Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Warehouse   Warehouse? @relation(fields: [warehouseId], references: [id])
+  warehouseId String?    @db.ObjectId
+}
+
+// Supplier Model
+model Supplier {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  phone         String?
+  email         String?
+  address       String?
+  contactPerson String?
+  supplierCode  String  @unique
+  paymentTerms  String?
+  taxID         String?
+  notes         String?
+  items         Item[]
+
+  //Also need this Relationships in supplier
+  addStockAdjustments AddStockAdjustment[]
+
+  sales Sale[]
+
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  PurchaseRequest PurchaseRequest[]
+  PurchaseOrder   PurchaseOrder[]
+  products   Product[]
+}
+
+// Next Authentication
+model User {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  hashedPassword String?
+  companyName    String?
+
+  role           String    @default("user")    // Add this field
+  // Add this relation field
+  purchaseRequestApprovals PurchaseRequestApproval[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Sale Model
+model Sale {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  //title                   String
+  customerName String
+  saleDate     DateTime // Add this field for the sale date
+
+  description String?
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId  String   @db.ObjectId
+  quantity    Int
+  unit        Unit     @relation(fields: [unitId], references: [id])
+  unitId      String   @db.ObjectId
+  brand       Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  brandId     String   @db.ObjectId
+  supplier    Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  supplierId  String   @db.ObjectId
+  location    String?
+
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+  warehouseId String    @db.ObjectId
+
+    // Item Relation
+  itemId String @db.ObjectId
+  item   Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+    // Product Relation
+  productId String @db.ObjectId
+  product   Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Purchase Request Model
+model PurchaseRequest {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  requestedBy String
+  requestDate DateTime
+  purchaseOrder String
+  reference     String
+
+
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String   @db.ObjectId
+  quantity   Int
+  unit       Unit     @relation(fields: [unitId], references: [id])
+  unitId     String   @db.ObjectId
+  brand      Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  brandId    String   @db.ObjectId
+  supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  supplierId String   @db.ObjectId
+
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+  warehouseId String    @db.ObjectId
+
+  description String?
+  status      String  @default("Pending") // ✅ Add status column
+
+  purchaseOrders PurchaseOrder[]
+
+ // Add this relation field
+  purchaseRequestApprovals PurchaseRequestApproval[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+//
+model PurchaseRequestApproval {
+  id               String          @id @default(auto()) @map("_id") @db.ObjectId
+  purchaseRequest  PurchaseRequest @relation(fields: [purchaseRequestId], references: [id], onDelete: Cascade)
+  purchaseRequestId String         @db.ObjectId
+
+  approvedBy       User            @relation(fields: [approvedById], references: [id])
+  approvedById     String          @db.ObjectId
+
+  status           String          // "Approved" | "Rejected"
+  remarks          String?
+  approvedAt       DateTime        @default(now())
+
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+}
+
+
+//
+
+
+
+
+// Purchase Order Model
+model PurchaseOrder {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderBy String
+  orderDate DateTime
+  purchaseOrder String
+  purchaseReceive     String
+
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String   @db.ObjectId
+  quantity   Int
+  unit       Unit     @relation(fields: [unitId], references: [id])
+  unitId     String   @db.ObjectId
+  brand      Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  brandId    String   @db.ObjectId
+  supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  supplierId String   @db.ObjectId
+
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+  warehouseId String    @db.ObjectId
+
+
+  
+
+  purchaseRequest   PurchaseRequest @relation(fields: [purchaseRequestId], references: [id], onDelete: Cascade)
+  purchaseRequestId String   @db.ObjectId
+
+  description String?
+  orderStatus      String  @default("Pending")
+
+
+  //grnNumber      String 
+  //receivedBy     String
+  //receivedDate   DateTime @default(now())
+  //goodsStatus         String   @default("Pending") // Example statuses: "Pending", "Received", "Completed"
+  //grnRemarks          String?
+
+    // New Relationship
+  goodsReceived GoodsReceived[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+
+
+
+
+
+
+model GoodsReceived {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  grnNumber      String  
+  receivedBy     String
+  receivedDate   DateTime @default(now())
+  purchaseOrder  PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+  purchaseOrderId String   @db.ObjectId
+  goodsStatus         String   @default("Pending") // Example statuses: "Pending", "Received", "Completed"
+  grnRemarks          String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+
+
+
+
+
+
+// Products Model
+model Product {
+  id                       String                    @id @default(auto()) @map("_id") @db.ObjectId
+  title                    String
+  description              String?
+  category                 Category                  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId               String                    @db.ObjectId
+  sku                      String                    @unique
+  barcode                  String?
+  quantity                 Int
+  unit                     Unit                      @relation(fields: [unitId], references: [id])
+  unitId                   String                    @db.ObjectId
+  brand                    Brand                     @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  brandId                  String                    @db.ObjectId
+  sellingPrice             Float
+  buyingPrice              Float
+  supplier                 Supplier                  @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  supplierId               String                    @db.ObjectId
+  reOrderPoint             Int
+  location                 String?
+  imageUrl                 String
+  weight                   Float?
+  dimensions               String?
+  taxRate                  Float
+  notes                    String?
+  
+
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+  warehouseId String    @db.ObjectId
+
+
+  sales Sale[]
+
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

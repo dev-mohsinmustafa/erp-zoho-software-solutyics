@@ -1,0 +1,40 @@
+import { HelpCircle, LayoutGrid, List, MoreHorizontal, Plus } from "lucide-react";
+import Link from "next/link";
+
+const FixedHeader = ({newLink, title}) => {
+  return (
+    <div className="flex justify-between items-center bg-white py-5 px-4 ">
+      <button className="text-2xl">
+        {title}
+      </button>
+      <div className="flex gap-4">
+        {/* New */}
+        <Link href={newLink} prefetch={false} className="p-1 rounded-sm bg-blue-600 px-3 flex items-center space-x-2 text-white transition-colors duration-300 hover:bg-gray-200 hover:text-black">
+          <Plus className="w-4 h-4" />
+          <span>New</span>
+        </Link>
+        {/* Layout */}
+        <div className="flex rounded overflow-hidden ">
+          <button className="bg-gray-300 p-2 border-r border-gray-400">
+            <List className="w-4 h-4 " />
+          </button>
+          <button className="bg-gray-100 p-2">
+            <LayoutGrid className="w-4 h-4 "/>
+          </button>
+        </div>
+        {/* More */}
+
+        <button className="bg-gray-100 p-2 rounded">
+          <MoreHorizontal className="w-4 h-4 " />
+        </button>
+        {/* Help */}
+
+        <button className="bg-orange-600 text-white p-2">
+          <HelpCircle  className="w-5 h-5 "/>
+        </button>
+      </div>
+    </div>
+  )
+}
+
+export default FixedHeader;

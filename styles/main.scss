@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.header-bg{
+    background-image: url("/header-bg.svg");
+    // background-image: url("https://res.cloudinary.com/mtechsolutions/image/upload/v1739181680/header-bg_veqftb.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+
+// body{
+//     position: relative;
+//     min-height: 100vh;
+// }
