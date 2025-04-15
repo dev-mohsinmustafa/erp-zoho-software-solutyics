@@ -59,7 +59,7 @@ const CreatePurchaseOrdersForm = ({ categories, units, brands, suppliers, wareho
 
 
     // Watch supplier selection
-    const selectedSupplier = watch("supplierId");
+    // const selectedSupplier = watch("supplierId");
     // ✅ Filter purchase requests based on selected supplier
     // const filteredPurchaseRequests = selectedSupplier
     //     ? purchaseRequests.filter(req => req.supplierId === selectedSupplier)
@@ -111,8 +111,8 @@ const CreatePurchaseOrdersForm = ({ categories, units, brands, suppliers, wareho
 
 
                 {/* Show fields only when a supplier is selected */}
-                {selectedSupplier && (
-                    <>
+                {/* {selectedSupplier && (
+                    <> */}
                         <SelectInput label="Select the Purchase Request Order" name="purchaseRequestId" register={register} errors={errors}
                             className="w-full" options={purchaseRequests.map((req) => ({
                                 id: req.id,
@@ -180,8 +180,8 @@ const CreatePurchaseOrdersForm = ({ categories, units, brands, suppliers, wareho
                         {/* <TextareaInput label="Item Notes" name="notes" register={register} errors={errors} /> */}
 
 
-                    </>
-                )}
+                    {/* </> */}
+                {/* )} */}
 
             </div>
 

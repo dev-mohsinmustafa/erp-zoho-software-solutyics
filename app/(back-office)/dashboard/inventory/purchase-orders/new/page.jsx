@@ -39,7 +39,7 @@ const NewPurchaseOrder = async ({ initialData = {}, isUpdate = false }) => {
       <div className="w-full max-w-3xl p-4 bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700
       mx-auto my-3">
 
-        <h2 className="py-4 text-xl font-semibold">Approval Request</h2>
+        <h2 className="py-4 text-xl font-semibold">Create PO</h2>
 
         {/* Now remove this form code after creating CreatingForm.jsx component */}
         <CreatePurchaseOrdersForm categories={categories} units={units} brands={brands} warehouses={warehouses} suppliers={suppliers}  purchaseRequests={purchaseRequests} initialData={initialData} isUpdate={isUpdate} />
