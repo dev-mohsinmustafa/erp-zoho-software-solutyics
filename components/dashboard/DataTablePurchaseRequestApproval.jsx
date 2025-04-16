@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 
 
 
-const DataTablePurchaseRequestApproval = ({ data = [], columns = [], resourceTitle }) => {
+const DataTablePurchaseRequestApproval = ({ data = [], columns = [], resourceTitle, onStatusUpdate }) => {
 
 
     const { data: session } = useSession();
@@ -74,8 +74,8 @@ const DataTablePurchaseRequestApproval = ({ data = [], columns = [], resourceTit
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ 
-                    id: selectedId, 
+                body: JSON.stringify({
+                    id: selectedId,
                     status: selectedStatus,
                     remarks: `Status changed to ${selectedStatus}`,
                     approvedById: session.user.id
@@ -88,8 +88,10 @@ const DataTablePurchaseRequestApproval = ({ data = [], columns = [], resourceTit
             }
 
             // Refresh data after update
-            const refreshedData = await fetch("/api/purchase-requests").then(res => res.json());
-            setTableData(refreshedData);
+            // const refreshedData = await fetch("/api/purchase-requests").then(res => res.json());
+            // setTableData(refreshedData);
+            // Call the parent's update function
+            onStatusUpdate?.();
 
             alert(`Status successfully updated to ${selectedStatus}`);
         } catch (error) {
@@ -116,20 +118,20 @@ const DataTablePurchaseRequestApproval = ({ data = [], columns = [], resourceTit
     //                 remarks: "Status changed to " + selectedStatus // You can add a remarks input field if needed
     //             }),
     //         });
-    
+
     //         if (!response.ok) {
     //             throw new Error("Failed to update status");
     //         }
-    
+
     //         const result = await response.json();
-    
+
     //         // Update the UI
     //         setTableData((prevData) =>
     //             prevData.map((item) =>
     //                 item.id === selectedId ? { ...item, status: selectedStatus } : item
     //             )
     //         );
-    
+
     //         // Show success message
     //         alert(`Status successfully updated to ${selectedStatus}`);
     //     } catch (error) {
