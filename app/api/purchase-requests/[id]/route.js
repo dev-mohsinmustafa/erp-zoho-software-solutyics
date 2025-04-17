@@ -15,7 +15,7 @@ export async function GET(request, { params: { id } }) {
                 unit: true,
                 brand: true,
                 warehouse: true, // Returns all warehouses fields
-                supplier: true,
+                // supplier: true,
               },
         });
         console.log(purchaseRequest);
@@ -50,7 +50,7 @@ export async function PUT(request, { params: { id } }) {
                 quantity: parseInt(purchaseRequestData.qty),
                 unitId: purchaseRequestData.unitId,
                 brandId: purchaseRequestData.brandId,
-                supplierId: purchaseRequestData.supplierId,
+                // supplierId: purchaseRequestData.supplierId,
                 warehouseId: purchaseRequestData.warehouseId,
                 description: purchaseRequestData.description,
                 location: purchaseRequestData.location,

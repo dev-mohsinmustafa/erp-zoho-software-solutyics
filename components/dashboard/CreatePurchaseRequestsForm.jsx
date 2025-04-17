@@ -12,7 +12,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const CreatePurchaseRequestsForm = ({ categories, units, brands, suppliers, warehouses, initialData = {}, isUpdate = false }) => {
+// suppliers,
+const CreatePurchaseRequestsForm = ({ categories, units, brands,  warehouses, initialData = {}, isUpdate = false }) => {
     console.log("Initial Data", initialData);
 
     const status = [
@@ -102,8 +103,8 @@ const CreatePurchaseRequestsForm = ({ categories, units, brands, suppliers, ware
                 <SelectInput label="Select the Item Brand" name="brandId" register={register} errors={errors}
                     className="w-full" options={brands} />
 
-                <SelectInput label="Select the Item Supplier" name="supplierId" register={register} errors={errors}
-                    className="w-full" options={suppliers} />
+                {/* <SelectInput label="Select the Item Supplier" name="supplierId" register={register} errors={errors}
+                    className="w-full" options={suppliers} /> */}
 
 
                 <SelectInput label="Select the Item Warehouse" name="warehouseId" register={register} errors={errors}

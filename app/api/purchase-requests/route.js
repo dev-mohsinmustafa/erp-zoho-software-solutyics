@@ -34,11 +34,11 @@ export async function POST(request) {
                 id: purchaseRequestsData.brandId
             }
         });
-        const supplier = await db.supplier.findUnique({
-            where: {
-                id: purchaseRequestsData.supplierId
-            }
-        });
+        // const supplier = await db.supplier.findUnique({
+        //     where: {
+        //         id: purchaseRequestsData.supplierId
+        //     }
+        // });
         // const item = await db.item.findUnique({
         //     where: {
         //         id: purchaseRequestsData.itemId
@@ -72,7 +72,7 @@ export async function POST(request) {
                 quantity: parseInt(purchaseRequestsData.qty),
                 unitId: purchaseRequestsData.unitId,
                 brandId: purchaseRequestsData.brandId,
-                supplierId: purchaseRequestsData.supplierId,
+                // supplierId: purchaseRequestsData.supplierId,
                 warehouseId: purchaseRequestsData.warehouseId,
                 description: purchaseRequestsData.description,
                 status: purchaseRequestsData.status, // ✅ Store status
@@ -100,7 +100,7 @@ export async function GET(request) {
                 unit: true,
                 brand: true,
                 warehouse: true, // Returns all warehouses fields
-                supplier: true,
+                // supplier: true,
                 // items: true
             },
         });

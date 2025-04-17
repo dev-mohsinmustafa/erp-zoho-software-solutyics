@@ -60,3 +60,19 @@ export async function PUT(request) {
     }
 }
 //
+
+
+
+export async function GET() {
+    try {
+        const users = await db.User.findMany({
+            include: {
+                purchaseRequestApprovals: true // Include the relations
+            }
+        });
+        return NextResponse.json(users);
+    } catch (error) {
+        console.log("Error fetching users:", error);
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+}

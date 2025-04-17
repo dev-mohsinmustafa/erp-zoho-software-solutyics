@@ -194,7 +194,10 @@ model Supplier {
 
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-  PurchaseRequest PurchaseRequest[]
+
+  // We remove suppliers because it does not make sense in PR
+  //PurchaseRequest PurchaseRequest[]
+  
   PurchaseOrder   PurchaseOrder[]
   products   Product[]
 }
@@ -268,8 +271,10 @@ model PurchaseRequest {
   unitId     String   @db.ObjectId
   brand      Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
   brandId    String   @db.ObjectId
-  supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
-  supplierId String   @db.ObjectId
+  
+  // We remove suppliers because it does not make sense in PR
+  //supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  //supplierId String   @db.ObjectId
 
   warehouse   Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
   warehouseId String    @db.ObjectId

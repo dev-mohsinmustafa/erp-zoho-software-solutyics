@@ -72,23 +72,27 @@ export async function PUT(request) {
 export async function GET() {
     try {
         const approvalRequests = await db.purchaseRequestApproval.findMany({
+            // include: {
+            //     purchaseRequest: {
+            //         include: {
+            //             supplier: true,
+            //             warehouse: true,
+            //             category: true,
+            //             unit: true,
+            //             brand: true
+            //         }
+            //     },
+            //     approvedBy: {
+            //         select: {
+            //             name: true,
+            //             email: true,
+            //             role: true
+            //         }
+            //     }
+            // },
             include: {
-                purchaseRequest: {
-                    include: {
-                        supplier: true,
-                        warehouse: true,
-                        category: true,
-                        unit: true,
-                        brand: true
-                    }
-                },
-                approvedBy: {
-                    select: {
-                        name: true,
-                        email: true,
-                        role: true
-                    }
-                }
+                purchaseRequest: true,
+                approvedBy: true
             },
             orderBy: {
                 createdAt: 'desc'

@@ -66,7 +66,7 @@ const ApprovalRequests = () => {
 
       <div>
         {/* Fixed Header */}
-        <FixedHeader title="Purchase Request Approval Management" newLink="/dashboard/inventory/approval-requests/new" />
+        <FixedHeader title="Purchase Request Approval Management" newLink="/dashboard/inventory/purchase-requests/new" />
         {/* I need a Table that show all the items */}
         {/* Table */}
         <div className="my-4 p-8">

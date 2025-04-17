@@ -101,7 +101,7 @@ const ViewPurchaseRequest = () => {
                                 <p><strong className="text-gray-900">Category:</strong> {purchaseRequest.categoryId}</p>
                                 <p><strong className="text-gray-900">Unit:</strong> {purchaseRequest.unitId}</p>
                                 <p><strong className="text-gray-900">Brand:</strong> {purchaseRequest.brandId}</p>
-                                <p><strong className="text-gray-900">Supplier:</strong> {purchaseRequest.supplierId}</p>
+                                {/* <p><strong className="text-gray-900">Supplier:</strong> {purchaseRequest.supplierId}</p> */}
                                 <p><strong className="text-gray-900">Warehouse:</strong> {purchaseRequest.warehouseId}</p>
                                 <p><strong className="text-gray-900">Description:</strong> {purchaseRequest.description}</p>
                                 <p><strong className="text-gray-900">Status:</strong>
