@@ -68,6 +68,8 @@ model Category {
   PurchaseOrder   PurchaseOrder[]
   products   Product[]
 
+  requestBasedPurchaseOrders RequestBasedPurchaseOrder[]
+
 }
 
 // Brand Modal
@@ -81,6 +83,8 @@ model Brand {
   PurchaseRequest PurchaseRequest[]
   PurchaseOrder   PurchaseOrder[]
   products   Product[]
+
+  requestBasedPurchaseOrders RequestBasedPurchaseOrder[]
 }
 
 // Warehouse Model
@@ -108,6 +112,8 @@ model Warehouse {
   PurchaseRequest PurchaseRequest[]
   PurchaseOrder   PurchaseOrder[]
   products   Product[]
+
+  requestBasedPurchaseOrders RequestBasedPurchaseOrder[]
 }
 
 // Unit Model
@@ -122,6 +128,8 @@ model Unit {
   PurchaseRequest PurchaseRequest[]
   PurchaseOrder   PurchaseOrder[]
   products   Product[]
+
+  requestBasedPurchaseOrders RequestBasedPurchaseOrder[]
 }
 
 // Create Relationship of AddStockAdjustment and TransferStockAdjustment
@@ -200,6 +208,8 @@ model Supplier {
   
   PurchaseOrder   PurchaseOrder[]
   products   Product[]
+
+  requestBasedPurchaseOrders RequestBasedPurchaseOrder[]
 }
 
 // Next Authentication
@@ -286,6 +296,9 @@ model PurchaseRequest {
 
  // Add this relation field
   purchaseRequestApprovals PurchaseRequestApproval[]
+
+
+  requestBasedPurchaseOrders RequestBasedPurchaseOrder[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -425,3 +438,50 @@ model Product {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
+
+
+
+
+
+
+// Request Based Purchase Order Model
+model RequestBasedPurchaseOrder {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderBy         String
+  orderDate       DateTime
+  purchaseOrder   String   @unique
+  purchaseReceive String
+
+  // Relations
+  purchaseRequest   PurchaseRequest @relation(fields: [purchaseRequestId], references: [id], onDelete: Cascade)
+  purchaseRequestId String          @db.ObjectId
+
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String   @db.ObjectId
+  
+  quantity   Int
+  
+  unit       Unit     @relation(fields: [unitId], references: [id])
+  unitId     String   @db.ObjectId
+  
+  brand      Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  brandId    String   @db.ObjectId
+  
+  supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  supplierId String   @db.ObjectId
+
+  warehouse   Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+  warehouseId String    @db.ObjectId
+
+  description String?
+  orderStatus String    @default("Pending")
+
+  
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Also update these related models to include the new relationship:

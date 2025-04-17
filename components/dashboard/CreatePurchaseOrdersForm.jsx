@@ -114,10 +114,15 @@ const CreatePurchaseOrdersForm = ({ categories, units, brands, suppliers, wareho
                 {/* {selectedSupplier && (
                     <> */}
                         <SelectInput label="Select the Purchase Request Order" name="purchaseRequestId" register={register} errors={errors}
-                            className="w-full" options={purchaseRequests.map((req) => ({
+                            className="w-full" options={
+                                [
+                                    { id: "", title: "Select Purchase Request" }, // Add default option
+                                ...purchaseRequests.map((req) => ({
                                 id: req.id,
                                 title: req.purchaseOrder
-                            }))} />
+                            }))
+                        ]
+                            } />
 
                         {/* Show fields only if a purchase request is selected */}
 

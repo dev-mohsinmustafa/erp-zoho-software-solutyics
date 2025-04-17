@@ -27,7 +27,7 @@ const CreateRequestBasedPurchaseOrdersForm = ({ categories, units, brands, suppl
             ...initialData,
             qty: initialData.quantity,
             title: initialData.orderBy,
-            requestDate: initialData.requestDate ? new Date(initialData.requestDate).toISOString().split("T")[0] : "",
+            orderDate: initialData.requestDate ? new Date(initialData.requestDate).toISOString().split("T")[0] : "",
             orderStatus: initialData.orderStatus, // ✅ Default status is "Pending"
             receivedDate: initialData.receivedDate ? new Date(initialData.receivedDate).toISOString().split("T")[0] : "",
             goodsStatus: initialData.goodsStatus, // ✅ Default status is "Pending"
@@ -53,10 +53,10 @@ const CreateRequestBasedPurchaseOrdersForm = ({ categories, units, brands, suppl
                 setValue("brandId", request.brandId);
                 setValue("warehouseId", request.warehouseId);
                 setValue("description", request.description);
-                setValue("requestedBy", request.requestedBy);
-                setValue("reference", request.reference);
+                setValue("orderBy", request.requestedBy);
+                setValue("purchaseReceive", request.reference);
                 // Format the date properly
-                setValue("requestDate", request.requestDate ? new Date(request.requestDate).toISOString().split("T")[0] : new Date().toISOString().split("T")[0]);
+                setValue("orderDate", request.requestDate ? new Date(request.requestDate).toISOString().split("T")[0] : new Date().toISOString().split("T")[0]);
             }
         }
         else {
@@ -78,7 +78,7 @@ const CreateRequestBasedPurchaseOrdersForm = ({ categories, units, brands, suppl
         console.log("Formdata", data);
         const formattedData = {
             ...data,
-            orderBy: data.title,  // Ensure correct field is sent
+            orderBy: data.orderBy,  // Ensure correct field is sent
             orderStatus: data.orderStatus, // ✅ Include status in submission
             purchaseOrder: `PO-${Date.now()}`,
             goodsStatus: data.goodsStatus, // ✅ Include status in submission
@@ -86,7 +86,7 @@ const CreateRequestBasedPurchaseOrdersForm = ({ categories, units, brands, suppl
         if (isUpdate) {
             makePutRequest(setLoading, `/api/purchase-orders/${initialData.id}`, formattedData, "Purchase Order", reset, redirect);
         } else {
-            makePostRequest(setLoading, "/api/purchase-orders", formattedData, "Purchase Order", reset);
+            makePostRequest(setLoading, "/api/purchase-orders/request-based", formattedData, "Purchase Order", reset);
         }
     }
 
@@ -129,7 +129,7 @@ const CreateRequestBasedPurchaseOrdersForm = ({ categories, units, brands, suppl
                 {/* Display selected request details */}
                 {selectedRequest && (
                     <>
-                        <TextInput label="Purchase Receive#" name="reference" register={register} errors={errors}
+                        <TextInput label="Purchase Receive#" name="purchaseReceive" register={register} errors={errors}
                             className="w-full"
                         />
                         {/* <TextInput label="Reference#" name="reference" register={register} errors={errors}
@@ -141,14 +141,14 @@ const CreateRequestBasedPurchaseOrdersForm = ({ categories, units, brands, suppl
                         {/* Order Received Date */}
                         <TextInput
                             label="Order Date"
-                            name="requestDate"
+                            name="orderDate"
                             register={register}
                             errors={errors}
                             className="w-full"
                             type="date"
                         />
                         {/* Order Received By */}
-                        <TextInput label="Order By" name="requestedBy" register={register} errors={errors}
+                        <TextInput label="Order By" name="orderBy" register={register} errors={errors}
                             className="w-full"
                         />
 
