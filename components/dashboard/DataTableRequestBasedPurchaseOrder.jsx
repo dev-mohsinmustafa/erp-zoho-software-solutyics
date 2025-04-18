@@ -23,7 +23,7 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
         async function fetchPurchases() {
             setLoading(true);
             try {
-                const response = await fetch("/api/purchase-orders");
+                const response = await fetch("/api/purchase-orders/request-based");
                 // console.log("STATUS CHANGE API", response);
 
                 if (!response.ok) throw new Error("Failed to fetch data");
@@ -64,7 +64,7 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
         setShowModal(false);
         setLoading(true);
         try {
-            const response = await fetch(`/api/purchase-orders`, {
+            const response = await fetch(`/api/purchase-orders/request-based`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -251,25 +251,7 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
 
 
 
-            {/* Modal Component */}
-            {/* {showModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-                        <h3 className="text-lg font-semibold mb-4">Confirm Status Change</h3>
-                        <p>Are you sure you want to change the status to <strong>{selectedStatus}</strong>?</p>
-                        <div className="flex justify-end mt-4 space-x-4">
-                            <button onClick={() => setShowModal(false)} className="px-4 py-2 bg-gray-500 text-white rounded">
-                                Cancel
-                            </button>
-                            <button onClick={handleUpdateStatus} className="px-4 py-2 bg-blue-600 text-white rounded">
-                                Confirm
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )} */}
-
-
+           
             {/* ✅ ShadCN Modal for Status Change Confirmation */}
             <Dialog open={showModal} onOpenChange={setShowModal}>
                 <DialogContent className="max-w-md p-6 bg-white rounded-lg shadow-lg">

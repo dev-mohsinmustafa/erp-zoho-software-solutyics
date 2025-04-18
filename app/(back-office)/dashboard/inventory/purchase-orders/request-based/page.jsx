@@ -1,29 +1,13 @@
-"use client"
 import DataTableRequestBasedPurchaseOrder from "@/components/dashboard/DataTableRequestBasedPurchaseOrder";
 import FixedHeader from "@/components/dashboard/FixedHeader";
-import { useEffect, useState } from "react";
+import { getData } from "@/lib/getData";
 
-const RequestBasedPurchaseOrders =  () => {
+const RequestBasedPurchaseOrders =  async() => {
+  const purchaseOrders = await getData("purchase-orders/request-based");
+  const columns = ["orderBy", "orderDate", "purchaseReceive", "purchaseOrder", "supplier.title", "orderStatus"];
 
-  // const columns = ["orderBy", "orderDate", "purchaseReceive", "purchaseOrder", "supplier.title", "orderStatus"];
 
 
-  const [purchaseRequests, setPurchaseRequests] = useState([]);
-  useEffect(() => {
-    // Fetch approved purchase requests
-    const fetchPurchaseRequests = async () => {
-        try {
-            const response = await fetch('/api/purchase-requests?status=approved');
-            if (!response.ok) throw new Error('Failed to fetch requests');
-            const data = await response.json();
-            setPurchaseRequests(data);
-        } catch (error) {
-            console.error('Error fetching purchase requests:', error);
-        }
-    };
-
-    fetchPurchaseRequests();
-}, []);
 
   return (
     <>
@@ -33,7 +17,7 @@ const RequestBasedPurchaseOrders =  () => {
         {/* I need a Table that show all the items */}
         {/* Table */}
         <div className="my-4 p-8">
-          <DataTableRequestBasedPurchaseOrder purchaseRequests={purchaseRequests}  resourceTitle="purchase-orders/request-based" />
+          <DataTableRequestBasedPurchaseOrder data={purchaseOrders} columns={columns}  resourceTitle="purchase-orders/request-based" />
         </div>
       </div>
     </>

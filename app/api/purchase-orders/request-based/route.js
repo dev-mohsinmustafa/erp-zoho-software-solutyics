@@ -127,3 +127,49 @@ export async function GET() {
       );
     }
   }
+
+
+
+
+
+  //
+// Add PUT handler for status updates
+export async function PUT(req) {
+    try {
+        const body = await req.json();
+        const { id, orderStatus } = body;
+
+        // Update the purchase order
+        const updatedOrder = await db.requestBasedPurchaseOrder.update({
+            where: { id },
+            data: { orderStatus },
+        });
+
+        // Update associated purchase request status
+        let requestStatus;
+        switch (orderStatus?.toLowerCase()) {
+            case "received":
+                requestStatus = "Completed";
+                break;
+            case "open":
+                requestStatus = "Open";
+                break;
+            default:
+                requestStatus = "Pending";
+        }
+
+        await db.purchaseRequest.update({
+            where: { id: updatedOrder.purchaseRequestId },
+            data: { status: requestStatus }
+        });
+
+        return NextResponse.json(updatedOrder);
+    } catch (error) {
+        console.error("Error updating purchase order:", error);
+        return NextResponse.json(
+            { error: "Failed to update purchase order" },
+            { status: 500 }
+        );
+    }
+}
+  //
