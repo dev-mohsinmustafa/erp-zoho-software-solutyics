@@ -29,6 +29,9 @@ export async function GET(request) {
             orderBy: {
                 createdAt: 'desc', // Latest Suppliers Show First'asc' for ascending, 'desc' for descending
             },
+            include: {
+                requestBasedPurchaseOrders: true // Include the relations
+            }
         });
         console.log(suppliers);
         return NextResponse.json(suppliers);
