@@ -26,7 +26,7 @@ export async function POST(req) {
                 goodsStatus: goodsStatus,
                 totalPayment: parseFloat(totalPayment),
                 grnRemarks: grnRemarks,
-                purchaseOrderId: purchaseOrderId, // from the selected PO
+                requestBasedPurchaseOrderId: purchaseOrderId, // from the selected PO
                 
             },
         });

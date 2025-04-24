@@ -11,7 +11,7 @@ import DataTablePOGoodReceivedRequestBasedPurchaseOrder from "@/components/dashb
 // const GoodsReceived = async () => {
 const POGoodsReceived =  () => {
   // const poGoodsReceived = await getData("goods-received");
-  const columns = ["grnNumber", "requestBasedPurchaseOrderId", "receivedBy", "receivedDate","grnRemarks",   ];
+  const columns = ["grnNumber", "requestBasedPurchaseOrderId", "receivedBy", "receivedDate","grnRemarks", "totalPayment" ];
   // "category.title", "warehouse.title", "quantity", "description" , "orderBy", "orderDate", "purchaseReceive", "purchaseOrder", "orderStatus", "goodsStatus"
 
   const [goodReceived, setGoodReceived] = useState([]);
