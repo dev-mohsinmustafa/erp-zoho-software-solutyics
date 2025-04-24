@@ -478,10 +478,30 @@ model RequestBasedPurchaseOrder {
   description String?
   orderStatus String    @default("Pending")
 
-  
+  // Relationship with Goods Received
+  poGoodsReceived      RequestBasedPOGoodsReceived[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-// Also update these related models to include the new relationship:
+
+
+
+// Request Based Goods Received Model
+model RequestBasedPOGoodsReceived {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  grnNumber      String   
+  receivedBy     String
+  receivedDate   DateTime
+  goodsStatus    String   @default("Pending")
+  totalPayment   Float
+  grnRemarks     String?
+
+  // Relationship with Request Based Purchase Order
+  requestBasedPurchaseOrder    RequestBasedPurchaseOrder @relation(fields: [requestBasedPurchaseOrderId], references: [id], onDelete: Cascade)
+  requestBasedPurchaseOrderId  String                    @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,17 +1,17 @@
 "use client"
 
-import DataTableGoodReceived from "@/components/dashboard/DataTableGoodReceived";
 import FixedHeader from "@/components/dashboard/FixedHeader";
 import { getData } from "@/lib/getData";
 import { Download, Filter, ListRestart } from "lucide-react";
 import { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import DataTablePOGoodReceivedRequestBasedPurchaseOrder from "@/components/dashboard/DataTablePOGoodReceivedRequestBasedPurchaseOrder";
 
 // const GoodsReceived = async () => {
-const GoodsReceived =  () => {
-  // const goodsReceived = await getData("goods-received");
-  const columns = ["grnNumber", "purchaseOrderId", "receivedBy", "receivedDate","grnRemarks",   ];
+const POGoodsReceived =  () => {
+  // const poGoodsReceived = await getData("goods-received");
+  const columns = ["grnNumber", "requestBasedPurchaseOrderId", "receivedBy", "receivedDate","grnRemarks",   ];
   // "category.title", "warehouse.title", "quantity", "description" , "orderBy", "orderDate", "purchaseReceive", "purchaseOrder", "orderStatus", "goodsStatus"
 
   const [goodReceived, setGoodReceived] = useState([]);
@@ -21,7 +21,7 @@ const GoodsReceived =  () => {
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getData("goods-received");
+      const data = await getData("poGoods-received");
       setGoodReceived(data);
       setFilteredGoodReceived(data); 
     }
@@ -86,13 +86,11 @@ const GoodsReceived =  () => {
   return (
     <div>
       {/* Fixed Header */}
-      {/* <FixedHeader title="Goods Received Create Goods Received Note (GRN)" newLink="/dashboard/inventory/goods-received/new" /> */}
-      <FixedHeader title="Goods Received Create Goods Received Note (GRN)" newLink="/dashboard/inventory/purchase-orders/new" />
-      
+      <FixedHeader title="Goods Received Create Goods Received Note (GRN) against RB PO" newLink="/dashboard/inventory/poGoods-received/new" />
       
        {/* Table */}
        <div className="my-4 p-8 ">
-        <h2 className="py-4 text-xl font-semibold">Goods Record</h2>
+        <h2 className="py-4 text-xl font-semibold">Purchase Order Goods Record</h2>
         {/* Date Filters */}
         <div className="flex gap-4 p-4 ">
           <label className="block">
@@ -153,10 +151,13 @@ const GoodsReceived =  () => {
       {/* I need a Table that show all the items */}
       {/* Table */}
       <div className="my-4 p-8">
-        <DataTableGoodReceived data={filteredGoodReceived} columns={columns} resourceTitle="goods-received"/>
-        {/* <DataTableGoodReceived data={goodsReceived} columns={columns} resourceTitle="goods-received"/> */}
+      
+      <h2 className="py-4 text-xl font-semibold">Table Request-Based Purchase Order Management Goods Received</h2>
+
+        <DataTablePOGoodReceivedRequestBasedPurchaseOrder data={filteredGoodReceived} columns={columns} resourceTitle="poGoods-received"/>
+        {/* <DataTableGoodReceived data={poGoodsReceived} columns={columns} resourceTitle="poGoods-received"/> */}
       </div>
     </div>
   )
 }
-export default GoodsReceived;
+export default POGoodsReceived;

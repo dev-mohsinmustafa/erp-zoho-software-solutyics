@@ -50,6 +50,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
         {
             title: "Supplier",
             href: "/dashboard/inventory/suppliers",
+            adminOnly: true
         },
         {
             title: "Products Management",
@@ -83,7 +84,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
         },
         {
             title: "Goods/Materials Received",
-            href: "/dashboard/inventory/goods-received",
+            href: "/dashboard/inventory/poGoods-received",
         },
     ].filter(link => !link.adminOnly || session?.user?.role === "admin");
 

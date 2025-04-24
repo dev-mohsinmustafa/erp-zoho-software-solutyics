@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 
 
 
-const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceTitle }) => {
+const DataTablePOGoodReceivedRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceTitle }) => {
 
 
     const [tableData, setTableData] = useState(data); // ✅ State to update status in UI
@@ -23,7 +23,7 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
         async function fetchPurchases() {
             setLoading(true);
             try {
-                const response = await fetch("/api/purchase-orders/request-based");
+                const response = await fetch("/api/poGoods-received");
                 // console.log("STATUS CHANGE API", response);
 
                 if (!response.ok) throw new Error("Failed to fetch data");
@@ -64,12 +64,12 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
         setShowModal(false);
         setLoading(true);
         try {
-            const response = await fetch(`/api/purchase-orders/request-based`, {
+            const response = await fetch(`/api/poGoods-received`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ id: selectedId, orderStatus: selectedStatus }),
+                body: JSON.stringify({ id: selectedId, goodsStatus: selectedStatus }),
             });
             if (!response.ok) {
                 throw new Error("Failed to update order status");
@@ -80,7 +80,7 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
             // ✅ Update the state to reflect changes in UI
             setTableData((prevData) =>
                 prevData.map((item) =>
-                    item.id === selectedId ? { ...item, orderStatus: selectedStatus } : item
+                    item.id === selectedId ? { ...item, goodsStatus: selectedStatus } : item
                 )
             );
             // await fetchPurchases();
@@ -113,9 +113,9 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
                                     })
                                 }
                                 {/* <th scope="col" className="px-6 py-3">Status Option</th> ✅ New Column */}
-                                <th scope="col" className="px-6 py-3">
+                                {/* <th scope="col" className="px-6 py-3">
                                     Order Actions
-                                </th>
+                                </th> */}
                                 <th scope="col" className="px-6 py-3">
                                     Actions
                                 </th>
@@ -163,13 +163,13 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
                                             }
 
                                             {/* ✅ Status Column with Dropdown */}
-                                            <td className="px-6 py-4 ">
+                                            {/* <td className="px-6 py-4 ">
                                                 <div className="block text-sm font-medium leading-6 text-gray-900">
                                                     <div className="mt-2">
                                                         <select
                                                             className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                                                             // className=" p-2 border rounded-md text-sm md:text-base bg-white dark:bg-gray-800 dark:text-white"
-                                                            value={item.orderStatus}
+                                                            value={item.goodsStatus}
                                                             onChange={(e) => openModal(item.id, e.target.value)}
                                                             disabled={loading}
                                                         >
@@ -181,8 +181,9 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
                                                         </select>
                                                     </div>
                                                 </div>
-                                            </td>
+                                            </td> */}
 
+                                            {/*  */}
                                             <td className="px-6 py-4 text-right flex items-center space-x-4">
 
                                                 {/* View Button */}
@@ -222,21 +223,27 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
                                                 }
 
                                                 {/* ✅ New Create GRN Button (Only for purchase orders with 'open' status) */}
-                                                {resourceTitle === "purchase-orders" && item.orderStatus === "open" && (
-                                                    <Link href={`/dashboard/inventory/${resourceTitle}/create-grn/${item.id}`}
-                                                        className="font-medium text-purple-600 dark:text-purple-500 flex items-center space-x-1 bg-purple-100 px-3 py-2 rounded-md hover:bg-purple-200 transition duration-200">
-                                                        <span>Create GRN</span>
-                                                    </Link>
-                                                    // <Link href={`/dashboard/inventory/${resourceTitle}/goods-received/new/${item.id}`}
+                                                {/* {resourceTitle === "goods-received" && item.goodsStatus === "open" && (
+                                                    // <Link href={`/dashboard/inventory/${resourceTitle}/create-grn/${item.id}`}
                                                     //     className="font-medium text-purple-600 dark:text-purple-500 flex items-center space-x-1 bg-purple-100 px-3 py-2 rounded-md hover:bg-purple-200 transition duration-200">
                                                     //     <span>Create GRN</span>
                                                     // </Link>
-                                                )}
+                                                    <Link href={`/dashboard/inventory/${resourceTitle}/purchase-orders/new/${item.id}`}
+                                                        className="font-medium text-purple-600 dark:text-purple-500 flex items-center space-x-1 bg-purple-100 px-3 py-2 rounded-md hover:bg-purple-200 transition duration-200">
+                                                        <span>Create GRN</span>
+                                                    </Link>
+                                                )} */}
+
+                                                <div className="font-medium text-purple-600 dark:text-purple-500 flex items-center space-x-1 bg-purple-100 px-3 py-2 rounded-md hover:bg-purple-200 transition duration-200">
+                                                    <span>{item.goodsStatus}</span>
+                                                </div>
 
 
                                                 {/* Delete Btn */}
                                                 {/* <DeleteBtn id={item.id} endpoint={resourceTitle} /> */}
                                             </td>
+                                            {/*  */}
+
                                         </tr>
                                     )
                                 })
@@ -250,7 +257,25 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
 
 
 
-           
+            {/* Modal Component */}
+            {/* {showModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                        <h3 className="text-lg font-semibold mb-4">Confirm Status Change</h3>
+                        <p>Are you sure you want to change the status to <strong>{selectedStatus}</strong>?</p>
+                        <div className="flex justify-end mt-4 space-x-4">
+                            <button onClick={() => setShowModal(false)} className="px-4 py-2 bg-gray-500 text-white rounded">
+                                Cancel
+                            </button>
+                            <button onClick={handleUpdateStatus} className="px-4 py-2 bg-blue-600 text-white rounded">
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )} */}
+
+
             {/* ✅ ShadCN Modal for Status Change Confirmation */}
             <Dialog open={showModal} onOpenChange={setShowModal}>
                 <DialogContent className="max-w-md p-6 bg-white rounded-lg shadow-lg">
@@ -275,4 +300,4 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
     )
 }
 
-export default DataTableRequestBasedPurchaseOrder;
+export default DataTablePOGoodReceivedRequestBasedPurchaseOrder;

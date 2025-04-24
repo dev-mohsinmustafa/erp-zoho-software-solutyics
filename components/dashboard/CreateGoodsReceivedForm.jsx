@@ -13,35 +13,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const CreateGoodsReceivedForm = ({ categories, units, brands, suppliers, warehouses, purchaseRequests, purchaseOrders,purchaseOrdersId, initialData = {}, isUpdate = false }) => {
-    // console.log("Initial Data", initialData);
-    // console.log("Fetched Purchase Requests Data Mohsin:", purchaseRequests[0].purchaseOrder);
-
+    
 
     const status = [
         { id: "pending", title: "Pending" },
         { id: "open", title: "Open" },
         { id: "received", title: "Received" },
     ]
-    // const suppliers = [
-    //     { id: "1", title: "Ahmad" },
-    //     { id: "2", title: "Ali" },
-    //     { id: "3", title: "Khalid" },
-    // ]
-    // const suppliers = [
-    //     {
-    //         "title": "Supplier Ali",
-    //         "id": "123"
-    //     },
-    //     {
-    //         "title": "Supplier John",
-    //         "id": "345"
-    //     },
-    //     {
-    //         "title": "Supplier Carlos",
-    //         "id": "567"
-    //     },
-    // ]
-
+    
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm({
         defaultValues: {
@@ -65,9 +44,9 @@ const CreateGoodsReceivedForm = ({ categories, units, brands, suppliers, warehou
         const formattedData = {
             ...data,
             receivedBy: data.title,  // Ensure correct field is sent
-            goodsStatus: data.goodsStatus, // ✅ Include status in submission
+            goodsStatus: data.goodsStatus, 
             // purchaseOrder: `PO-${Date.now()}`
-            purchaseOrderId: purchaseOrdersId.id // Add purchaseOrderId to the submission
+            purchaseOrderId: purchaseOrdersId.id 
         };
         if (isUpdate) {
             makePutRequest(setLoading, `/api/goods-received/${initialData.id}`, formattedData, "Goods Received", reset, redirect);
@@ -142,74 +121,6 @@ const CreateGoodsReceivedForm = ({ categories, units, brands, suppliers, warehou
                 <TextareaInput label="Goods Received Remarks" name="grnRemarks" register={register} errors={errors} />
 
 
-                {/* <SelectInput label="Select the Supplier" name="supplierId" register={register} errors={errors}
-                    className="w-full" options={suppliers} /> */}
-                {/* Purchase Order Received By */}
-                {/* <TextInput label="Purchase Order#" name="purchaseOrder" register={register} errors={errors}
-                    className="w-full"
-                /> */}
-
-                {/* Show fields only when a supplier is selected */}
-
-                {/* <SelectInput label="Select the Purchase Request Order" name="purchaseRequestId" register={register} errors={errors}
-                    className="w-full" options={purchaseRequests.map((req) => ({
-                        id: req.id,
-                        title: req.purchaseOrder
-                    }))} /> */}
-
-                {/* Show fields only if a purchase request is selected */}
-
-                {/* <TextInput label="Purchase Receive#" name="purchaseReceive" register={register} errors={errors}
-                    className="w-full"
-                /> */}
-                {/* <TextInput label="Reference#" name="reference" register={register} errors={errors}
-                    className="w-full"
-                /> */}
-
-                {/* Title */}
-
-                {/* Order Received Date */}
-                {/* <TextInput
-                    label="Order Date"
-                    name="orderDate"
-                    register={register}
-                    errors={errors}
-                    className="w-full"
-                    type="date"
-                /> */}
-                {/* Order Received By */}
-                {/* <TextInput label="Order By" name="title" register={register} errors={errors}
-                    className="w-full"
-                /> */}
-
-
-                {/* Select */}
-                {/* <SelectInput
-                    label="Order Status"
-                    name="orderStatus"
-                    register={register}
-                    errors={errors}
-                    className="w-full"
-                    options={status}
-                /> */}
-
-                {/* <SelectInput label="Select the Item Category" name="categoryId" register={register} errors={errors}
-                    className="w-full" options={categories} /> */}
-
-
-
-                {/* <TextInput label="Item Quantity" name="qty" register={register} errors={errors} className="w-full" /> */}
-                {/* <SelectInput label="Select the Item Unit" name="unitId" register={register} errors={errors}
-                    className="w-full" options={units} />
-                <SelectInput label="Select the Item Brand" name="brandId" register={register} errors={errors}
-                    className="w-full" options={brands} /> */}
-
-                {/* <SelectInput label="Select the Item Supplier" name="supplierId" register={register} errors={errors}
-                    className="w-full" options={suppliers} /> */}
-
-
-                {/* <SelectInput label="Select the Item Warehouse" name="warehouseId" register={register} errors={errors}
-                    className="w-full" options={warehouses} /> */}
 
 
 

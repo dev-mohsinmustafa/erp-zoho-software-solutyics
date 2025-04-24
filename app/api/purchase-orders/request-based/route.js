@@ -63,7 +63,7 @@ export async function POST(req) {
         let requestStatus;
         switch (orderStatus?.toLowerCase()) {
             case "received":
-                requestStatus = "Completed";
+                requestStatus = "Received";
                 break;
             case "open":
                 requestStatus = "Open";
@@ -149,7 +149,7 @@ export async function PUT(req) {
         let requestStatus;
         switch (orderStatus?.toLowerCase()) {
             case "received":
-                requestStatus = "Completed";
+                requestStatus = "Received";
                 break;
             case "open":
                 requestStatus = "Open";

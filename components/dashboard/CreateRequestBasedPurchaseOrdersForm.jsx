@@ -12,6 +12,11 @@ import { useForm } from "react-hook-form";
 const CreateRequestBasedPurchaseOrdersForm = ({ categories, units, brands, suppliers, warehouses, purchaseRequests, initialData = {}, isUpdate = false }) => {
 
     const [selectedRequest, setSelectedRequest] = useState(null);
+    const [availablePRs, setAvailablePRs] = useState(
+        purchaseRequests.filter(req => req.status === "approved")
+    );
+    // Add this near the top of your component
+    // const approvedRequests = purchaseRequests.filter(req => req.status === "approved");
 
     const status = [
         { id: "pending", title: "Pending" },
@@ -65,8 +70,7 @@ const CreateRequestBasedPurchaseOrdersForm = ({ categories, units, brands, suppl
     }, [selectedPurchaseRequestId, purchaseRequests, setValue]);
 
 
-    // Add this near the top of your component
-    const approvedRequests = purchaseRequests.filter(req => req.status === "approved");
+
 
 
 
@@ -87,6 +91,8 @@ const CreateRequestBasedPurchaseOrdersForm = ({ categories, units, brands, suppl
             makePutRequest(setLoading, `/api/purchase-orders/${initialData.id}`, formattedData, "Purchase Order", reset, redirect);
         } else {
             makePostRequest(setLoading, "/api/purchase-orders/request-based", formattedData, "Purchase Order", reset);
+            setAvailablePRs(prev => prev.filter(pr => pr.id !== data.purchaseRequestId));
+            setSelectedRequest(null);
         }
     }
 
@@ -116,10 +122,10 @@ const CreateRequestBasedPurchaseOrdersForm = ({ categories, units, brands, suppl
                 <SelectInput label="Select the Purchase Request Order" name="purchaseRequestId" register={register} errors={errors}
                     className="w-full" options={[
                         { id: "", title: "Select Purchase Request" }, // Add default option
-                        ...approvedRequests.map((req) => ({
+                        ...availablePRs.map((req) => ({
                             id: req.id,
                             // title: req.purchaseOrder,
-                            title: `${req.purchaseOrder} - ${req.description}`
+                            title: `${req.purchaseOrder} - ${req.requestedBy}`
                         }))
                     ]
                     }
