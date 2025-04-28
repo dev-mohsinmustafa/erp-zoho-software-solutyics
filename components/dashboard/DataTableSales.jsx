@@ -4,7 +4,7 @@ import DeleteBtn from "./DeleteBtn"
 
 // onRefresh
 const DataTableSales = ({ data = [], columns = [], resourceTitle, onRefresh  }) => {
-    console.log("Mohsin Data Check kro", data)
+    // console.log("Mohsin Data Check kro", data)
     // if a have an array of objects:
     // [
     //     {

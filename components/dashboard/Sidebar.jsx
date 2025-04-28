@@ -48,6 +48,10 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             href: "/dashboard/inventory/adjustments",
         },
         {
+            title: "Stock Adjustments",
+            href: "/dashboard/inventory/stock-adjustments",
+        },
+        {
             title: "Supplier",
             href: "/dashboard/inventory/suppliers",
             adminOnly: true

@@ -7,11 +7,12 @@ import { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import DataTablePOGoodReceivedRequestBasedPurchaseOrder from "@/components/dashboard/DataTablePOGoodReceivedRequestBasedPurchaseOrder";
+import toast from "react-hot-toast";
 
 // const GoodsReceived = async () => {
-const POGoodsReceived =  () => {
+const POGoodsReceived = () => {
   // const poGoodsReceived = await getData("goods-received");
-  const columns = ["grnNumber", "requestBasedPurchaseOrderId", "receivedBy", "receivedDate","grnRemarks", "totalPayment" ];
+  const columns = ["grnNumber", "requestBasedPurchaseOrderId", "receivedBy", "receivedDate", "grnRemarks", "totalPayment"];
   // "category.title", "warehouse.title", "quantity", "description" , "orderBy", "orderDate", "purchaseReceive", "purchaseOrder", "orderStatus", "goodsStatus"
 
   const [goodReceived, setGoodReceived] = useState([]);
@@ -23,7 +24,7 @@ const POGoodsReceived =  () => {
     async function fetchData() {
       const data = await getData("poGoods-received");
       setGoodReceived(data);
-      setFilteredGoodReceived(data); 
+      setFilteredGoodReceived(data);
     }
     fetchData();
   }, []);
@@ -48,11 +49,11 @@ const POGoodsReceived =  () => {
   };
 
 
-  
+
   // Generate PDF
   const handleDownloadPDF = () => {
     if (!startDate || !endDate) {
-      alert("Please select a start and end date before downloading the PDF.");
+      toast.success("Please select a start and end date before downloading the PDF.");
       return;
     }
 
@@ -60,15 +61,17 @@ const POGoodsReceived =  () => {
     doc.text("Goods Report", 14, 10);
     doc.text(`From: ${startDate} To: ${endDate}`, 14, 20);
 
-    const tableColumn = ["Received By", "grnNumber", "purchaseOrderId", "Received Date"];
+    const tableColumn = ["Received By", "grnNumber", "requestBasedPurchaseOrderId", "Received Date", "totalPayment", "grnRemarks"];
     const tableRows = filteredGoodReceived.map((good) => [
       good.receivedBy,
       good.grnNumber,
-      good.purchaseOrderId,
+      good.requestBasedPurchaseOrderId,
       new Date(good.receivedDate).toLocaleDateString(),
+      good.totalPayment,
+      good.grnRemarks,
     ]);
 
-  
+
     // Ensure autoTable is being called correctly
     autoTable(doc, {
       head: [tableColumn],
@@ -80,16 +83,16 @@ const POGoodsReceived =  () => {
   };
 
 
-  
+
 
 
   return (
     <div>
       {/* Fixed Header */}
       <FixedHeader title="Goods Received Create Goods Received Note (GRN) against RB PO" newLink="/dashboard/inventory/poGoods-received/new" />
-      
-       {/* Table */}
-       <div className="my-4 p-8 ">
+
+      {/* Table */}
+      <div className="my-4 p-8 ">
         <h2 className="py-4 text-xl font-semibold">Purchase Order Goods Record</h2>
         {/* Date Filters */}
         <div className="flex gap-4 p-4 ">
@@ -146,15 +149,15 @@ const POGoodsReceived =  () => {
         </div>
 
       </div>
-      
-      
+
+
       {/* I need a Table that show all the items */}
       {/* Table */}
       <div className="my-4 p-8">
-      
-      <h2 className="py-4 text-xl font-semibold">Table Request-Based Purchase Order Management Goods Received</h2>
 
-        <DataTablePOGoodReceivedRequestBasedPurchaseOrder data={filteredGoodReceived} columns={columns} resourceTitle="poGoods-received"/>
+        <h2 className="py-4 text-xl font-semibold">Table Request-Based Purchase Order Management Goods Received</h2>
+
+        <DataTablePOGoodReceivedRequestBasedPurchaseOrder data={filteredGoodReceived} columns={columns} resourceTitle="poGoods-received" />
         {/* <DataTableGoodReceived data={poGoodsReceived} columns={columns} resourceTitle="poGoods-received"/> */}
       </div>
     </div>

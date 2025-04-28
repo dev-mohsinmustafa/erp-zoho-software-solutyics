@@ -11,6 +11,7 @@ import { ListRestart } from 'lucide-react';
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import DataTableSales from "@/components/dashboard/DataTableSales";
+import toast from "react-hot-toast";
 
 
 
@@ -22,17 +23,34 @@ const Sales = () => {
   const [filteredSales, setFilteredSales] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  
+  const [loading, setLoading] = useState(false);
+
   async function fetchData() {
-    const data = await getData("sales");
-    console.log("Sales Data", data);
-    setSales(data);
-    setFilteredSales(data); // Initialize filtered sales with all data
+    setLoading(true);
+    try {
+      const data = await getData("sales");
+      console.log("Sales Data", data);
+      setSales(data);
+      setFilteredSales(data); // Initialize filtered sales with all data
+    } catch (error) {
+      console.error("Error fetching purchase orders:", error);
+    }
+    finally {
+      setLoading(false);
+    }
   }
   useEffect(() => {
-   
+
     fetchData();
   }, []);
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+        <span className="ml-4 text-lg">Loading...</span>
+      </div>
+    );
+  }
 
   // // Filter sales based on date range
   // useEffect(() => {
@@ -73,7 +91,7 @@ const Sales = () => {
   // Generate PDF
   const handleDownloadPDF = () => {
     if (!startDate || !endDate) {
-      alert("Please select a start and end date before downloading the PDF.");
+      toast.success("Please select a start and end date before downloading the PDF.");
       return;
     }
 
@@ -88,7 +106,7 @@ const Sales = () => {
       new Date(sale.saleDate).toLocaleDateString(),
     ]);
 
-  
+
     // Ensure autoTable is being called correctly
     autoTable(doc, {
       head: [tableColumn],
@@ -165,8 +183,8 @@ const Sales = () => {
       </div>
 
       <div className="my-4 p-8 ">
-        <DataTableSales data={filteredSales} columns={columns} resourceTitle={"sales"} 
-        onRefresh={fetchData}
+        <DataTableSales data={filteredSales} columns={columns} resourceTitle={"sales"}
+          onRefresh={fetchData}
         />
       </div>
 

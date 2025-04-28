@@ -23,16 +23,7 @@ const CreatePOGoodsReceivedFormRequestBasedPurchaseOrder = ({ categories, units,
 
     const [loading, setLoading] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
-    // const [availablePOs, setAvailablePOs] = useState(purchaseOrderRB.filter(req => req.orderStatus === "received"));
-    const [availablePOs, setAvailablePOs] = useState(() => {
-        // Get completed GRNs from localStorage
-        const completedGRNs = JSON.parse(localStorage.getItem('completedGRNs') || '[]');
-        // Filter out orders that already have GRNs
-        return purchaseOrderRB.filter(req => 
-            req.orderStatus === "received" && 
-            !completedGRNs.includes(req.id)
-        );
-    });
+    const [availablePOs, setAvailablePOs] = useState(purchaseOrderRB.filter(req => req.orderStatus === "received"));
     // Add this near the top of your component
     //    const receivedPurchaseOrderRB = purchaseOrderRB.filter(req => req.orderStatus === "received");
     // const receivedPurchaseOrderRB = availablePOs.filter(req => req.orderStatus === "received");
@@ -73,11 +64,6 @@ const CreatePOGoodsReceivedFormRequestBasedPurchaseOrder = ({ categories, units,
             // Update available POs after successful submission
             try {
                 await makePostRequest(setLoading, "/api/poGoods-received", formattedData, "Request Based PO Goods Received", reset);
-                 // Store completed GRN in localStorage
-                 const completedGRNs = JSON.parse(localStorage.getItem('completedGRNs') || '[]');
-                 completedGRNs.push(data.purchaseOrderId);
-                 localStorage.setItem('completedGRNs', JSON.stringify(completedGRNs));
- 
                 setAvailablePOs(prev => prev.filter(po => po.id !== data.purchaseOrderId));
                 setSelectedOrder(null);
                 reset(); // Clear the form
