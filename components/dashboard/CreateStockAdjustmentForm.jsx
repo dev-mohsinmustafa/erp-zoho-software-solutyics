@@ -6,8 +6,9 @@ import TextInput from '@/components/formInputs/TextInput';
 import TextareaInput from '@/components/formInputs/TextareaInput';
 import SubmitButton from '@/components/formInputs/SubmitButton';
 import { makePostRequest } from '@/lib/apiRequest';
+import { useRouter } from 'next/navigation';
 
-const CreateStockAdjustmentForm = ({ items, warehouses }) => {
+const CreateStockAdjustmentForm = ({ items, warehouses, initialData = {}, isUpdate = false }) => {
     const [loading, setLoading] = useState(false);
 
     const adjustmentTypes = [
@@ -17,25 +18,31 @@ const CreateStockAdjustmentForm = ({ items, warehouses }) => {
         { id: "lost", title: "Lost" }
     ];
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
+        defaultValues: {
+            ...initialData,
+           quantity: initialData.quantity,
+           adjustmentDate: initialData.adjustmentDate ? new Date(initialData.adjustmentDate).toISOString().split("T")[0] : "", 
+           adjustmentNumber: initialData.adjustmentNumber || `ADJ-${Date.now()}`,
+        }
+    });
 
-    const onSubmit = async (data) => {
+
+    const router = useRouter();
+    function redirect() {
+        router.push("/dashboard/inventory/goods-received");
+    }
+
+    async function onSubmit(data){
         const formattedData = {
             ...data,
             adjustmentDate: new Date().toISOString(),
             quantity: parseFloat(data.quantity)
         };
-
-        try {
-            await makePostRequest(
-                setLoading,
-                '/api/stock-adjustments',
-                formattedData,
-                'Stock Adjustment',
-                reset
-            );
-        } catch (error) {
-            console.error('Error creating stock adjustment:', error);
+        if (isUpdate) {
+            makePostRequest(setLoading, `/api/stock-adjustments/${initialData.id}`, formattedData, 'Stock Adjustment', reset, redirect);
+        } else {
+            makePostRequest(setLoading, '/api/stock-adjustments', formattedData, 'Stock Adjustment', reset);
         }
     };
 
