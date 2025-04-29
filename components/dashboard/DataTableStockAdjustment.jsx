@@ -64,7 +64,7 @@ const DataTableStockAdjustment = memo(({ data = [], columns = [], resourceTitle 
                                                                             className="w-12 h-12 object-cover rounded-full" />
                                                                     )
                                                                     :
-                                                                    columnName === "createdAt" || columnName === "updatedAt" || columnName === "saleDate"
+                                                                    columnName === "createdAt" || columnName === "updatedAt" || columnName === "adjustmentDate"
                                                                         ?
                                                                         (
                                                                             // Convert date columns to a more readable format 

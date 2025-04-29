@@ -8,35 +8,33 @@ import SubmitButton from '@/components/formInputs/SubmitButton';
 import { makePostRequest } from '@/lib/apiRequest';
 import { useRouter } from 'next/navigation';
 
-const CreateStockAdjustmentForm = ({ items, warehouses, initialData = {}, isUpdate = false }) => {
+const CreateStockAdjustmentForm = ({ items, warehouses, categories, brands, units, initialData = {}, isUpdate = false }) => {
     const [loading, setLoading] = useState(false);
+
 
     const adjustmentTypes = [
         { id: "addition", title: "Addition" },
         { id: "subtraction", title: "Subtraction" },
-        { id: "damage", title: "Damage" },
-        { id: "lost", title: "Lost" }
     ];
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         defaultValues: {
             ...initialData,
-           quantity: initialData.quantity,
-           adjustmentDate: initialData.adjustmentDate ? new Date(initialData.adjustmentDate).toISOString().split("T")[0] : "", 
-           adjustmentNumber: initialData.adjustmentNumber || `ADJ-${Date.now()}`,
+            quantity: initialData.quantity,
+            adjustmentDate: initialData.adjustmentDate ? new Date(initialData.adjustmentDate).toISOString().split("T")[0] : "",
+            adjustmentNumber: initialData.adjustmentNumber,
         }
     });
 
 
     const router = useRouter();
     function redirect() {
-        router.push("/dashboard/inventory/goods-received");
+        router.push("/dashboard/inventory/stock-adjustments");
     }
 
-    async function onSubmit(data){
+    async function onSubmit(data) {
         const formattedData = {
             ...data,
-            adjustmentDate: new Date().toISOString(),
             quantity: parseFloat(data.quantity)
         };
         if (isUpdate) {
@@ -49,6 +47,16 @@ const CreateStockAdjustmentForm = ({ items, warehouses, initialData = {}, isUpda
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+
+
+                <SelectInput
+                    label="Select Warehouse"
+                    name="warehouseId"
+                    register={register}
+                    errors={errors}
+                    options={warehouses}
+                    className='w-full'
+                />
 
                 <SelectInput
                     label="Select Item"
@@ -76,19 +84,11 @@ const CreateStockAdjustmentForm = ({ items, warehouses, initialData = {}, isUpda
                     register={register}
                     errors={errors}
                     className="w-full"
-                    defaultValue={`ADJ-${Date.now()}`}
                     readOnly
                 />
 
 
-                <SelectInput
-                    label="Select Warehouse"
-                    name="warehouseId"
-                    register={register}
-                    errors={errors}
-                    options={warehouses}
-                    className='w-full'
-                />
+
 
                 <SelectInput
                     label="Adjustment Type"

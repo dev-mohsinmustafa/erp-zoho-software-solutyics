@@ -49,6 +49,8 @@ model Item {
 
   sales Sale[]
 
+  // Relationship with StockAdjustment
+  stockAdjustments StockAdjustment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -69,6 +71,7 @@ model Category {
   products   Product[]
 
   requestBasedPurchaseOrders RequestBasedPurchaseOrder[]
+
 
 }
 
@@ -114,6 +117,9 @@ model Warehouse {
   products   Product[]
 
   requestBasedPurchaseOrders RequestBasedPurchaseOrder[]
+
+  // Relationship with StockAdjustment
+  stockAdjustments StockAdjustment[]
 }
 
 // Unit Model
@@ -130,6 +136,8 @@ model Unit {
   products   Product[]
 
   requestBasedPurchaseOrders RequestBasedPurchaseOrder[]
+
+
 }
 
 // Create Relationship of AddStockAdjustment and TransferStockAdjustment
@@ -505,3 +513,31 @@ model RequestBasedPOGoodsReceived {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
+
+//
+// Stock Adjustment Model
+model StockAdjustment {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  adjustmentNumber String   @unique
+  adjustmentType   String   // "addition", "subtraction", "damage", "lost"
+  quantity        Float
+  currentStock    Float
+  adjustmentDate  DateTime
+  reason          String?
+
+  // Item Relation
+  itemId         String    @db.ObjectId
+  item           Item      @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  // Warehouse Relation
+  warehouseId    String    @db.ObjectId
+  warehouse      Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
+
+  
+  
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+

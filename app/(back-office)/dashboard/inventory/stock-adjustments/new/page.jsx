@@ -9,11 +9,12 @@ const NewStockAdjustment = async ({ initialData = {}, isUpdate = false }) => {
   const itemsData = getData("items");
   const warehousesData = getData("warehouse");
   const categoriesData = getData("categories");
+  const brandsData = getData("brands");
   const unitsData = getData("units");
 
   // Parallel fetching
-  const [items, warehouses, categories, units] = await Promise.all([
-    itemsData, warehousesData, categoriesData, unitsData
+  const [items, warehouses, categories, units, brands] = await Promise.all([
+    itemsData, warehousesData, categoriesData, brandsData,unitsData
   ]);
 
   return (
@@ -28,6 +29,7 @@ const NewStockAdjustment = async ({ initialData = {}, isUpdate = false }) => {
           items={items}
           warehouses={warehouses}
           categories={categories}
+          brands={brands}
           units={units}
           initialData={initialData}
           isUpdate={isUpdate}
