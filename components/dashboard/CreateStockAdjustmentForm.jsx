@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
 
 
-const CreateStockAdjustmentForm = ({ items, warehouses, initialData = {}, isUpdate = false, }) => {
+const CreateStockAdjustmentForm = ({ items, warehouses, initialData = {}, isUpdate = false }) => {
     const [loading, setLoading] = useState(false);
     const [selectedWarehouse, setSelectedWarehouse] = useState(null);
 
@@ -81,16 +81,16 @@ const CreateStockAdjustmentForm = ({ items, warehouses, initialData = {}, isUpda
     }, [selectedItemId, selectedWarehouse, selectedWarehouseId, setValue]);
 
 
-    
+
     // Add useEffect for adjustment type changes
     useEffect(() => {
         if (selectedAdjustmentType && !initialData.adjustmentType) {
-            const message = selectedAdjustmentType === "addition" 
+            const message = selectedAdjustmentType === "addition"
                 ? "You are about to add stock to the inventory"
                 : "You are about to subtract stock from the inventory";
-                
+
             const icon = selectedAdjustmentType === "addition" ? "info" : "warning";
-            
+
             Swal.fire({
                 title: 'Stock Adjustment Type Selected',
                 text: message,
@@ -116,15 +116,47 @@ const CreateStockAdjustmentForm = ({ items, warehouses, initialData = {}, isUpda
     }
 
     async function onSubmit(data) {
-        const formattedData = {
-            ...data,
-            quantity: parseFloat(data.quantity)
-        };
-        if (isUpdate) {
-            makePutRequest(setLoading, `/api/stock-adjustments/${initialData.id}`, formattedData, 'Stock Adjustment', reset, redirect);
-        } else {
-            makePostRequest(setLoading, '/api/stock-adjustments', formattedData, 'Stock Adjustment', reset);
+        //
+        // Show confirmation dialog before proceeding
+        const result = await Swal.fire({
+            title: 'Confirm Stock Adjustment',
+            html: `
+        <div class="text-left">
+            <p><strong>Warehouse:</strong> ${selectedWarehouse?.title}</p>
+            <p><strong>Item:</strong> ${selectedWarehouse?.items.find(i => i.id === data.itemId)?.title}</p>
+            <p><strong>Current Stock:</strong> ${data.currentStock}</p>
+            <p><strong>Adjustment Type:</strong> ${data.adjustmentType}</p>
+            <p><strong>Adjustment Quantity:</strong> ${data.quantity}</p>
+            <p><strong>New Stock will be:</strong> ${data.adjustmentType === "addition"
+                    ? parseFloat(data.currentStock) + parseFloat(data.quantity)
+                    : parseFloat(data.currentStock) - parseFloat(data.quantity)
+                }</p>
+        </div>
+    `,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, proceed!',
+            cancelButtonText: 'Cancel'
+        });
+
+        //
+        //
+        if (result.isConfirmed) {
+            //
+            const formattedData = {
+                ...data,
+                quantity: parseFloat(data.quantity)
+            };
+            if (isUpdate) {
+                makePutRequest(setLoading, `/api/stock-adjustments/${initialData.id}`, formattedData, 'Stock Adjustment', reset, redirect);
+            } else {
+                makePostRequest(setLoading, '/api/stock-adjustments', formattedData, 'Stock Adjustment', reset);
+            }
+            //
         }
+        //
     };
 
     return (
