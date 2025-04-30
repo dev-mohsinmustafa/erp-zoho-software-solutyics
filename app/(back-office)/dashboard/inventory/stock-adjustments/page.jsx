@@ -7,8 +7,9 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { Download, Filter, ListRestart } from "lucide-react";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
-const StockAdjustments =  () => {
+const StockAdjustments = () => {
   // const stockAdjustments = await getData("stock-adjustments");
   // const columns = [
   //   // "adjustmentNumber",
@@ -20,12 +21,13 @@ const StockAdjustments =  () => {
   // ];
 
 
-  const columns = ["adjustmentNumber", "adjustmentType", "quantity", "currentStock",];
+  const columns = ["adjustmentNumber", "adjustmentType", "quantity", "currentStock", "adjustmentDate"];
   const [stockAdjustments, setStockAdjustments] = useState([]);
   const [filteredStocks, setFilteredStocks] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [loading, setLoading] = useState(false);
+  
 
   async function fetchData() {
     setLoading(true);
@@ -33,7 +35,7 @@ const StockAdjustments =  () => {
       const data = await getData("stock-adjustments");
       console.log("Stock Adjustments Data", data);
       setStockAdjustments(data);
-      setFilteredStocks(data); 
+      setFilteredStocks(data);
     } catch (error) {
       console.error("Error Fetching Stock Adjustments:", error);
     }
@@ -54,7 +56,7 @@ const StockAdjustments =  () => {
     );
   }
 
-  
+
   // Filter stocks on button click
   const handleFilter = () => {
     if (startDate && endDate) {
@@ -64,7 +66,7 @@ const StockAdjustments =  () => {
       });
       setFilteredStocks(filtered);
     } else {
-      setFilteredSales(stockAdjustments); 
+      setFilteredSales(stockAdjustments);
     }
   };
 
@@ -89,11 +91,13 @@ const StockAdjustments =  () => {
     doc.text("Stock Adjustments Report", 14, 10);
     doc.text(`From: ${startDate} To: ${endDate}`, 14, 20);
 
-    const tableColumn = ["Customer Name", "Quantity", "Sale Date"];
+    const tableColumn = ["Adjustment Number", "Adjustment Type", "Quantity", "Current Stock", "Adjustment Date"];
     const tableRows = filteredStocks.map((stock) => [
-      stock.customerName,
+      stock.adjustmentNumber,
+      stock.adjustmentType,
       stock.quantity,
-      new Date(stock.stockAdjustments).toLocaleDateString(),
+      stock.currentStock,
+      new Date(stock.adjustmentDate).toLocaleDateString(),
     ]);
 
 
@@ -109,9 +113,9 @@ const StockAdjustments =  () => {
 
   return (
     <div>
-      <FixedHeader title="Stock Adjustments"  newLink="/dashboard/inventory/stock-adjustments/new" />
+      <FixedHeader title="Stock Adjustments" newLink="/dashboard/inventory/stock-adjustments/new" />
 
-            {/* I need a Table that show all the brands */}
+      {/* I need a Table that show all the brands */}
       {/* Table */}
       <div className="my-4 p-8 ">
         <h2 className="py-4 text-xl font-semibold">Stocks Record</h2>
@@ -171,13 +175,13 @@ const StockAdjustments =  () => {
 
       </div>
 
-      
+
       <div className="my-4 p-8">
         <DataTableStockAdjustment
           // data={stockAdjustments} 
-          data={filteredStocks} 
-          columns={columns} 
-          resourceTitle={"stock-adjustments"} 
+          data={filteredStocks}
+          columns={columns}
+          resourceTitle={"stock-adjustments"}
         />
       </div>
 

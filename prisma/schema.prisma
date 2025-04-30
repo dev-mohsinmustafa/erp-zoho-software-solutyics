@@ -536,6 +536,8 @@ model StockAdjustment {
   warehouse      Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Cascade)
 
   
+  @@index([warehouseId])
+  @@index([itemId])
   
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
