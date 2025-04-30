@@ -25,6 +25,9 @@ const DataTableProduct = ({ data = [], columns = [], resourceTitle }) => {
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr >
+                                <th scope="col" className="px-6 py-3">
+                                    Sr. No
+                                </th>
                                 {
                                     columns.map((columnName, index) => {
                                         return (
@@ -59,6 +62,9 @@ const DataTableProduct = ({ data = [], columns = [], resourceTitle }) => {
                                             )
                                         })
                                     } */}
+                                            <td className="px-6 py-4">
+                                                {index + 1}
+                                            </td>
                                             {/* Now Advanced Data Table Logic to cater for Dates and Image */}
                                             {/* toLocaleDateString convert data and time in normal time  */}
                                             {

@@ -99,8 +99,9 @@ const Sales = () => {
     doc.text("Sales Report", 14, 10);
     doc.text(`From: ${startDate} To: ${endDate}`, 14, 20);
 
-    const tableColumn = ["Customer Name", "Quantity", "Sale Date"];
-    const tableRows = filteredSales.map((sale) => [
+    const tableColumn = ["SrNo", "Customer Name", "Quantity", "Sale Date"];
+    const tableRows = filteredSales.map((sale, index) => [
+      index + 1,
       sale.customerName,
       sale.quantity,
       new Date(sale.saleDate).toLocaleDateString(),

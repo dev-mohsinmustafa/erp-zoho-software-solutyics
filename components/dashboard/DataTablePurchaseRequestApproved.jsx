@@ -8,11 +8,11 @@ const DataTablePurchaseRequestApproved = ({ data = [], columns = [], resourceTit
 
 
 
-  
 
 
-    
-   
+
+
+
 
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -21,6 +21,9 @@ const DataTablePurchaseRequestApproved = ({ data = [], columns = [], resourceTit
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr >
+                                <th scope="col" className="px-6 py-3">
+                                    Sr. No
+                                </th>
                                 {
                                     columns.map((columnName, index) => {
                                         return (
@@ -31,7 +34,7 @@ const DataTablePurchaseRequestApproved = ({ data = [], columns = [], resourceTit
                                     })
                                 }
                                 {/* <th scope="col" className="px-6 py-3">Status Option</th> ✅ New Column */}
-                             
+
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +43,9 @@ const DataTablePurchaseRequestApproved = ({ data = [], columns = [], resourceTit
                                     return (
                                         <tr key={index}
                                             className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-
+                                            <td className="px-6 py-4">
+                                                {index + 1}
+                                            </td>
                                             {/* Now Advanced Data Table Logic to cater for Dates and Image */}
                                             {/* toLocaleDateString convert data and time in normal time  */}
                                             {
@@ -56,29 +61,29 @@ const DataTablePurchaseRequestApproved = ({ data = [], columns = [], resourceTit
                                                                     }
                                                                     return value;
                                                                 })() :
-                                                             
-                                                                
-                                                                
-                                                                    columnName === "createdAt" || columnName === "updatedAt" || columnName === "purchaseRequest.requestDate"  || columnName === "requestDate" 
-                                                                        ?
-                                                                        (
-                                                                            // Convert date columns to a more readable format 
-                                                                            new Date(item[columnName]).toLocaleDateString()
-                                                                        )
-                                                                        :
-                                                                        (
-                                                                            // Otherwise, display the value as is
-                                                                            item[columnName]
-                                                                        )
+
+
+
+                                                                columnName === "createdAt" || columnName === "updatedAt" || columnName === "purchaseRequest.requestDate" || columnName === "requestDate"
+                                                                    ?
+                                                                    (
+                                                                        // Convert date columns to a more readable format 
+                                                                        new Date(item[columnName]).toLocaleDateString()
+                                                                    )
+                                                                    :
+                                                                    (
+                                                                        // Otherwise, display the value as is
+                                                                        item[columnName]
+                                                                    )
                                                             }
                                                         </td>
                                                     )
                                                 })
                                             }
 
-                                         
 
-                                            
+
+
                                         </tr>
                                     )
                                 })
@@ -92,7 +97,7 @@ const DataTablePurchaseRequestApproved = ({ data = [], columns = [], resourceTit
 
 
 
-       
+
 
 
         </div>

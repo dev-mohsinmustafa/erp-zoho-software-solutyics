@@ -3,8 +3,7 @@ import Link from "next/link"
 import DeleteBtn from "./DeleteBtn"
 
 // onRefresh
-const DataTableSales = ({ data = [], columns = [], resourceTitle, onRefresh  }) => {
-    // console.log("Mohsin Data Check kro", data)
+const DataTableSales = ({ data = [], columns = [], resourceTitle, onRefresh }) => {
     // if a have an array of objects:
     // [
     //     {
@@ -27,6 +26,9 @@ const DataTableSales = ({ data = [], columns = [], resourceTitle, onRefresh  }) 
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr >
+                                <th scope="col" className="px-6 py-3">
+                                    Sr. No
+                                </th>
                                 {
                                     columns.map((columnName, index) => {
                                         return (
@@ -61,6 +63,9 @@ const DataTableSales = ({ data = [], columns = [], resourceTitle, onRefresh  }) 
                                             )
                                         })
                                     } */}
+                                            <td className="px-6 py-4">
+                                                {index + 1}
+                                            </td>
                                             {/* Now Advanced Data Table Logic to cater for Dates and Image */}
                                             {/* toLocaleDateString convert data and time in normal time  */}
                                             {
@@ -128,8 +133,8 @@ const DataTableSales = ({ data = [], columns = [], resourceTitle, onRefresh  }) 
 
 
                                                 {/* Delete Btn */}
-                                                <DeleteBtn id={item.id} endpoint={resourceTitle} 
-                                                onSuccess={onRefresh} 
+                                                <DeleteBtn id={item.id} endpoint={resourceTitle}
+                                                    onSuccess={onRefresh}
                                                 />
                                             </td>
                                         </tr>

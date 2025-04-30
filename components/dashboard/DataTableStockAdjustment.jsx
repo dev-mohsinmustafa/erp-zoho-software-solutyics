@@ -13,6 +13,9 @@ const DataTableStockAdjustment = memo(({ data = [], columns = [], resourceTitle 
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr >
+                                <th scope="col" className="px-6 py-3">
+                                    Sr. No
+                                </th>
                                 {
                                     columns.map((columnName, index) => {
                                         return (
@@ -23,7 +26,7 @@ const DataTableStockAdjustment = memo(({ data = [], columns = [], resourceTitle 
                                     })
                                 }
                                 <th scope="col" className="px-6 py-3">
-                                    Actions
+                                    {/* Actions */}
                                 </th>
                             </tr>
                         </thead>
@@ -33,20 +36,9 @@ const DataTableStockAdjustment = memo(({ data = [], columns = [], resourceTitle 
                                     return (
                                         <tr key={index}
                                             className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                            {/* <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {item.title}
-                                        </th> */}
-                                            {/* {item.title} */}
-                                            {/* item['title'] === item.title these are same */}
-                                            {/* {
-                                        columns.map((columnName, index) => {
-                                            return (
-                                                <td key={index} className="px-6 py-4">
-                                                    {item[columnName]}
-                                                </td>
-                                            )
-                                        })
-                                    } */}
+                                            <td className="px-6 py-4">
+                                                {index + 1}
+                                            </td>
                                             {/* Now Advanced Data Table Logic to cater for Dates and Image */}
                                             {/* toLocaleDateString convert data and time in normal time  */}
                                             {
@@ -90,17 +82,17 @@ const DataTableStockAdjustment = memo(({ data = [], columns = [], resourceTitle 
                                                 </Link> */}
 
                                                 {/* Conditionally Render View Button for Sales Only */}
-                                                {resourceTitle === "stock-adjustments" && (
+                                                {/* {resourceTitle === "stock-adjustments" && (
                                                     <Link href={`/dashboard/inventory/${resourceTitle}/view/${item.id}`}
                                                         className="font-medium text-green-600 dark:text-green-500 flex items-center space-x-1">
                                                         <Eye className="w-4 h-4" />
                                                         <span>View</span>
                                                     </Link>
-                                                )}
+                                                )} */}
 
 
                                                 {/* Show Edit button only in stock-adjustments */}
-                                                {
+                                                {/* {
                                                     resourceTitle === "stock-adjustments" && (
                                                         <Link href={`/dashboard/inventory/${resourceTitle}/update/${item.id}`}
                                                             className="font-medium text-blue-600 dark:text-blue-500 flex items-center space-x-1">
@@ -108,13 +100,13 @@ const DataTableStockAdjustment = memo(({ data = [], columns = [], resourceTitle 
                                                             <span>Edit</span>
                                                         </Link>
                                                     )
-                                                }
+                                                } */}
 
 
 
 
                                                 {/* Delete Btn */}
-                                                <DeleteBtn id={item.id} endpoint={resourceTitle} />
+                                                {/* <DeleteBtn id={item.id} endpoint={resourceTitle} /> */}
                                             </td>
                                         </tr>
                                     )

@@ -61,7 +61,7 @@ const StockAdjustments = () => {
   const handleFilter = () => {
     if (startDate && endDate) {
       const filtered = stockAdjustments.filter((stock) => {
-        const stockDate = new Date(stock.stockDate);
+        const stockDate = new Date(stock.adjustmentDate);
         return stockDate >= new Date(startDate) && stockDate <= new Date(endDate);
       });
       setFilteredStocks(filtered);
@@ -91,8 +91,9 @@ const StockAdjustments = () => {
     doc.text("Stock Adjustments Report", 14, 10);
     doc.text(`From: ${startDate} To: ${endDate}`, 14, 20);
 
-    const tableColumn = ["Adjustment Number", "Adjustment Type", "Quantity", "Current Stock", "Adjustment Date"];
-    const tableRows = filteredStocks.map((stock) => [
+    const tableColumn = ["SrNo", "Adjustment Number", "Adjustment Type", "Quantity", "Current Stock", "Adjustment Date"];
+    const tableRows = filteredStocks.map((stock, index) => [
+      index + 1,
       stock.adjustmentNumber,
       stock.adjustmentType,
       stock.quantity,

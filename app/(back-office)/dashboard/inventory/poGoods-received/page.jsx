@@ -61,8 +61,9 @@ const POGoodsReceived = () => {
     doc.text("Goods Report", 14, 10);
     doc.text(`From: ${startDate} To: ${endDate}`, 14, 20);
 
-    const tableColumn = ["Received By", "grnNumber", "requestBasedPurchaseOrderId", "Received Date", "totalPayment", "grnRemarks"];
-    const tableRows = filteredGoodReceived.map((good) => [
+    const tableColumn = ["SrNo", "Received By", "grnNumber", "requestBasedPurchaseOrderId", "Received Date", "totalPayment", "grnRemarks"];
+    const tableRows = filteredGoodReceived.map((good, index) => [
+      index + 1,
       good.receivedBy,
       good.grnNumber,
       good.requestBasedPurchaseOrderId,
