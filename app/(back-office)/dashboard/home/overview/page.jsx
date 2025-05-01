@@ -1,6 +1,3 @@
-export const dynamic = 'force-dynamic'; // 👈 Add this line to opt out of static rendering
-
-
 import SalesOverview from '@/components/dashboard/SalesOverview';
 // import SalesOverview from '../../../../../components/dashboard/SalesOverview';
 // import DashboardBanner from '../../../../../components/dashboard/DashboardBanner';
