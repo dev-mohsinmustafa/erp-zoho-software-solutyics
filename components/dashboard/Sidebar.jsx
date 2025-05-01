@@ -133,7 +133,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
         <>
             {/* bg-purpleColor */}
             {/* <div className='w-60 min-h-screen bg-slate-800 text-slate-50 fixed hidden lg:block z-50'> */}
-            <div className={`${showSidebar ? "w-60 min-h-screen bg-slate-800 text-slate-50 fixed lg:block z-50" : "w-60 min-h-screen bg-slate-800 text-slate-50 fixed hidden lg:block z-50"}`}>
+            <div className={`${showSidebar ? "w-60 min-h-screen bg-slate-800 text-white fixed lg:block z-50" : "w-60 min-h-screen bg-slate-800 text-white fixed hidden lg:block z-50"}`}>
             {/* <div className={`w-60 min-h-screen bg-slate-800 text-white fixed z-50 transition-transform duration-300 ${showSidebar ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}> */}
 
 
