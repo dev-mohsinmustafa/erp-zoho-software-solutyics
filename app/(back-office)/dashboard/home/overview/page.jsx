@@ -1,3 +1,6 @@
+export const dynamic = 'force-dynamic'; // 👈 Add this line to opt out of static rendering
+
+
 import SalesOverview from '@/components/dashboard/SalesOverview';
 // import SalesOverview from '../../../../../components/dashboard/SalesOverview';
 // import DashboardBanner from '../../../../../components/dashboard/DashboardBanner';
@@ -20,14 +23,26 @@ const Dashboard = async () => {
       {/* <h2>Dashboard Mohsin</h2> */}
       <SalesOverview />
       {/* Now we create CurrentStock as reuseable component */}
-      <CurrentStock items={items} title="Available Stock Items" />
-      {
+      <CurrentStock items={items || []} title="Available Stock Items" />
+      {/* {
         warehouses?.map((warehouse, index) => {
           return (
             <CurrentStock key={index} items={warehouse.items} title={`Available Stock Items in ${warehouse.title}`} />
           )
         })
-      }
+      } */}
+      {/* Safely handle warehouses data */}
+      {warehouses?.length > 0 ? (
+        warehouses.map((warehouse) => (
+          <CurrentStock 
+            key={warehouse.id} // 👈 Use a unique ID instead of index
+            items={warehouse.items || []} 
+            title={`Stock in ${warehouse.title}`}
+          />
+        ))
+      ) : (
+        <p>No warehouse data available.</p>
+      )}
       {/* Fetch items in the warehouse in a particular warehouse  */}
     </div>
   )
