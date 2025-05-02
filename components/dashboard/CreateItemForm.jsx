@@ -14,6 +14,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import MultiSelectInput from "../formInputs/MultiSelectInput";
 
 const CreateItemForm = ({ categories, units, brands, suppliers, warehouses, initialData = {}, isUpdate = false }) => {
   console.log("Initial Data", initialData);
@@ -138,6 +139,17 @@ const CreateItemForm = ({ categories, units, brands, suppliers, warehouses, init
         />
         <SelectInput label="Select the Item Supplier" name="supplierId" register={register} errors={errors}
           className="w-full" options={suppliers} />
+
+        {/* <MultiSelectInput
+          label="Select Item Suppliers"
+          name="supplierIds"
+          register={register}
+          errors={errors}
+          className="w-full"
+          options={suppliers}
+          defaultValue={initialData?.suppliers || []}
+        /> */}
+
 
         <TextInput label="Re-Order Point" name="reOrderPoint" register={register} errors={errors}
           className="w-full" type="number"
