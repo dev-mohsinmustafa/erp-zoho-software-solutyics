@@ -4,7 +4,7 @@ import { getData } from "@/lib/getData";
 
 const Items = async () => {
   const items = await getData("items");
-  const columns = ["imageUrl", "title", "quantity", "category.title", "warehouse.title" ];
+  const columns = ["imageUrl", "title", "quantity", "category.title", "warehouse.title", "suppliers.title" ];
   return (
     <div>
       {/* Fixed Header */}

@@ -33,6 +33,8 @@ model Item {
   buyingPrice              Float
   supplier                 Supplier                  @relation(fields: [supplierId], references: [id], onDelete: Cascade)
   supplierId               String                    @db.ObjectId
+   // Replace the suppliers field with itemSuppliers
+  itemSuppliers           ItemSupplier[]
   reOrderPoint             Int
   location                 String?
   imageUrl                 String
@@ -202,6 +204,9 @@ model Supplier {
   taxID         String?
   notes         String?
   items         Item[]
+  // Replace the items field with itemSuppliers
+  itemSuppliers ItemSupplier[]
+
 
   //Also need this Relationships in supplier
   addStockAdjustments AddStockAdjustment[]
@@ -219,6 +224,24 @@ model Supplier {
 
   requestBasedPurchaseOrders RequestBasedPurchaseOrder[]
 }
+
+
+//
+// New join model for Item-Supplier relationship
+model ItemSupplier {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  item        Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId      String   @db.ObjectId
+  supplier    Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  supplierId  String   @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([itemId, supplierId])
+}
+
+
+//
 
 // Next Authentication
 model User {

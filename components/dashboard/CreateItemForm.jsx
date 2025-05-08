@@ -137,18 +137,18 @@ const CreateItemForm = ({ categories, units, brands, suppliers, warehouses, init
         <TextInput label="Selling Price" name="sellingPrice" register={register} errors={errors}
           className="w-full" type="number"
         />
-        <SelectInput label="Select the Item Supplier" name="supplierId" register={register} errors={errors}
-          className="w-full" options={suppliers} />
+        {/* <SelectInput label="Select the Item Supplier" name="supplierId" register={register} errors={errors}
+          className="w-full" options={suppliers} /> */}
 
-        {/* <MultiSelectInput
+        <MultiSelectInput
           label="Select Item Suppliers"
           name="supplierIds"
           register={register}
           errors={errors}
           className="w-full"
           options={suppliers}
-          defaultValue={initialData?.suppliers || []}
-        /> */}
+          // defaultValue={initialData?.suppliers || []}
+        />
 
 
         <TextInput label="Re-Order Point" name="reOrderPoint" register={register} errors={errors}

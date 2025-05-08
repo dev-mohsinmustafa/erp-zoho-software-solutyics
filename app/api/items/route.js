@@ -52,7 +52,7 @@ export async function POST(request) {
             }
         })
 
-
+        // Create the item with itemSuppliers relationship
         const item = await db.item.create({
             data: {
                 title: itemData.title,
@@ -63,7 +63,7 @@ export async function POST(request) {
                 quantity: parseInt(itemData.qty),
                 unitId: itemData.unitId,
                 brandId: itemData.brandId,
-                supplierId: itemData.supplierId,
+                supplierId: itemData.supplierIds[0], // Use the first supplier as primary
                 buyingPrice: parseFloat(itemData.buyingPrice),
                 sellingPrice: parseFloat(itemData.sellingPrice),
                 reOrderPoint: parseInt(itemData.reOrderPoint),
@@ -73,6 +73,12 @@ export async function POST(request) {
                 dimensions: itemData.dimensions,
                 taxRate: parseFloat(itemData.taxRate),
                 notes: itemData.notes,
+                // Create the itemSuppliers relationships
+                itemSuppliers: {
+                    create: itemData.supplierIds.map(supplierId => ({
+                        supplierId: supplierId
+                    }))
+                }
             }
         });
         return NextResponse.json(item);
@@ -98,6 +104,11 @@ export async function GET(request) {
                 category: true, // Returns all fields for all categories
                 warehouse: true, // Returns all warehouses fields
                 supplier: true,
+                itemSuppliers: {
+                    include: {
+                        supplier: true
+                    }
+                }
             },
         });
         console.log(items);

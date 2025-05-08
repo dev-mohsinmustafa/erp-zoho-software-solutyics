@@ -20,11 +20,23 @@ import {
 const MultiSelectInput = ({ label, name, register, errors, className, options = [], defaultValue = [] }) => {
   const [open, setOpen] = React.useState(false)
   const [selectedValues, setSelectedValues] = React.useState(defaultValue)
-  const { onChange, ...rest } = register(name)
+  
+  // Register the field with react-hook-form
+  const { ref, ...registerProps } = register(name)
 
+  // Update form values when selection changes
   React.useEffect(() => {
-    onChange(selectedValues.map(option => option.id))
-  }, [selectedValues, onChange])
+    if (registerProps.onChange) {
+      // Create a synthetic event object that react-hook-form expects
+      const event = {
+        target: {
+          name,
+          value: selectedValues.map(option => option.id)
+        }
+      }
+      registerProps.onChange(event)
+    }
+  }, [selectedValues, registerProps.onChange, name])
 
   const toggleOption = (option) => {
     setSelectedValues(current => {
