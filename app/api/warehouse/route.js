@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
     try {
-        const { title, location, type, description, stockQty } = await request.json();
+        const { title, location, type, description, } = await request.json();
         // const warehouse = { title, location, type, description };
         const warehouse = await db.warehouse.create({
             data: {
@@ -11,7 +11,7 @@ export async function POST(request) {
                 location,
                 warehouseType: type,
                 description,
-                stockQty: parseInt(stockQty)
+                // stockQty: parseInt(stockQty)
             }
         });
         console.log(warehouse);
@@ -30,7 +30,7 @@ export async function GET(request) {
             orderBy: {
                 createdAt: 'desc', // Latest Warehouse Show First'asc' for ascending, 'desc' for descending
             },
-            include:{
+            include: {
                 items: true,
             },
         });
@@ -53,7 +53,7 @@ export async function DELETE(request) {
             where: {
                 id,
             },
-            include:{
+            include: {
                 items: true,
             }
         })

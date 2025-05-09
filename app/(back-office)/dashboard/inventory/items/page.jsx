@@ -4,7 +4,7 @@ import { getData } from "@/lib/getData";
 
 const Items = async () => {
   const items = await getData("items");
-  const columns = ["imageUrl", "title", "quantity", "category.title", "warehouse.title", "suppliers.title" ];
+  const columns = ["imageUrl", "title", "quantity", "category.title", "warehouse.title", "suppliers" ];
   return (
     <div>
       {/* Fixed Header */}
@@ -12,7 +12,12 @@ const Items = async () => {
       {/* I need a Table that show all the brands */}
       {/* Table */}
       <div className="my-4 p-8">
-        <DataTable data={items} columns={columns} resourceTitle={"items"} />
+        <DataTable 
+        data={items.map(item=>({
+          ...item,
+          suppliers: item.itemSuppliers?.map(itemSupplier=>itemSupplier.supplier.title).join(", " || "-")
+  }))}
+         columns={columns} resourceTitle={"items"} />
       </div>
     </div>
   )

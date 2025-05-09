@@ -87,9 +87,9 @@ const NewWarehouse = ({initialData = {}, isUpdate = false}) => {
             <TextInput label="Warehouse Location" name="location" register={register} errors={errors}
               className="w-full"
             />
-            <TextInput label="Stock Add in Warehouse" name="stockQty" register={register} errors={errors}
+            {/* <TextInput label="Stock Add in Warehouse" name="stockQty" register={register} errors={errors}
               className="w-full"
-            />
+            /> */}
             <TextareaInput label="Warehouse Description" name="description" register={register} errors={errors} />
           </div>
 

@@ -34,7 +34,7 @@ export async function POST(request) {
     } catch (error) {
         console.log(error);
         // return NextResponse.json({ error: error.message }, { status: 500 });
-        return NextResponse.json({ error}, { status: 500 });
+        return NextResponse.json({ error }, { status: 500 });
     }
 }
 
@@ -47,7 +47,7 @@ export async function POST(request) {
 export async function PUT(request) {
     try {
         const { email, role } = await request.json();
-        
+
         const updatedUser = await db.User.update({
             where: { email },
             data: { role }

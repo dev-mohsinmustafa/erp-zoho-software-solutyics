@@ -11,8 +11,8 @@ export async function GET(request, { params: { id } }) {
                 id,
             },
             include: {
-                warehouse: true, 
-              },
+                warehouse: true,
+            },
         });
         console.log(item);
         return NextResponse.json(item);
@@ -31,7 +31,7 @@ export async function PUT(request, { params: { id } }) {
     try {
         // const { title, sellingPrice, qty } = await request.json();
         const itemData = await request.json();
-        console.log("getData API",itemData);
+        console.log("getData API", itemData);
         // update is used to Update single item
         const item = await db.item.update({
             where: {
@@ -42,13 +42,13 @@ export async function PUT(request, { params: { id } }) {
                 description: itemData.description,
                 categoryId: itemData.categoryId,
                 sku: itemData.sku,
-                barcode: itemData.barcode,
+                // barcode: itemData.barcode,
                 quantity: parseInt(itemData.qty),
                 unitId: itemData.unitId,
                 brandId: itemData.brandId,
                 supplierId: itemData.supplierId,
-                buyingPrice: parseFloat(itemData.buyingPrice),
-                sellingPrice: parseFloat(itemData.sellingPrice),
+                // buyingPrice: parseFloat(itemData.buyingPrice),
+                // sellingPrice: parseFloat(itemData.sellingPrice),
                 reOrderPoint: parseInt(itemData.reOrderPoint),
                 warehouseId: itemData.warehouseId,
                 imageUrl: itemData.imageUrl,

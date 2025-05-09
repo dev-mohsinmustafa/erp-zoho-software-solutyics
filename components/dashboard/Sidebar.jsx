@@ -52,6 +52,11 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             href: "/dashboard/inventory/stock-adjustments",
         },
         {
+            title: "Users",
+            href: "/dashboard/inventory/users",
+            adminOnly: true
+        },
+        {
             title: "Supplier",
             href: "/dashboard/inventory/suppliers",
             adminOnly: true
@@ -85,10 +90,12 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
         {
             title: "Purchase Orders",
             href: "/dashboard/inventory/purchase-orders",
+            adminOnly: true
         },
         {
             title: "Goods/Materials Received",
             href: "/dashboard/inventory/poGoods-received",
+            adminOnly: true
         },
     ].filter(link => !link.adminOnly || session?.user?.role === "admin");
 

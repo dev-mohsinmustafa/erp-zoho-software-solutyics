@@ -23,14 +23,14 @@ model Item {
   category                 Category                  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId               String                    @db.ObjectId
   sku                      String                    @unique
-  barcode                  String?
+  //barcode                  String?
   quantity                 Int
   unit                     Unit                      @relation(fields: [unitId], references: [id])
   unitId                   String                    @db.ObjectId
   brand                    Brand                     @relation(fields: [brandId], references: [id], onDelete: Cascade)
   brandId                  String                    @db.ObjectId
-  sellingPrice             Float
-  buyingPrice              Float
+  //sellingPrice             Float
+  //buyingPrice              Float
   supplier                 Supplier                  @relation(fields: [supplierId], references: [id], onDelete: Cascade)
   supplierId               String                    @db.ObjectId
    // Replace the suppliers field with itemSuppliers

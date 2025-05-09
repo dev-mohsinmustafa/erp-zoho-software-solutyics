@@ -123,20 +123,20 @@ const CreateItemForm = ({ categories, units, brands, suppliers, warehouses, init
 
 
         <TextInput label="Item SKU" name="sku" register={register} errors={errors} className="w-full" />
-        <TextInput label="Item Barcode" name="barcode" register={register} errors={errors} className="w-full"
-        // IsRequired="false"
-        />
+        {/* <TextInput label="Item Barcode" name="barcode" register={register} errors={errors} className="w-full"
+        IsRequired="false"
+        /> */}
         <TextInput label="Item Quantity" name="qty" register={register} errors={errors} className="w-full" />
         <SelectInput label="Select the Item Unit" name="unitId" register={register} errors={errors}
           className="w-full" options={units} />
         <SelectInput label="Select the Item Brand" name="brandId" register={register} errors={errors}
           className="w-full" options={brands} />
-        <TextInput label="Buying Price" name="buyingPrice" register={register} errors={errors}
+        {/* <TextInput label="Buying Price" name="buyingPrice" register={register} errors={errors}
           className="w-full" type="number"
         />
         <TextInput label="Selling Price" name="sellingPrice" register={register} errors={errors}
           className="w-full" type="number"
-        />
+        /> */}
         {/* <SelectInput label="Select the Item Supplier" name="supplierId" register={register} errors={errors}
           className="w-full" options={suppliers} /> */}
 
