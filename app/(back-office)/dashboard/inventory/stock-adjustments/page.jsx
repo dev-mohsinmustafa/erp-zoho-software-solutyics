@@ -27,7 +27,7 @@ const StockAdjustments = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
 
   async function fetchData() {
     setLoading(true);
@@ -47,14 +47,7 @@ const StockAdjustments = () => {
 
     fetchData();
   }, []);
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
-        <span className="ml-4 text-lg">Loading...</span>
-      </div>
-    );
-  }
+
 
 
   // Filter stocks on button click
@@ -177,7 +170,19 @@ const StockAdjustments = () => {
       </div>
 
 
-      <div className="my-4 p-8">
+      <div className="my-4 p-8 relative">
+        {loading ? (
+          <div className="absolute inset-0 bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center z-50">
+            <img
+              src="/navLogo.png"
+              alt="Solutyics Logo"
+              className="w-16 h-16 mb-4"
+            />
+            <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-violetRed mt-2"></div>
+            <p className="text-violetRed font-semibold mt-4">Loading stock adjustments data, please wait...</p>
+          </div>
+        ) : null}
+
         <DataTableStockAdjustment
           // data={stockAdjustments} 
           data={filteredStocks}

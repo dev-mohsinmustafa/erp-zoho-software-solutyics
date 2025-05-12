@@ -8,21 +8,20 @@ export default function RoleGuard({ children, allowedRoles }) {
     const router = useRouter();
 
     useEffect(() => {
-        if (status === "authenticated") {
-            if (!allowedRoles.includes(session.user.role)) {
-                router.push("/dashboard/home/overview");
-            }
+        if (status === "authenticated" && !allowedRoles.includes(session?.user?.role)) {
+            router.push("/dashboard/home/overview");
+        } else if (status === "unauthenticated") {
+            router.push("/login");
         }
-    }, [status, session, router, allowedRoles]);
+    }, [status, session, allowedRoles, router]);
 
     if (status === "loading") {
-        return <div>Loading...</div>;
+        return (
+            <div className="fixed inset-0 bg-white/50 backdrop-blur-sm flex items-center justify-center z-50">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600">Mohsin</div>
+            </div>
+        );
     }
 
-    if (!session?.user) {
-        router.push("/login");
-        return null;
-    }
-
-    return children;
+    return allowedRoles.includes(session?.user?.role) ? children : null;
 }

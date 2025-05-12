@@ -25,14 +25,14 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-         <Toaster
-            position="top-center"
-            reverseOrder={false}
-          />
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+        />
         {/* Now we get everything in whole app like user session  */}
         <AuthProvider>
 
-         
+
           {children}
 
         </AuthProvider>

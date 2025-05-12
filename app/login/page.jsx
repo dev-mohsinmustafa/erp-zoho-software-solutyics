@@ -32,7 +32,7 @@ export default function Login() {
         if (status === "authenticated") {
             // Redirect based on user role
             if (session.user.role === "admin") {
-                router.push("/dashboard/inventory/approval-requests");
+                router.push("/dashboard/home/overview");
             } else {
                 router.push("/dashboard/home/overview");
             }
@@ -44,7 +44,17 @@ export default function Login() {
     // console.log("GET USER DATA FROM SESSION", username)
 
     if (status === "loading") {
-        return <p>Loading User please wait...</p>
+        return (
+            <div className="fixed inset-0 bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center min-h-screen z-50">
+                <img
+                    src="/navLogo.png"
+                    alt="Solutyics Logo"
+                    className="w-16 h-16 mb-4"
+                />
+                <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-violetRed mt-2"></div>
+                <p className="text-violetRed font-semibold mt-4">Loading, please wait...</p>
+            </div>
+        );
     }
 
 

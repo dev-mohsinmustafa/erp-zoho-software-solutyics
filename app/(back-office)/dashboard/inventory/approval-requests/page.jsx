@@ -52,14 +52,7 @@ const ApprovalRequests = () => {
     fetchData(); // Refresh both tables when status is updated
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
-        <span className="ml-4 text-lg">Loading...</span>
-      </div>
-    );
-  }
+
 
   return (
     <RoleGuard allowedRoles={["admin"]}>
@@ -69,14 +62,39 @@ const ApprovalRequests = () => {
         <FixedHeader title="Purchase Request Approval Management" newLink="/dashboard/inventory/purchase-requests/new" />
         {/* I need a Table that show all the items */}
         {/* Table */}
-        <div className="my-4 p-8">
-          <h2 className="py-4 text-xl font-semibold">Pending Approval Requests</h2>
+        <div className="px-8">
+          <h2 className="pt-4 text-xl font-semibold">Pending Approval Requests</h2>
+        </div>
+        <div className="my-4 p-8 relative">
+          {loading ? (
+            <div className="absolute inset-0 bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center z-50">
+              <img
+                src="/navLogo.png"
+                alt="Solutyics Logo"
+                className="w-16 h-16 mb-4"
+              />
+              <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-violetRed mt-2"></div>
+              <p className="text-violetRed font-semibold mt-4">Loading pending requests, please wait...</p>
+            </div>
+          ) : null}
           <DataTablePurchaseRequestApproval data={purchaseRequests} columns={columns} resourceTitle="purchase-requests" onStatusUpdate={handleStatusUpdate}
           />
         </div>
-
-        <div className="my-4 p-8">
-          <h2 className="py-4 text-xl font-semibold">Show Approved Requests</h2>
+        <div className="px-8">
+          <h2 className="pt-4 text-xl font-semibold">Show Approved Requests </h2>
+        </div>
+        <div className="my-4 p-8 relative">
+          {loading ? (
+            <div className="absolute inset-0 bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center z-50">
+              <img
+                src="/navLogo.png"
+                alt="Solutyics Logo"
+                className="w-16 h-16 mb-4"
+              />
+              <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-violetRed mt-2"></div>
+              <p className="text-violetRed font-semibold mt-4">Loading approved requests, please wait...</p>
+            </div>
+          ) : null}
           <DataTablePurchaseRequestApproved data={approvalRequests} columns={columnsApprovalRequests} resourceTitle="approval-requests" />
         </div>
       </div>

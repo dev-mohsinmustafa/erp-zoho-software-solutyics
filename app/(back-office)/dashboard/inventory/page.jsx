@@ -1,11 +1,14 @@
 "use client"
 
+import RoleGuard from '@/app/roleGuard/RoleGuard';
 import FixedHeader from '@/components/dashboard/FixedHeader';
 import OptionCard from '@/components/dashboard/OptionCard';
 import {  Diff, Factory, LayoutGrid, LayoutPanelTop, Scale, Slack, Warehouse } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 
 const Inventory = () => {
+  const { data: session } = useSession();
 
   const optionCards = [
     // {
@@ -53,6 +56,7 @@ const Inventory = () => {
       link: "/dashboard/inventory/warehouse/new",
       linkTitle: "New Warehouse",
       enabled: true,
+      adminOnly: true
     },
     {
       title: "Units",
@@ -69,6 +73,7 @@ const Inventory = () => {
       link: "/dashboard/inventory/suppliers/new",
       linkTitle: "New Supplier",
       enabled: true,
+      adminOnly: true
     },
     {
       title: "Inventory Adjustments",
@@ -77,10 +82,13 @@ const Inventory = () => {
       link: "/dashboard/inventory/adjustments/new",
       linkTitle: "New Adjustments",
       enabled: true,
+      adminOnly: true
     },
-  ]
+  ].filter(link => !link.adminOnly || session?.user?.role === "admin");
+
 
   return (
+    <RoleGuard allowedRoles={["admin", "user"]}>
     <div>
       <FixedHeader title="All Items" newLink="/dashboard/inventory/items/new" />
       <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 px-16 py-8 gap-6">
@@ -99,6 +107,7 @@ const Inventory = () => {
 
       </div>
     </div>
+    </RoleGuard>
   )
 }
 

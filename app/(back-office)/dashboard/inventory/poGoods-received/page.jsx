@@ -19,12 +19,20 @@ const POGoodsReceived = () => {
   const [filteredGoodReceived, setFilteredGoodReceived] = useState([]);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getData("poGoods-received");
-      setGoodReceived(data);
-      setFilteredGoodReceived(data);
+      setLoading(true);
+      try {
+        const data = await getData("poGoods-received");
+        setGoodReceived(data);
+        setFilteredGoodReceived(data);
+      } catch (error) {
+        console.error("Error fetching goods received:", error);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchData();
   }, []);
@@ -154,12 +162,26 @@ const POGoodsReceived = () => {
 
       {/* I need a Table that show all the items */}
       {/* Table */}
-      <div className="my-4 p-8">
-
-        <h2 className="py-4 text-xl font-semibold">Table Request-Based Purchase Order Management Goods Received</h2>
-
-        <DataTablePOGoodReceivedRequestBasedPurchaseOrder data={filteredGoodReceived} columns={columns} resourceTitle="poGoods-received" />
-        {/* <DataTableGoodReceived data={poGoodsReceived} columns={columns} resourceTitle="poGoods-received"/> */}
+      <div className="px-8">
+        <h2 className="text-xl font-semibold">Table Request-Based Purchase Order Management Goods Received</h2>
+      </div>
+      <div className="my-4 p-8 relative">
+        {loading ? (
+          <div className="absolute inset-0 bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center z-50">
+            <img
+              src="/navLogo.png"
+              alt="Solutyics Logo"
+              className="w-16 h-16 mb-4"
+            />
+            <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-violetRed mt-2"></div>
+            <p className="text-violetRed font-semibold mt-4">Loading goods received data, please wait...</p>
+          </div>
+        ) : null}
+        <DataTablePOGoodReceivedRequestBasedPurchaseOrder
+          data={filteredGoodReceived} 
+          columns={columns} 
+          resourceTitle="poGoods-received" 
+        />
       </div>
     </div>
   )

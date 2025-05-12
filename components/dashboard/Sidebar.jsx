@@ -9,6 +9,7 @@ import SidebarDropdownLink from './SidebarDropdownLink';
 import Image from 'next/image';
 
 import { useSession } from 'next-auth/react';
+import RoleGuard from '@/app/roleGuard/RoleGuard';
 
 
 const Sidebar = ({ showSidebar, setShowSidebar }) => {
@@ -42,14 +43,17 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
         {
             title: "Warehouse",
             href: "/dashboard/inventory/warehouse",
+            adminOnly: true
         },
         {
             title: "Inventory Adjustments",
             href: "/dashboard/inventory/adjustments",
+            adminOnly: true
         },
         {
             title: "Stock Adjustments",
             href: "/dashboard/inventory/stock-adjustments",
+            adminOnly: true
         },
         {
             title: "Users",
@@ -138,6 +142,8 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
 
     return (
         <>
+            <RoleGuard allowedRoles={["admin", "user"]}>
+
             {/* bg-purpleColor */}
             {/* <div className='w-60 min-h-screen bg-slate-800 text-slate-50 fixed hidden lg:block z-50'> */}
             <div className={`${showSidebar ? "w-60 min-h-screen bg-slate-800 text-white fixed lg:block z-50" : "w-60 min-h-screen bg-slate-800 text-white fixed hidden lg:block z-50"}`}>
@@ -225,6 +231,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
                 {/* Subscription Card */}
                 {/* Footer Icon */}
             </div>
+            </RoleGuard>
         </>
     )
 }

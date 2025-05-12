@@ -16,10 +16,19 @@ const Layout = ({ children }) => {
 
   if (status === "loading") {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
-        <span className="ml-4 text-lg">Loading...</span>
-      </div>
+      // <div className="flex items-center justify-center min-h-screen">
+      //   <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+      //   <span className="ml-4 text-lg">Loading... back office outer layout.js</span>
+      // </div>
+      <div className="fixed inset-0 bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center min-h-screen z-50">
+        <img
+          src="/navLogo.png"
+          alt="Solutyics Logo"
+          className="w-16 h-16 mb-4"
+        />
+        <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-violetRed mt-2"></div>
+        <p className="text-violetRed font-semibold mt-4">Loading dashboard, please wait...</p>      </div>
+
     );
 
   }
