@@ -254,6 +254,8 @@ model User {
   companyName    String?
 
   role           String    @default("user")    // Add this field
+  permissions    Json?     @default("{}")
+
   // Add this relation field
   purchaseRequestApprovals PurchaseRequestApproval[]
 

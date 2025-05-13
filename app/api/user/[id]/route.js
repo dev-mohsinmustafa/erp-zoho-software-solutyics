@@ -5,11 +5,18 @@ import { NextResponse } from "next/server";
 // For Edit we getData
 export async function GET(request, { params: { id } }) {
     try {
-        // findUnique is used to Fetch single user
         const user = await db.user.findUnique({
             where: {
                 id,
             },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                companyName: true,
+                role: true,
+                permissions: true
+            }
         });
         console.log(user);
         return NextResponse.json(user);
@@ -30,8 +37,9 @@ export async function PUT(request, { params: { id } }) {
             name,
             email,
             companyName,
-            role } = await request.json();
-        // update is used to Update single user
+            role,
+            permissions } = await request.json();
+
         const user = await db.user.update({
             where: {
                 id,
@@ -40,7 +48,8 @@ export async function PUT(request, { params: { id } }) {
                 name,
                 email,
                 companyName,
-                role
+                role,
+                permissions // Add permissions to update
             }
         });
         console.log(user);

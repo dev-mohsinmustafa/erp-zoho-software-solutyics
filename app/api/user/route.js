@@ -26,7 +26,8 @@ export async function POST(request) {
                 email,
                 hashedPassword,
                 companyName,
-                role: email.includes("admin") ? "admin" : "user", // Assign role based on email
+                role: email.includes("admin") ? "admin" : "user",
+                permissions: {} // Initialize empty permissions object
             }
         });
         console.log(newUser);
