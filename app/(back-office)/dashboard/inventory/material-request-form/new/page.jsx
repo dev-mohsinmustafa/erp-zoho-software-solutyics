@@ -3,12 +3,13 @@
 import FormHeader from "@/components/dashboard/FormHeader";
 import SubmitButton from "@/components/formInputs/SubmitButton";
 import TextareaInput from "@/components/formInputs/TextareaInput";
-import TextInput from "@/components/formInputs/TextInput";
 import { makePostRequest } from "@/lib/apiRequest";
 import { useRouter } from "next/navigation";
 import { memo, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useSession } from "next-auth/react";
+import FormTextInput from "@/components/formInputs/FormTextInput";
+import { Trash2 } from "lucide-react";
 
 const NewMaterialRequest = memo(() => {
     const [loading, setLoading] = useState(false);
@@ -25,8 +26,11 @@ const NewMaterialRequest = memo(() => {
         defaultValues: {
             department: "",
             remarks: "",
+            status: "Pending",
+            requestDate: new Date().toISOString().split('T')[0],
+            requestedBy: session?.user?.name || '',
             items: [{ itemId: "", name: "", quantity: "", unit: "" }]
-        }
+        },
     });
 
     const { fields, append, remove } = useFieldArray({
@@ -65,14 +69,80 @@ const NewMaterialRequest = memo(() => {
             <div className="w-full max-w-3xl p-4 bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm sm:p-6 md:p-8 mx-auto my-3">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="grid gap-4 sm:gap-6">
-                        <TextInput
+                        {/* Request Information Section */}
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium leading-6 text-gray-900 mb-2">
+                                    Status
+                                </label>
+                                <div className="inline-flex items-center px-2.5 py-1.5 rounded-md text-sm font-medium bg-yellow-50 text-yellow-800 border border-yellow-200">
+                                    <span className="flex-shrink-0 w-2 h-2 rounded-full bg-yellow-400 mr-2"></span>
+                                    Pending
+                                </div>
+                                <input
+                                    type="hidden"
+                                    {...register("status")}
+                                    value="Pending"
+                                />
+                            </div>
+
+                            {/* Status color reference (hidden in production) */}
+                            <div className="hidden">
+                                {/* Approved Status */}
+                                <div className="inline-flex items-center px-2.5 py-1.5 rounded-md text-sm font-medium bg-green-50 text-green-800 border border-green-200">
+                                    <span className="flex-shrink-0 w-2 h-2 rounded-full bg-green-400 mr-2"></span>
+                                    Approved
+                                </div>
+
+                                {/* Rejected Status */}
+                                <div className="inline-flex items-center px-2.5 py-1.5 rounded-md text-sm font-medium bg-red-50 text-red-800 border border-red-200">
+                                    <span className="flex-shrink-0 w-2 h-2 rounded-full bg-red-400 mr-2"></span>
+                                    Rejected
+                                </div>
+
+                                {/* Processing Status */}
+                                <div className="inline-flex items-center px-2.5 py-1.5 rounded-md text-sm font-medium bg-blue-50 text-blue-800 border border-blue-200">
+                                    <span className="flex-shrink-0 w-2 h-2 rounded-full bg-blue-400 mr-2"></span>
+                                    Processing
+                                </div>
+
+                                {/* Completed Status */}
+                                <div className="inline-flex items-center px-2.5 py-1.5 rounded-md text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
+                                    <span className="flex-shrink-0 w-2 h-2 rounded-full bg-emerald-400 mr-2"></span>
+                                    Completed
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <FormTextInput
+                            label="Request Date"
+                            name="requestDate"
+                            type="date"
+                            register={register}
+                            errors={errors}
+                            disabled
+                            className="w-full"
+                        />
+                        <FormTextInput
+                            label="Requester"
+                            name="requestedBy"
+                            register={register}
+                            errors={errors}
+                            disabled
+                            className="w-full"
+                        />
+                        <FormTextInput
                             label="Department"
                             name="department"
                             register={register}
                             errors={errors}
                             placeholder="e.g. Production"
+                            className="w-full"
                         />
 
+                        {/* Requested Items Section */}
                         <div className="sm:col-span-2">
                             <label className="block text-sm font-medium leading-6 text-gray-900 mb-2">
                                 Requested Items
@@ -80,21 +150,21 @@ const NewMaterialRequest = memo(() => {
                             <div className="space-y-4">
                                 {fields.map((field, index) => (
                                     <div key={field.id} className="grid grid-cols-1 sm:grid-cols-4 gap-3 items-center">
-                                        <TextInput
+                                        <FormTextInput
                                             placeholder="Item ID"
                                             name={`items.${index}.itemId`}
                                             register={register}
                                             errors={errors}
                                             noLabel
                                         />
-                                        <TextInput
+                                        <FormTextInput
                                             placeholder="Item Name"
                                             name={`items.${index}.name`}
                                             register={register}
                                             errors={errors}
                                             noLabel
                                         />
-                                        <TextInput
+                                        <FormTextInput
                                             type="number"
                                             placeholder="Quantity"
                                             name={`items.${index}.quantity`}
@@ -103,7 +173,7 @@ const NewMaterialRequest = memo(() => {
                                             noLabel
                                         />
                                         <div className="flex items-center gap-2">
-                                            <TextInput
+                                            <FormTextInput
                                                 placeholder="Unit"
                                                 name={`items.${index}.unit`}
                                                 register={register}
@@ -115,7 +185,8 @@ const NewMaterialRequest = memo(() => {
                                                 onClick={() => remove(index)}
                                                 className="text-red-600 hover:text-red-800 p-2"
                                             >
-                                                ✕
+                                                {/* ✕ */}
+                                                <Trash2 className="w-5 h-5" />
                                             </button>
                                         </div>
                                     </div>

@@ -568,3 +568,28 @@ model StockAdjustment {
   updatedAt      DateTime  @updatedAt
 }
 
+
+model MaterialRequest {
+    id             String   @id @default(auto()) @map("_id") @db.ObjectId
+    department  String
+    remarks     String?
+    status      String
+    requestDate DateTime
+    requestedBy String
+    items       MaterialRequestItem[]
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
+
+model MaterialRequestItem {
+    id             String   @id @default(auto()) @map("_id") @db.ObjectId
+    materialRequest  MaterialRequest @relation(fields: [materialRequestId], references: [id], onDelete: Cascade)
+    materialRequestId String
+    itemId          String?
+    name            String
+    quantity        Int
+    unit            String
+    createdAt       DateTime       @default(now())
+    updatedAt       DateTime       @updatedAt
+}
+

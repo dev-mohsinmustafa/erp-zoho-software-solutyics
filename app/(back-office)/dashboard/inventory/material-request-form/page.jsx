@@ -1,16 +1,15 @@
-import DataTable from "@/components/dashboard/DataTable";
+import DataTableMRF from "@/components/dashboard/DataTableMRF";
 import FixedHeader from "@/components/dashboard/FixedHeader";
 import { getData } from "@/lib/getData";
 
 const MaterialRequestForm = async () => {
   const materialRequests = await getData("material-requests");
   const columns = [
-    "mrfNo",
+    // "mrfNo",
     "department",
     "requestedBy",
     "requestDate",
     "status",
-    "priority"
   ];
 
   return (
@@ -19,7 +18,7 @@ const MaterialRequestForm = async () => {
       <FixedHeader title="Material Request Form (MRF)" newLink="/dashboard/inventory/material-request-form/new" />
       {/* Table */}
       <div className="my-4 p-8">
-        {/* <DataTable data={materialRequests} columns={columns} resourceTitle={"material-requests"} /> */}
+        <DataTableMRF data={materialRequests} columns={columns} resourceTitle={"material-request-form"} />
       </div>
 
     </div>

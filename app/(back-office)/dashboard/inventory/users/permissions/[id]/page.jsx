@@ -28,7 +28,8 @@ const UserPermissions = ({ params }) => {
         { id: "purchase-requests", title: "Purchase Requests" },
         { id: "approval-requests", title: "Approval Requests" },
         { id: "purchase-orders", title: "Purchase Orders" },
-        { id: "poGoods-received", title: "Goods/Materials Received" }
+        { id: "poGoods-received", title: "Goods/Materials Received" },
+        { id: "material-request-form", title: "Material Request Form (MRF)" }
     ];
 
     useEffect(() => {
