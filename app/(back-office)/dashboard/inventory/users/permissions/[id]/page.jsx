@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { use } from 'react';
 import FormHeader from '@/components/dashboard/FormHeader';
 import LoadingSpinner from '@/components/dashboard/LoadingSpinner';
+import MiniButtonSpinner from '@/components/dashboard/MiniButtonSpinner';
 
 const UserPermissions = ({ params }) => {
     const router = useRouter();
@@ -97,16 +98,17 @@ const UserPermissions = ({ params }) => {
                         className="text-white bg-violetRed hover:bg-violetRed/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center relative"
                     >
                         {loading ? (
-                            <div className="flex items-center justify-center space-x-2">
-                                <img
-                                    src="/navLogo.png"
-                                    alt="Solutyics Logo"
-                                    className="w-5 h-5 mr-2"
-                                />
-                                <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
-                                <span>Saving...</span>
-                            </div>
+                            // <div className="flex items-center justify-center space-x-2">
+                            //     <img
+                            //         src="/navLogo.png"
+                            //         alt="Solutyics Logo"
+                            //         className="w-5 h-5 mr-2"
+                            //     />
+                            //     <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white"></div>
+                            //     <span>Saving...</span>
+                            // </div>
                             // <LoadingSpinner message="Saving" />
+                            <MiniButtonSpinner text="Saving..." />
                         ) : (
                             'Save Permissions'
                         )}
