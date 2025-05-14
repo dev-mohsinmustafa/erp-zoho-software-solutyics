@@ -1,5 +1,4 @@
 "use client"
-import Loading from "@/app/loading";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
@@ -7,6 +6,7 @@ import ThemeLink from "../ui/ThemeLink";
 import { BiMenu } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { generateInitials } from "@/lib/generateInitials";
+import LoadingSpinner from "../dashboard/LoadingSpinner";
 
 const Navbar = () => {
     const { data: session, status } = useSession();
@@ -48,7 +48,7 @@ const Navbar = () => {
     return (
         <>
             {status === "loading" ? (
-                <Loading /> // ✅ Fix: Conditionally render instead of returning early
+                <LoadingSpinner message="Loading Logging in User, please wait..." /> // ✅ Fix: Conditionally render instead of returning early
             ) :
                 (
                     <header className="bg-[#F4F4F4] shadow-md fixed top-0 right-0 w-full left-0 h-16 flex
@@ -145,7 +145,7 @@ const Navbar = () => {
                 </div>
 
             </div>
-            
+
         </>
     )
 }
