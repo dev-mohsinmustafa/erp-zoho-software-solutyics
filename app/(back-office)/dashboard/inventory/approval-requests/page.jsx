@@ -5,6 +5,7 @@ import RoleGuard from "@/app/roleGuard/RoleGuard";
 import DataTablePurchaseRequestApproval from "@/components/dashboard/DataTablePurchaseRequestApproval";
 import DataTablePurchaseRequestApproved from "@/components/dashboard/DataTablePurchaseRequestApproved";
 import FixedHeader from "@/components/dashboard/FixedHeader";
+import LoadingSpinner from "@/components/dashboard/LoadingSpinner";
 import { getData } from "@/lib/getData";
 import { useEffect, useState } from "react";
 
@@ -66,17 +67,7 @@ const ApprovalRequests = () => {
           <h2 className="pt-4 text-xl font-semibold">Pending Approval Requests</h2>
         </div>
         <div className="my-4 p-8 relative">
-          {loading ? (
-            <div className="absolute inset-0 bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center z-50">
-              <img
-                src="/navLogo.png"
-                alt="Solutyics Logo"
-                className="w-16 h-16 mb-4"
-              />
-              <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-violetRed mt-2"></div>
-              <p className="text-violetRed font-semibold mt-4">Loading pending requests, please wait...</p>
-            </div>
-          ) : null}
+          {loading ? <LoadingSpinner message="Loading pending requests, please wait..." /> : null}
           <DataTablePurchaseRequestApproval data={purchaseRequests} columns={columns} resourceTitle="purchase-requests" onStatusUpdate={handleStatusUpdate}
           />
         </div>
@@ -84,17 +75,7 @@ const ApprovalRequests = () => {
           <h2 className="pt-4 text-xl font-semibold">Show Approved Requests </h2>
         </div>
         <div className="my-4 p-8 relative">
-          {loading ? (
-            <div className="absolute inset-0 bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center z-50">
-              <img
-                src="/navLogo.png"
-                alt="Solutyics Logo"
-                className="w-16 h-16 mb-4"
-              />
-              <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-violetRed mt-2"></div>
-              <p className="text-violetRed font-semibold mt-4">Loading approved requests, please wait...</p>
-            </div>
-          ) : null}
+          {loading ? <LoadingSpinner message="Loading approved requests, please wait..." /> : null}
           <DataTablePurchaseRequestApproved data={approvalRequests} columns={columnsApprovalRequests} resourceTitle="approval-requests" />
         </div>
       </div>

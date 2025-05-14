@@ -12,6 +12,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import DataTableSales from "@/components/dashboard/DataTableSales";
 import toast from "react-hot-toast";
+import LoadingSpinner from "@/components/dashboard/LoadingSpinner";
 
 
 
@@ -184,17 +185,7 @@ const Sales = () => {
       </div>
 
       <div className="my-4 p-8 relative">
-      {loading ? (
-          <div className="absolute inset-0 bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center z-50">
-            <img
-              src="/navLogo.png"
-              alt="Solutyics Logo"
-              className="w-16 h-16 mb-4"
-            />
-            <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-violetRed mt-2"></div>
-            <p className="text-violetRed font-semibold mt-4">Loading sales data, please wait...</p>
-          </div>
-        ) : null}
+        {loading ? <LoadingSpinner message="Loading sales data, please wait..." /> : null}
         <DataTableSales data={filteredSales} columns={columns} resourceTitle={"sales"}
           onRefresh={fetchData}
         />
