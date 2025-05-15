@@ -54,6 +54,8 @@ model Item {
   // Relationship with StockAdjustment
   stockAdjustments StockAdjustment[]
 
+  materialRequirements MaterialRequirement[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -138,6 +140,8 @@ model Unit {
   products   Product[]
 
   requestBasedPurchaseOrders RequestBasedPurchaseOrder[]
+
+  materialRequirements MaterialRequirement[]
 
 
 }
@@ -593,3 +597,21 @@ model MaterialRequestItem {
     updatedAt       DateTime       @updatedAt
 }
 
+
+
+
+model MaterialRequirement {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  status      String   @default("Pending")
+  requestDate DateTime @default(now())
+  requestedBy String
+  department  String
+  itemId      String
+  item        Item     @relation(fields: [itemId], references: [id])
+  quantity    Float
+  unitId      String
+  unit        Unit     @relation(fields: [unitId], references: [id])
+  remarks     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

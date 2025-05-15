@@ -3,7 +3,7 @@ import NewMaterialRequest from "../../new/page";
 
 const UpdateMaterialRequest = async ({ params: { id } }) => {
     const TAG = "UpdateMaterialRequest.js"
-    const data = await getData(`material-requests/${id}`);
+    const data = await getData(`material-request-form/${id}`);
     console.log(TAG, "data", data);
 
     return (

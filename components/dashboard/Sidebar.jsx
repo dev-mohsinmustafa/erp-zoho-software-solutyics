@@ -123,6 +123,18 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             adminOnly: true,
             requiredPermission: "material-request-form"
         },
+        {
+            title: "Material Requirement Form",
+            href: "/dashboard/inventory/material-requirement-form",
+            adminOnly: true,
+            requiredPermission: "material-requirement-form"
+        },
+        {
+            title: "Material Requirement Approval",
+            href: "/dashboard/inventory/material-requirement-approval",
+            adminOnly: true,
+            requiredPermission: "material-requirement-approval"
+        },
     ].filter(link => {
         // Show link if:
         // 1. It's not admin-only, or user is admin

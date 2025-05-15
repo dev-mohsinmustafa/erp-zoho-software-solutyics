@@ -3,7 +3,7 @@
 import FormHeader from "@/components/dashboard/FormHeader";
 import SubmitButton from "@/components/formInputs/SubmitButton";
 import TextareaInput from "@/components/formInputs/TextareaInput";
-import { makePostRequest } from "@/lib/apiRequest";
+import { makePostRequest, makePutRequest } from "@/lib/apiRequest";
 import { useRouter } from "next/navigation";
 import { memo, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
@@ -43,20 +43,17 @@ const NewMaterialRequest = memo(() => {
     }
 
     async function onSubmit(data) {
-        const formData = {
+        const formattedData = {
             ...data,
             requestDate: new Date(),
             requestedBy: session?.user?.name,
             status: "Pending"
         };
-        makePostRequest(
-            setLoading,
-            "/api/material-requests",
-            formData,
-            "Material Request",
-            reset,
-            redirect
-        );
+        if (isUpdate) {
+            makePutRequest(setLoading, `/api/material-request-form/${initialData.id}`, formattedData, "Material Request", reset, redirect);
+        } else {
+            makePostRequest(setLoading, "/api/material-request-form", formattedData, "Material Request", reset,);
+        }
     }
 
     return (
@@ -149,30 +146,36 @@ const NewMaterialRequest = memo(() => {
                             </label>
                             <div className="space-y-4">
                                 {fields.map((field, index) => (
-                                    <div key={field.id} className="grid grid-cols-1 sm:grid-cols-4 gap-3 items-center">
-                                        <FormTextInput
-                                            placeholder="Item ID"
-                                            name={`items.${index}.itemId`}
-                                            register={register}
-                                            errors={errors}
-                                            noLabel
-                                        />
-                                        <FormTextInput
-                                            placeholder="Item Name"
-                                            name={`items.${index}.name`}
-                                            register={register}
-                                            errors={errors}
-                                            noLabel
-                                        />
-                                        <FormTextInput
-                                            type="number"
-                                            placeholder="Quantity"
-                                            name={`items.${index}.quantity`}
-                                            register={register}
-                                            errors={errors}
-                                            noLabel
-                                        />
-                                        <div className="flex items-center gap-2">
+                                    <div key={field.id} className="flex flex-col sm:flex-row gap-3 items-center">
+                                        <div className="w-full sm:w-1/5">
+                                            <FormTextInput
+                                                placeholder="Item ID"
+                                                name={`items.${index}.itemId`}
+                                                register={register}
+                                                errors={errors}
+                                                noLabel
+                                            />
+                                        </div>
+                                        <div className="w-full sm:w-1/5">
+                                            <FormTextInput
+                                                placeholder="Item Name"
+                                                name={`items.${index}.name`}
+                                                register={register}
+                                                errors={errors}
+                                                noLabel
+                                            />
+                                        </div>
+                                        <div className="w-full sm:w-1/5">
+                                            <FormTextInput
+                                                type="number"
+                                                placeholder="Quantity"
+                                                name={`items.${index}.quantity`}
+                                                register={register}
+                                                errors={errors}
+                                                noLabel
+                                            />
+                                        </div>
+                                        <div className="w-full sm:w-1/5">
                                             <FormTextInput
                                                 placeholder="Unit"
                                                 name={`items.${index}.unit`}
@@ -180,15 +183,14 @@ const NewMaterialRequest = memo(() => {
                                                 errors={errors}
                                                 noLabel
                                             />
-                                            <button
-                                                type="button"
-                                                onClick={() => remove(index)}
-                                                className="text-red-600 hover:text-red-800 p-2"
-                                            >
-                                                {/* ✕ */}
-                                                <Trash2 className="w-5 h-5" />
-                                            </button>
                                         </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => remove(index)}
+                                            className="text-red-600 hover:text-red-800 p-2 flex-shrink-0"
+                                        >
+                                            <Trash2 className="w-5 h-5" />
+                                        </button>
                                     </div>
                                 ))}
                                 <button
