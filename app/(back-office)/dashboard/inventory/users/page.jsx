@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 // async
 const Users = () => {
   // const users = await getData("user");
-  const columns = ["SrNo", "email", "role", "name", "companyName"];
+  const columns = ["email", "role", "name", "companyName"];
   // "phoneNumber", "address" 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);

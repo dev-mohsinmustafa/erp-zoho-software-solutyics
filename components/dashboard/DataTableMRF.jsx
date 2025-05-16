@@ -65,10 +65,22 @@ const DataTableMRF = memo(({ data = [], columns = [], resourceTitle }) => {
                                                                             new Date(item[columnName]).toLocaleDateString()
                                                                         )
                                                                         :
-                                                                        (
-                                                                            // Otherwise, display the value as is
-                                                                            item[columnName]
-                                                                        )
+                                                                        columnName === "status" ?
+                                                                            (
+                                                                                <span className={`px-2 py-1 rounded text-sm ${item[columnName].toLowerCase() === 'approved'
+                                                                                    ? 'bg-green-100 text-green-800'
+                                                                                    : item[columnName].toLowerCase() === 'rejected'
+                                                                                        ? 'bg-red-100 text-red-800'
+                                                                                        : 'bg-yellow-100 text-yellow-800'
+                                                                                    }`}>
+                                                                                    {item[columnName]}
+                                                                                </span>
+                                                                            )
+                                                                            :
+                                                                            (
+                                                                                // Otherwise, display the value as is
+                                                                                item[columnName]
+                                                                            )
                                                             }
                                                         </td>
                                                     )

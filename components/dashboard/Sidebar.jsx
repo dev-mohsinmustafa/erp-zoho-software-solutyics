@@ -183,93 +183,37 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
     return (
         <>
             <RoleGuard allowedRoles={["admin", "user"]}>
-
-                {/* bg-purpleColor */}
-                {/* <div className='w-60 min-h-screen bg-slate-800 text-slate-50 fixed hidden lg:block z-50'> */}
-                <div className={`${showSidebar ? "w-60 min-h-screen bg-slate-800 text-white fixed lg:block z-50" : "w-60 min-h-screen bg-slate-800 text-white fixed hidden lg:block z-50"}`}>
-                    {/* <div className={`w-60 min-h-screen bg-slate-800 text-white fixed z-50 transition-transform duration-300 ${showSidebar ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}> */}
-
-
-                    {/* Top Part */}
+                <div className={`${showSidebar ? "w-60 min-h-screen bg-violetRed text-white fixed lg:block z-50" : "w-60 min-h-screen bg-violetRed text-white fixed hidden lg:block z-50"}`}>
                     <div className="flex flex-col h-screen">
                         {/* Logo */}
-                        {/* bg-white */}
-                        <div className="flex justify-between flex-shrink-0">
-                            <Link href={"/"} prefetch={false} className="bg-slate-950 flex space-x-2 items-center py-3 px-2 w-full">
-                                <ShoppingCart />
+                        <div className="flex justify-between flex-shrink-0 bg-white">
+                            <Link href={"/"} prefetch={false} className="bg-white/10 flex space-x-2 items-center py-3 px-2 w-full">
+                                <ShoppingCart className="text-[#B4287C]" />
                                 <Image src={"/logo.png"} alt="Company Logo" width={150} height={50} />
-                                {/* <span className='text-xl font-semibold'>Inventory</span> */}
                             </Link>
-                            {/* px-4 */}
-                            <button className='bg-slate-950 px-2 py-3 lg:hidden' onClick={() => setShowSidebar(false)}>
-                                <X className='w-6 h-6 text-white ' />
+                            <button className='bg-white/10 px-2 py-3 lg:hidden' onClick={() => setShowSidebar(false)}>
+                                <X className='w-6 h-6 text-[#B4287C]' />
                             </button>
                         </div>
+
                         {/* Links */}
-                        {/* flex-grow overflow-y-auto scrolling effect */}
                         <nav className='flex flex-col gap-3 px-3 py-6 flex-grow overflow-y-auto'>
-                            <Link href={"/dashboard/home/overview"} prefetch={false} className='flex items-center space-x-2 bg-blue-600 text-slate-50 p-2 rounded-md transition-colors duration-300 hover:bg-gray-200 hover:text-black'>
+                            <Link href={"/dashboard/home/overview"} prefetch={false}
+                                className='flex items-center space-x-2 bg-white/10 text-white p-2 rounded-md transition-colors duration-300 hover:bg-white/40'>
                                 <Home className='w-4 h-4' />
                                 <span>Home</span>
                             </Link>
 
-                            {/* <Collapsible>
-                            <CollapsibleTrigger className='p-2 flex items-center space-x-2'>
-                            <BaggageClaim className='w-4 h-4' />
-                            <span>Inventory</span>
-                            </CollapsibleTrigger>
-                            <CollapsibleContent>
-                                {
-                                    inventoryLinks.map((item, index) => {
-                                        return (
-                                         <CollapsibleLink key={index} item={item}/>
-                                        )
-                                    })
-                                }
-                            </CollapsibleContent>
-                       </Collapsible> */}
-
-                            {/* make Collapsible code in component */}
                             <SidebarDropdownLink items={inventoryLinks} title="Inventory" icon={BaggageClaim} setShowSidebar={setShowSidebar} />
-                            {/* <SidebarDropdownLink items={salesLinks} title="Sales" icon={ShoppingBasket} /> */}
-
-
-
-                            {/* <button className='p-2 flex items-center space-x-2'>
-                            <ShoppingBasket className='w-4 h-4' />
-                            <span>Sales</span>
-                        </button>
-                        <button className='p-2 flex items-center space-x-2'>
-                            <ShoppingBag className='w-4 h-4' />
-                            <span>Purchases</span>
-                        </button> */}
-
-                            {/* <Link href={""} className='p-2 flex items-center space-x-2'>
-                            <Cable className='w-4 h-4' />
-                            <span>Integrations</span>
-                        </Link>
-                        <Link href={""} className='p-2 flex items-center space-x-2'>
-                            <BarChart4 className='w-4 h-4' />
-                            <span>Reports</span>
-                        </Link>
-                        <Link href={""} className='p-2 flex items-center space-x-2'>
-                            <Files className='w-4 h-4' />
-                            <span>Documents</span>
-                        </Link> */}
                         </nav>
                         <SubscriptionCard />
                     </div>
 
-                    {/* Bottom */}
-                    {/* Adding`flex-shrink-0` to the header and footer sections to keep them fixed */}
                     <div className="flex flex-col flex-shrink-0">
-                        <button className="bg-slate-950 flex space-x-2 items-center py-3 px-2 justify-center">
-                            <ChevronLeft />
+                        <button className="bg-white/10 flex space-x-2 items-center py-3 px-2 justify-center">
+                            <ChevronLeft className="text-white" />
                         </button>
                     </div>
-
-                    {/* Subscription Card */}
-                    {/* Footer Icon */}
                 </div>
             </RoleGuard>
         </>

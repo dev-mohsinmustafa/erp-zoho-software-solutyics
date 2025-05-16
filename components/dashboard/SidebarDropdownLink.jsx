@@ -14,18 +14,18 @@ const SidebarDropdownLink = ({ items, title, icon, setShowSidebar }) => {
         <Collapsible>
             <CollapsibleTrigger className='flex justify-between items-center  w-full'>
                 <div className="flex p-2 items-center space-x-2">
-                <Icon className='w-4 h-4' />
-                <span>{title}</span>
+                    <Icon className='w-4 h-4' />
+                    <span>{title}</span>
                 </div>
-                <ChevronRight className="w-4 h-4"/>
+                <ChevronRight className="w-4 h-4" />
             </CollapsibleTrigger>
-            <CollapsibleContent 
+            <CollapsibleContent
             // onClick={()=>setShowSidebar(false)}
             >
                 {
                     items.map((item, index) => {
                         return (
-                            <CollapsibleLink key={index} item={item} title={item.title} setShowSidebar={setShowSidebar}/>
+                            <CollapsibleLink key={index} item={item} title={item.title} setShowSidebar={setShowSidebar} />
                         )
                     })
                 }

@@ -29,7 +29,9 @@ const UserPermissions = ({ params }) => {
         { id: "approval-requests", title: "Approval Requests" },
         { id: "purchase-orders", title: "Purchase Orders" },
         { id: "poGoods-received", title: "Goods/Materials Received" },
-        { id: "material-request-form", title: "Material Request Form (MRF)" }
+        { id: "material-request-form", title: "Material Request Form (MRF)" },
+        { id: "material-requirement-form", title: "Material Requirement Form (MRF)" },
+        { id: "material-requirement-approval", title: "Material Requirement Approval" }
     ];
 
     useEffect(() => {
@@ -62,7 +64,7 @@ const UserPermissions = ({ params }) => {
                 })
             });
             if (response.ok) {
-                // router.push('/dashboard/inventory/users');
+                router.push('/dashboard/inventory/users');
             }
         } catch (error) {
             console.error('Error updating permissions:', error);

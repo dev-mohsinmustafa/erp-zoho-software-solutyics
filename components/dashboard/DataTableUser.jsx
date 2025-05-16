@@ -12,24 +12,35 @@ const DataTableUser = memo(({ data = [], columns = [], resourceTitle }) => {
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             {data.length > 0 ? (
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead>
-                        {columns.map((columnName, index) => (
-                            <th key={index} scope="col" className="px-6 py-3">
-                                {columnName}
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" className="px-6 py-3">
+                                Sr. No
                             </th>
-                        ))}
-                        <th scope="col" className="px-6 py-3">Permissions</th>
-                        <th scope="col" className="px-6 py-3">Actions</th>
+                            {
+                                columns.map((columnName, index) => (
+                                    <th key={index} scope="col" className="px-6 py-3">
+                                        {columnName}
+                                    </th>
+                                ))
+                            }
+                            <th scope="col" className="px-6 py-3">Permissions</th>
+                            <th scope="col" className="px-6 py-3">Actions</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {data.map((item, index) => (
                             <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50">
-                                <td className="px-6 py-4">{index + 1}</td>
-                                {columns.map((columnName, colIndex) => (
-                                    <td key={colIndex} className="px-6 py-4">
-                                        {item[columnName]}
-                                    </td>
-                                ))}
+                                <td className="px-6 py-4">
+                                    {index + 1}
+                                </td>
+                                {
+                                    columns.map((columnName, colIndex) => (
+                                        <td key={colIndex} className="px-6 py-4">
+                                            {item[columnName]}
+                                        </td>
+                                    ))
+                                }
                                 <td className="px-6 py-4">
                                     <button
                                         onClick={() => router.push(`/dashboard/inventory/users/permissions/${item.id}`)}
