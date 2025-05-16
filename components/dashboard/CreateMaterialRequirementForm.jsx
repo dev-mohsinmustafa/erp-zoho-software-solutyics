@@ -74,14 +74,24 @@ const CreateMaterialRequirementForm = memo(({ initialData = {}, isUpdate = false
                         <label className="block text-sm font-medium leading-6 text-gray-900 mb-2">
                             Status
                         </label>
-                        <div className="inline-flex items-center px-2.5 py-1.5 rounded-md text-sm font-medium bg-yellow-50 text-yellow-800 border border-yellow-200">
-                            <span className="flex-shrink-0 w-2 h-2 rounded-full bg-yellow-400 mr-2"></span>
-                            Pending
+                        <div className={`inline-flex items-center px-2.5 py-1.5 rounded-md text-sm font-medium 
+                            ${initialData.status?.toLowerCase() === "approved"
+                                ? "bg-green-50 text-green-800 border border-green-200"
+                                : initialData.status?.toLowerCase() === "rejected"
+                                    ? "bg-red-50 text-red-800 border border-red-200"
+                                    : "bg-yellow-50 text-yellow-800 border border-yellow-200"
+                            }`}>
+                            <span className={`flex-shrink-0 w-2 h-2 rounded-full mr-2
+                                 ${initialData.status?.toLowerCase() === "approved"
+                                    ? "bg-green-400" : initialData.status?.toLowerCase() === "rejected"
+                                        ? "bg-red-400" : "bg-yellow-400"
+                                }`}></span>
+                            {initialData.status || Pending}
                         </div>
                         <input
                             type="hidden"
                             {...register("status")}
-                            value="Pending"
+                            value={initialData.status || "Pending"}
                         />
                     </div>
                 </div>

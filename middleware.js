@@ -4,13 +4,14 @@ import { NextResponse } from "next/server";
 // Define admin-only routes
 const adminRoutes = [
   "/dashboard/inventory/warehouse",
-  "/dashboard/inventory/suppliers",
   "/dashboard/inventory/adjustments",
+  "/dashboard/inventory/stock-adjustments",
   "/dashboard/inventory/users",
+  "/dashboard/inventory/suppliers",
   "/dashboard/inventory/approval-requests",
   "/dashboard/inventory/purchase-orders",
   "/dashboard/inventory/poGoods-received",
-  "/dashboard/inventory/stock-adjustments"
+  "/dashboard/inventory/material-requirement-approval",
 ];
 
 export default withAuth(

@@ -54,27 +54,26 @@ const DataTableMaterialRequirementForm = memo(({ data = [], columns = [], resour
                                                                     )
                                                                     :
                                                                     columnName === "status" ?
-                                                                    (
-                                                                        <span className={`px-2 py-1 rounded text-sm ${
-                                                                            item[columnName] === 'Approved' 
-                                                                                ? 'bg-green-100 text-green-800'
-                                                                                : item[columnName] === 'Rejected'
-                                                                                ? 'bg-red-100 text-red-800'
-                                                                                : 'bg-yellow-100 text-yellow-800'
-                                                                        }`}>
-                                                                            {item[columnName]}
-                                                                        </span>
-                                                                    )
-                                                                    :
-                                                                    columnName === "createdAt" || columnName === "updatedAt" || columnName === "saleDate" || columnName === "requestDate"
-                                                                        ?
                                                                         (
-                                                                            new Date(item[columnName]).toLocaleDateString()
+                                                                            <span className={`px-2 py-1 rounded text-sm ${item[columnName] === 'approved'
+                                                                                    ? 'bg-green-100 text-green-800'
+                                                                                    : item[columnName] === 'rejected'
+                                                                                        ? 'bg-red-100 text-red-800'
+                                                                                        : 'bg-yellow-100 text-yellow-800'
+                                                                                }`}>
+                                                                                {item[columnName]}
+                                                                            </span>
                                                                         )
                                                                         :
-                                                                        (
-                                                                            item[columnName]
-                                                                        )
+                                                                        columnName === "createdAt" || columnName === "updatedAt" || columnName === "saleDate" || columnName === "requestDate"
+                                                                            ?
+                                                                            (
+                                                                                new Date(item[columnName]).toLocaleDateString()
+                                                                            )
+                                                                            :
+                                                                            (
+                                                                                item[columnName]
+                                                                            )
                                                             }
                                                         </td>
                                                     )
