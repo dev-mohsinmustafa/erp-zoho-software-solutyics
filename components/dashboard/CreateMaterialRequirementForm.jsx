@@ -47,9 +47,9 @@ const CreateMaterialRequirementForm = memo(({ initialData = {}, isUpdate = false
             status: "Pending"
         };
         if (isUpdate) {
-            makePutRequest(setLoading, `/api/material-requirement-form/${initialData.id}`, formattedData, "Material Requirement", reset, redirect);
+            makePutRequest(setLoading, `/api/inventory/material-requirement-form/${initialData.id}`, formattedData, "Material Requirement", reset, redirect);
         } else {
-            makePostRequest(setLoading, "/api/material-requirement-form", formattedData, "Material Requirement", reset);
+            makePostRequest(setLoading, "/api/inventory/material-requirement-form", formattedData, "Material Requirement", reset);
         }
     }
 
@@ -86,7 +86,7 @@ const CreateMaterialRequirementForm = memo(({ initialData = {}, isUpdate = false
                                     ? "bg-green-400" : initialData.status?.toLowerCase() === "rejected"
                                         ? "bg-red-400" : "bg-yellow-400"
                                 }`}></span>
-                            {initialData.status || Pending}
+                            {initialData.status || "Pending"}
                         </div>
                         <input
                             type="hidden"

@@ -3,7 +3,7 @@ import FixedHeader from "@/components/dashboard/FixedHeader";
 import { getData } from "@/lib/getData";
 
 const MaterialRequestForm = async () => {
-  const materialRequests = await getData("material-request-form");
+  const materialRequests = await getData("inventory/material-request-form");
   const columns = [
     // "mrfNo",
     "department",

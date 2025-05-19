@@ -2,8 +2,8 @@ import DataTableRequestBasedPurchaseOrder from "@/components/dashboard/DataTable
 import FixedHeader from "@/components/dashboard/FixedHeader";
 import { getData } from "@/lib/getData";
 
-const RequestBasedPurchaseOrders =  async() => {
-  const purchaseOrders = await getData("purchase-orders/request-based");
+const RequestBasedPurchaseOrders = async () => {
+  const purchaseOrders = await getData("inventory/purchase-orders/request-based");
   const columns = ["orderBy", "orderDate", "purchaseReceive", "purchaseOrder", "supplier.title", "orderStatus"];
 
 
@@ -17,7 +17,7 @@ const RequestBasedPurchaseOrders =  async() => {
         {/* I need a Table that show all the items */}
         {/* Table */}
         <div className="my-4 p-8">
-          <DataTableRequestBasedPurchaseOrder data={purchaseOrders} columns={columns}  resourceTitle="purchase-orders/request-based" />
+          <DataTableRequestBasedPurchaseOrder data={purchaseOrders} columns={columns} resourceTitle="purchase-orders/request-based" />
         </div>
       </div>
     </>

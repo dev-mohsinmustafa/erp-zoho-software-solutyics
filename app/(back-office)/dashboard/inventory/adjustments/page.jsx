@@ -5,8 +5,8 @@ import { getData } from "@/lib/getData";
 const Adjustments = async () => {
   // const addStockAdjustments = await getData("adjustments/add");
   // const transferStockAdjustments = await getData("adjustments/transfer");
-  const addStockAdjustmentsData = getData("adjustments/add");
-  const transferStockAdjustmentsData = getData("adjustments/transfer");
+  const addStockAdjustmentsData = getData("inventory/adjustments/add");
+  const transferStockAdjustmentsData = getData("inventory/adjustments/transfer");
   // now these can load faster
   const [addStockAdjustments, transferStockAdjustments] = await Promise.all([addStockAdjustmentsData, transferStockAdjustmentsData])
   // Log the results to check data

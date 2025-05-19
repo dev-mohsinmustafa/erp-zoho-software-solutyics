@@ -23,7 +23,7 @@ const DataTablePurchaseOrder = ({ data = [], columns = [], resourceTitle }) => {
         async function fetchPurchases() {
             setLoading(true);
             try {
-                const response = await fetch("/api/purchase-orders");
+                const response = await fetch("/api/inventory/purchase-orders");
                 // console.log("STATUS CHANGE API", response);
 
                 if (!response.ok) throw new Error("Failed to fetch data");

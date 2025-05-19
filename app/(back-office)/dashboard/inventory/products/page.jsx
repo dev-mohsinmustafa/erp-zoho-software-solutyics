@@ -6,7 +6,7 @@ import { getData } from "@/lib/getData";
 // import { useEffect, useState } from "react";
 
 const Products = async () => {
-  const products = await getData("products");
+  const products = await getData("inventory/products");
   // const [products, setProducts] = useState([]);
   // useEffect(() => {
   //   const fetchData = async () => {

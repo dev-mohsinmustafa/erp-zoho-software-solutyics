@@ -3,7 +3,7 @@ import FixedHeader from "@/components/dashboard/FixedHeader";
 import { getData } from "@/lib/getData";
 
 const Units = async () => {
-  const units = await getData("units");
+  const units = await getData("inventory/units");
   const columns = ["title", "abbreviation",];
   return (
     <div>

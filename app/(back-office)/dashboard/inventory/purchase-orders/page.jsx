@@ -5,7 +5,7 @@ import { getData } from "@/lib/getData";
 import RequestBasedPurchaseOrders from "./request-based/page";
 
 const PurchaseOrders = async () => {
-  const purchasesOrder = await getData("purchase-orders");
+  const purchasesOrder = await getData("inventory/purchase-orders");
   const columns = ["orderBy", "orderDate", "purchaseReceive", "purchaseOrder", "supplier.title", "orderStatus"];
   // "category.title", "warehouse.title", "quantity", "description"
 

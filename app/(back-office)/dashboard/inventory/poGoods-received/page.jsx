@@ -26,7 +26,7 @@ const POGoodsReceived = () => {
     async function fetchData() {
       setLoading(true);
       try {
-        const data = await getData("poGoods-received");
+        const data = await getData("inventory/poGoods-received");
         setGoodReceived(data);
         setFilteredGoodReceived(data);
       } catch (error) {

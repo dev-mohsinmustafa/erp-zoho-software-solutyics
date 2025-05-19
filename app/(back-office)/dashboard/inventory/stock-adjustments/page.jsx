@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const StockAdjustments = () => {
-  // const stockAdjustments = await getData("stock-adjustments");
+  // const stockAdjustments = await getData("inventory/stock-adjustments");
   // const columns = [
   //   // "adjustmentNumber",
   //   // "adjustmentType",
@@ -33,7 +33,7 @@ const StockAdjustments = () => {
   async function fetchData() {
     setLoading(true);
     try {
-      const data = await getData("stock-adjustments");
+      const data = await getData("inventory/stock-adjustments");
       console.log("Stock Adjustments Data", data);
       setStockAdjustments(data);
       setFilteredStocks(data);

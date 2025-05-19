@@ -35,8 +35,8 @@ const MaterialRequirementApproval = () => {
         setLoading(true);
         try {
             const [requirementsData, approvalData] = await Promise.all([
-                getData("material-requirement-form"),
-                getData("material-requirement-approval")
+                getData("inventory/material-requirement-form"),
+                getData("inventory/material-requirement-approval")
             ]);
             setMaterialRequirements(requirementsData);
             setApprovedRequirements(approvalData);
@@ -68,7 +68,7 @@ const MaterialRequirementApproval = () => {
                     <DataTableMaterialRequirementApprovalForm
                         data={materialRequirements}
                         columns={columns}
-                        resourceTitle="material-requirement-form"
+                        resourceTitle="inventory/material-requirement-form"
                         onStatusUpdate={handleStatusUpdate}
                     />
                 )}
@@ -83,7 +83,7 @@ const MaterialRequirementApproval = () => {
                     <DataTableMaterialRequirementApprovedForm
                         data={approvedRequirements}
                         columns={columnsApprovedRequests}
-                        resourceTitle="material-requirement-approval"
+                        resourceTitle="inventory/material-requirement-approval"
                     />
                 )}
             </div>

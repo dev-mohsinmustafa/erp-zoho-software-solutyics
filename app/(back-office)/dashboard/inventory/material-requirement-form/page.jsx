@@ -6,7 +6,7 @@ import { Suspense } from "react";
 
 
 const MaterialRequirementFormContent = async () => {
-  const materialRequirements = await getData("material-requirement-form");
+  const materialRequirements = await getData("inventory/material-requirement-form");
   const columns = [
     "department",
     "requestedBy",
@@ -16,7 +16,7 @@ const MaterialRequirementFormContent = async () => {
 
   return (
 
-    <DataTableMaterialRequirementForm data={materialRequirements} columns={columns} resourceTitle={"material-requirement-form"} />
+    <DataTableMaterialRequirementForm data={materialRequirements} columns={columns} resourceTitle={"inventory/material-requirement-form"} />
 
   )
 }

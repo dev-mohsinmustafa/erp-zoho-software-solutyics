@@ -4,8 +4,8 @@ import { getData } from "@/lib/getData";
 
 const NewMaterialRequirement = async ({ initialData = {}, isUpdate = false }) => {
 
-    const itemsData = getData("items");
-    const unitsData = getData("units");
+    const itemsData = getData("inventory/items");
+    const unitsData = getData("inventory/units");
     const [items, units] = await Promise.all([itemsData, unitsData])
     return (
         <div>

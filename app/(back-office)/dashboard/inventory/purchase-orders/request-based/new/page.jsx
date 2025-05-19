@@ -8,12 +8,12 @@ import { getData } from "@/lib/getData";
 const NewRequestBasedPurchaseOrder = async ({ initialData = {}, isUpdate = false }) => {
   const TAG = "NewRequestBasedPurchaseOrder.js"
 
-  const categoriesData = getData("categories");
-  const unitsData = getData("units");
-  const brandsData = getData("brands");
-  const warehousesData = getData("warehouse");
-  const suppliersData = getData("suppliers");
-  const purchaseRequestsData = getData("purchase-requests");
+  const categoriesData = getData("inventory/categories");
+  const unitsData = getData("inventory/units");
+  const brandsData = getData("inventory/brands");
+  const warehousesData = getData("inventory/warehouse");
+  const suppliersData = getData("inventory/suppliers");
+  const purchaseRequestsData = getData("inventory/purchase-requests");
 
 
 
@@ -42,7 +42,7 @@ const NewRequestBasedPurchaseOrder = async ({ initialData = {}, isUpdate = false
         <h2 className="py-4 text-xl font-semibold">Create Request Based PO</h2>
 
         {/* Now remove this form code after creating CreatingForm.jsx component */}
-        <CreateRequestBasedPurchaseOrdersForm categories={categories} units={units} brands={brands} warehouses={warehouses} suppliers={suppliers}  purchaseRequests={purchaseRequests} initialData={initialData} isUpdate={isUpdate} />
+        <CreateRequestBasedPurchaseOrdersForm categories={categories} units={units} brands={brands} warehouses={warehouses} suppliers={suppliers} purchaseRequests={purchaseRequests} initialData={initialData} isUpdate={isUpdate} />
       </div>
 
     </div>

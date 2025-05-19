@@ -4,7 +4,7 @@ import FixedHeader from "@/components/dashboard/FixedHeader";
 import { getData } from "@/lib/getData";
 
 const Suppliers = async () => {
-  const suppliersData = getData("suppliers");
+  const suppliersData = getData("inventory/suppliers");
   const columns = ["title", "phone", "email"];
   // how do i get an array with objects with only the keys title and description 
   // const data = suppliers.map((obj) => {
@@ -14,7 +14,7 @@ const Suppliers = async () => {
   //     email: obj.email,
   //   };
   // })
-  const purchaseOrdersRBData = getData("purchase-orders/request-based");
+  const purchaseOrdersRBData = getData("inventory/purchase-orders/request-based");
   const columnsPurchaseOrderRB = ["orderBy", "orderDate", "purchaseReceive", "purchaseOrder", "supplier.title", "orderStatus"];
   const [suppliers, purchaseOrdersRB,] = await Promise.all([suppliersData, purchaseOrdersRBData,]);
 

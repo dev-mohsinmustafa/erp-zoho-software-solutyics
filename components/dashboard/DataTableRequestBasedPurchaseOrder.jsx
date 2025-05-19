@@ -23,7 +23,7 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
         async function fetchPurchases() {
             setLoading(true);
             try {
-                const response = await fetch("/api/purchase-orders/request-based");
+                const response = await fetch("/api/inventory/purchase-orders/request-based");
                 // console.log("STATUS CHANGE API", response);
 
                 if (!response.ok) throw new Error("Failed to fetch data");
@@ -64,7 +64,7 @@ const DataTableRequestBasedPurchaseOrder = ({ data = [], columns = [], resourceT
         setShowModal(false);
         setLoading(true);
         try {
-            const response = await fetch(`/api/purchase-orders/request-based`, {
+            const response = await fetch(`/api/inventory/purchase-orders/request-based`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

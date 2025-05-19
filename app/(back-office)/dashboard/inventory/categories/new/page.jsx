@@ -21,14 +21,14 @@ const NewCategory = memo(({ initialData = {}, isUpdate = false }) => {
 
   const router = useRouter();
   function redirect() {
-   router.push("/dashboard/inventory/categories"); 
+    router.push("/dashboard/inventory/categories");
   }
   async function onSubmit(data) {
     console.log("Formdata", data);
     if (isUpdate) {
-      makePutRequest(setLoading, `/api/categories/${initialData.id}`, data, "Category", reset, redirect);
-    }else{
-      makePostRequest(setLoading, "/api/categories", data, "Category", reset);
+      makePutRequest(setLoading, `/api/inventory/categories/${initialData.id}`, data, "Category", reset, redirect);
+    } else {
+      makePostRequest(setLoading, "/api/inventory/categories", data, "Category", reset);
     }
   }
 

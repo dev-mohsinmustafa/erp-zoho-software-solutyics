@@ -10,7 +10,7 @@ import { getData } from "@/lib/getData";
 import { useEffect, useState } from "react";
 
 const ApprovalRequests = () => {
-  // const purchaseRequestData =  getData("purchase-requests");
+  // const purchaseRequestData =  getData("inventory/purchase-requests");
   const columns = ["requestedBy", "requestDate", "purchaseOrder", "reference", "description", "status"];
   // "category.title", "warehouse.title", "quantity",
   // const approvalRequestsData =  getData("approval-requests");
@@ -33,8 +33,8 @@ const ApprovalRequests = () => {
     setLoading(true);
     try {
       const [purchaseData, approvalData] = await Promise.all([
-        getData("purchase-requests"),
-        getData("approval-requests")
+        getData("inventory/purchase-requests"),
+        getData("inventory/approval-requests")
       ]);
       setPurchaseRequests(purchaseData);
       setApprovalRequests(approvalData);

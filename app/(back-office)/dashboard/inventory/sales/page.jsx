@@ -29,7 +29,7 @@ const Sales = () => {
   async function fetchData() {
     setLoading(true);
     try {
-      const data = await getData("sales");
+      const data = await getData("inventory/sales");
       console.log("Sales Data", data);
       setSales(data);
       setFilteredSales(data); // Initialize filtered sales with all data

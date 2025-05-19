@@ -116,15 +116,15 @@ const CreateGRNPage = async ({ params, initialData = {}, isUpdate = false }) => 
 
   const { id } = params;
   // const purchaseOrder = await getData(`purchase-orders/${id}`);
-  const purchaseOrderDataId = getData(`purchase-orders/${id}`);
+  const purchaseOrderDataId = getData(`inventory/purchase-orders/${id}`);
 
-  const categoriesData = getData("categories");
-  const unitsData = getData("units");
-  const brandsData = getData("brands");
-  const warehousesData = getData("warehouse");
-  const suppliersData = getData("suppliers");
-  const purchaseRequestsData = getData("purchase-requests");
-  const purchaseOrdersData = getData("purchase-orders");
+  const categoriesData = getData("inventory/categories");
+  const unitsData = getData("inventory/units");
+  const brandsData = getData("inventory/brands");
+  const warehousesData = getData("inventory/warehouse");
+  const suppliersData = getData("inventory/suppliers");
+  const purchaseRequestsData = getData("inventory/purchase-requests");
+  const purchaseOrdersData = getData("inventory/purchase-orders");
 
 
 
@@ -139,7 +139,7 @@ const CreateGRNPage = async ({ params, initialData = {}, isUpdate = false }) => 
 
   // console.log("Fetched Purchase Requests Data:", purchaseRequests); 
   // console.log("Fetched Purchase Orders Data:", purchaseOrders); 
-  console.log("Fetched Purchase Orders Data Id:", purchaseOrdersId); 
+  console.log("Fetched Purchase Orders Data Id:", purchaseOrdersId);
 
 
   return (
@@ -154,7 +154,7 @@ const CreateGRNPage = async ({ params, initialData = {}, isUpdate = false }) => 
 
 
         {/* Now remove this form code after creating CreatingForm.jsx component */}
-        <CreateGoodsReceivedForm categories={categories} units={units} brands={brands} warehouses={warehouses} suppliers={suppliers}  purchaseRequests={purchaseRequests} purchaseOrders={purchaseOrders} purchaseOrdersId={purchaseOrdersId} initialData={initialData} isUpdate={isUpdate} />
+        <CreateGoodsReceivedForm categories={categories} units={units} brands={brands} warehouses={warehouses} suppliers={suppliers} purchaseRequests={purchaseRequests} purchaseOrders={purchaseOrders} purchaseOrdersId={purchaseOrdersId} initialData={initialData} isUpdate={isUpdate} />
       </div>
 
     </div>

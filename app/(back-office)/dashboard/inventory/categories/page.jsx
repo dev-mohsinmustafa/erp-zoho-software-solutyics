@@ -3,7 +3,7 @@ import FixedHeader from "@/components/dashboard/FixedHeader";
 import { getData } from "@/lib/getData";
 
 const Categories = async () => {
-  const categories = await getData("categories");
+  const categories = await getData("inventory/categories");
   const columns = ["title", "description"];
   // how do i get an array with objects with only the keys title and description 
   // const data = categories.map((obj) => {
@@ -20,7 +20,7 @@ const Categories = async () => {
       {/* I need a Table that show all the categories */}
       {/* Table */}
       <div className="my-4 p-8">
-        <DataTable data={categories} columns={columns} resourceTitle={"categories"} />
+        <DataTable data={categories} columns={columns} resourceTitle={"inventory/categories"} />
       </div>
 
     </div>
