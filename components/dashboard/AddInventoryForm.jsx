@@ -54,7 +54,7 @@ const AddInventoryForm = memo(({ items, warehouses, suppliers }) => {
 
   async function onSubmit(data) {
     console.log("Formdata", data);
-    makePostRequest(setLoading, "/api/adjustments/add", data, "Add Stock Adjustment", reset);
+    makePostRequest(setLoading, "/api/inventory/adjustments/add", data, "Add Stock Adjustment", reset);
   }
 
   return (

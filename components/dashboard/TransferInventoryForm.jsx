@@ -44,7 +44,7 @@ const TransferInventoryForm = ({ items, warehouses }) => {
 
   async function onSubmit(data) {
     console.log("Formdata", data);
-    makePostRequest(setLoading, "/api/adjustments/transfer", data, "Transfer Stock Adjustment", reset);
+    makePostRequest(setLoading, "/api/inventory/adjustments/transfer", data, "Transfer Stock Adjustment", reset);
   }
 
   return (

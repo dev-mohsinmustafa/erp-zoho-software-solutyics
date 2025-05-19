@@ -13,22 +13,22 @@ const NewBrand = ({ initialData = {}, isUpdate = false }) => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: initialData,
   });
-  
+
   // For redirecting to page
   const router = useRouter();
   function redirect() {
-   router.push("/dashboard/inventory/brands");
-   // if it not update without refreshing page then use replace
-  //  router.replace("/dashboard/inventory/brands");
+    router.push("/dashboard/inventory/brands");
+    // if it not update without refreshing page then use replace
+    //  router.replace("/dashboard/inventory/brands");
   }
 
   async function onSubmit(data) {
     console.log("Formdata", data);
     if (isUpdate) {
       // Update request
-      makePutRequest(setLoading, `/api/brands/${initialData.id}`, data, "Brand", reset, redirect,);
+      makePutRequest(setLoading, `/api/inventory/brands/${initialData.id}`, data, "Brand", reset, redirect,);
     } else {
-      makePostRequest(setLoading, "/api/brands", data, "Brand", reset);
+      makePostRequest(setLoading, "/api/inventory/brands", data, "Brand", reset);
     }
   }
 

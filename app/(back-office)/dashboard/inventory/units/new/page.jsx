@@ -13,7 +13,7 @@ const NewUnit = ({ initialData = {}, isUpdate = false }) => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: initialData,
   });
-  
+
   // For redirecting to page
   const router = useRouter();
   function redirect() {
@@ -24,9 +24,9 @@ const NewUnit = ({ initialData = {}, isUpdate = false }) => {
     console.log("Formdata", data);
     if (isUpdate) {
       // Update request
-      makePutRequest(setLoading, `/api/units/${initialData.id}`, data, "Unit", reset, redirect,);
+      makePutRequest(setLoading, `/api/inventory/units/${initialData.id}`, data, "Unit", reset, redirect,);
     } else {
-      makePostRequest(setLoading, "/api/units", data, "Unit", reset,);
+      makePostRequest(setLoading, "/api/inventory/units", data, "Unit", reset,);
     }
   }
 

@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const NewWarehouse = ({initialData = {}, isUpdate = false}) => {
+const NewWarehouse = ({ initialData = {}, isUpdate = false }) => {
 
   const selectOptions = [
     {
@@ -43,14 +43,14 @@ const NewWarehouse = ({initialData = {}, isUpdate = false}) => {
     },
   ];
 
-  
+
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: initialData,
   });
-  
+
   const router = useRouter();
-  function redirect(){
+  function redirect() {
     router.push("/dashboard/inventory/warehouse");
   }
 
@@ -58,9 +58,9 @@ const NewWarehouse = ({initialData = {}, isUpdate = false}) => {
     console.log("Formdata", data);
     if (isUpdate) {
       // Update request
-      makePutRequest(setLoading, `/api/warehouse/${initialData.id}`, data, "Warehouse", reset, redirect);
+      makePutRequest(setLoading, `/api/inventory/warehouse/${initialData.id}`, data, "Warehouse", reset, redirect);
     } else {
-      makePostRequest(setLoading, "/api/warehouse", data, "Warehouse", reset);
+      makePostRequest(setLoading, "/api/inventory/warehouse", data, "Warehouse", reset);
     }
   }
 

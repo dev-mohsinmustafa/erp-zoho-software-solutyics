@@ -2,15 +2,15 @@ import AdjustmentForm from "@/components/dashboard/AdjustmentForm";
 import { getData } from "@/lib/getData";
 
 const NewAdjustments = async () => {
-  // const items = await getData("items");
-  // const warehouses = await getData("warehouse");
-  const itemsData =  getData("items");
-  const warehousesData =  getData("warehouse");
+  // const items = await getData("inventory/items");
+  // const warehouses = await getData("inventory/warehouse");
+  const itemsData = getData("inventory/items");
+  const warehousesData = getData("inventory/warehouse");
   // After making relationship schema in addStockAdjustments
-  const suppliersData =  getData("suppliers");
+  const suppliersData = getData("inventory/suppliers");
   const [items, warehouses, suppliers] = await Promise.all([itemsData, warehousesData, suppliersData]);
   return (
-    <AdjustmentForm items={items} warehouses={warehouses} suppliers={suppliers}/>
+    <AdjustmentForm items={items} warehouses={warehouses} suppliers={suppliers} />
   )
 }
 

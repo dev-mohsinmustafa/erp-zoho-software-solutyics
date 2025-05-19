@@ -12,7 +12,7 @@ const Brands = async () => {
       {/* I need a Table that show all the brands */}
       {/* Table */}
       <div className="my-4 p-8">
-        <DataTable data={brands} columns={columns} resourceTitle="brands" />
+        <DataTable data={brands} columns={columns} resourceTitle="inventory/brands" />
       </div>
     </div>
   )

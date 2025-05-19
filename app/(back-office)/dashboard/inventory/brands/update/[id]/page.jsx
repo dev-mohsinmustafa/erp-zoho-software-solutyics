@@ -1,13 +1,13 @@
 import { getData } from "@/lib/getData";
 import NewBrand from "../../new/page";
 
-const UpdateBrand = async({ params: { id } }) => {
+const UpdateBrand = async ({ params: { id } }) => {
     const TAG = "UpdateBrand.js"
-    const data = await getData(`brands/${id}`);
-    console.log(TAG, "data",data);
-     
+    const data = await getData(`inventory/brands/${id}`);
+    console.log(TAG, "data", data);
+
     return (
-        <NewBrand initialData={data} isUpdate={true}/>
+        <NewBrand initialData={data} isUpdate={true} />
     )
 }
 

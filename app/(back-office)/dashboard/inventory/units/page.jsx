@@ -12,7 +12,7 @@ const Units = async () => {
       {/* I need a Table that show all the units */}
       {/* Table */}
       <div className="my-4 p-8">
-        <DataTable data={units} columns={columns} resourceTitle="units" />
+        <DataTable data={units} columns={columns} resourceTitle="inventory/units" />
       </div>
     </div>
   )

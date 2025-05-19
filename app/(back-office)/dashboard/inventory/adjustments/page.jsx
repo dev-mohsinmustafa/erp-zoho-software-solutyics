@@ -23,11 +23,11 @@ const Adjustments = async () => {
       {/* Table */}
       <div className="my-4 p-8">
         <h2 className="py-4 text-xl font-semibold">Stock Increments Adjustments</h2>
-        <DataTable data={addStockAdjustments} columns={columnsAddStockAdjustments} resourceTitle={"adjustments/add"} />
+        <DataTable data={addStockAdjustments} columns={columnsAddStockAdjustments} resourceTitle={"inventory/adjustments/add"} />
       </div>
       <div className="my-4 p-8">
         <h2 className="py-4 text-xl font-semibold">Stock Transfer Adjustments</h2>
-        <DataTable data={transferStockAdjustments} columns={columnsTransferStockAdjustments} resourceTitle={"adjustments/transfer"} />
+        <DataTable data={transferStockAdjustments} columns={columnsTransferStockAdjustments} resourceTitle={"inventory/adjustments/transfer"} />
       </div>
     </div>
   )
