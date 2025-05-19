@@ -7,13 +7,13 @@ import { getData } from '@/lib/getData';
 const Dashboard = async () => {
   // const items = await getData("items");
   // const warehouses = await getData("warehouse") || [];
-  
-  const itemsData =  getData("items");
-  const warehousesData =  getData("warehouse");
+
+  const itemsData = getData("inventory/items");
+  const warehousesData = getData("inventory/warehouse");
   const [items, warehouses] = await Promise.all([itemsData, warehousesData]);
 
 
-  
+
   return (
     <div>
       {/* <DashboardBanner /> */}
@@ -31,9 +31,9 @@ const Dashboard = async () => {
       {/* Safely handle warehouses data */}
       {warehouses?.length > 0 ? (
         warehouses.map((warehouse) => (
-          <CurrentStock 
+          <CurrentStock
             key={warehouse.id} // 👈 Use a unique ID instead of index
-            items={warehouse.items || []} 
+            items={warehouse.items || []}
             title={`Stock in ${warehouse.title}`}
           />
         ))

@@ -5,10 +5,10 @@ import { getData } from '@/lib/getData';
 
 const SalesOverview = async () => {
 
-    const warehousesData = getData("warehouse");
-    const itemsData = getData("items");
-    const categoriesData = getData("categories");
-    const suppliersData = getData("suppliers");
+    const warehousesData = getData("inventory/warehouse");
+    const itemsData = getData("inventory/items");
+    const categoriesData = getData("inventory/categories");
+    const suppliersData = getData("inventory/suppliers");
     // Parallel Fetching
     const [warehouses, items, categories, suppliers] = await Promise.all([warehousesData, itemsData, categoriesData, suppliersData]);
 

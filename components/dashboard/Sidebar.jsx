@@ -1,6 +1,6 @@
 "use client"
 
-import { BaggageClaim, BarChart4, Cable, ChevronLeft, Files, Home, PlusCircle, ShoppingBag, ShoppingBasket, ShoppingCart, X } from 'lucide-react';
+import { BadgeDollarSign, BaggageClaim, BarChart4, Cable, ChevronLeft, DollarSignIcon, Files, Home, PlusCircle, ShoppingBag, ShoppingBasket, ShoppingCart, X } from 'lucide-react';
 import Link from 'next/link';
 import SubscriptionCard from './SubscriptionCard';
 
@@ -146,39 +146,137 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
 
     const salesLinks = [
         {
+            title: "All Sales",
+            href: "/dashboard/sales",
+            requiredPermission: "sales"
+        },
+        {
             title: "Customers",
-            href: "/",
+            href: "/dashboard/sales/customers",
+            requiredPermission: "customers"
         },
         {
             title: "Sales Orders",
-            href: "/",
-        },
-        {
-            title: "Shipments",
-            href: "/",
+            href: "/dashboard/sales/orders",
+            requiredPermission: "sales-orders"
         },
         {
             title: "Invoices",
-            href: "/",
-        },
-        {
-            title: "Sales Receipts",
-            href: "/",
-        },
-        {
-            title: "Payment Received",
-            href: "/",
+            href: "/dashboard/sales/invoices",
+            requiredPermission: "invoices"
         },
         {
             title: "Sales Returns",
-            href: "/",
+            href: "/dashboard/sales/returns",
+            requiredPermission: "sales-returns"
         },
         {
             title: "Credit Notes",
-            href: "/",
+            href: "/dashboard/sales/credit-notes",
+            requiredPermission: "credit-notes"
         },
-    ]
+        // {
+        //     title: "Sales Orders",
+        //     href: "/",
+        // },
+        // {
+        //     title: "Shipments",
+        //     href: "/",
+        // },
+        // {
+        //     title: "Invoices",
+        //     href: "/",
+        // },
+        // {
+        //     title: "Sales Receipts",
+        //     href: "/",
+        // },
+        // {
+        //     title: "Payment Received",
+        //     href: "/",
+        // },
+        // {
+        //     title: "Sales Returns",
+        //     href: "/",
+        // },
+        // {
+        //     title: "Credit Notes",
+        //     href: "/",
+        // },
+    ].filter(link => {
+        return (!link.adminOnly || session?.user?.role === "admin") ||
+            (link.requiredPermission && session?.user?.permissions?.[link.requiredPermission]);
+    });
 
+    const purchaseLinks = [
+        {
+            title: "All Purchases",
+            href: "/dashboard/purchases",
+            requiredPermission: "purchases"
+        },
+        {
+            title: "Purchase Orders",
+            href: "/dashboard/purchases/orders",
+            requiredPermission: "purchase-orders"
+        },
+        {
+            title: "Purchase Returns",
+            href: "/dashboard/purchases/returns",
+            requiredPermission: "purchase-returns"
+        },
+        {
+            title: "Bills",
+            href: "/dashboard/purchases/bills",
+            requiredPermission: "bills"
+        },
+        {
+            title: "Supplier",
+            href: "/dashboard/purchases/suppliers",
+            requiredPermission: "suppliers"
+        }
+    ].filter(link => {
+        return (!link.adminOnly || session?.user?.role === "admin") ||
+            (link.requiredPermission && session?.user?.permissions?.[link.requiredPermission]);
+    });
+
+
+    const accountingLinks = [
+        {
+            title: "All",
+            href: "/dashboard/accounting",
+            requiredPermission: "accounting"
+        },
+        {
+            title: "Chart of Accounts",
+            href: "/dashboard/accounting/chart-of-accounts",
+            requiredPermission: "accounting"
+        },
+        {
+            title: "Journal Entries",
+            href: "/dashboard/accounting/journal-entries",
+            requiredPermission: "accounting"
+        },
+        {
+            title: "General Ledger",
+            href: "/dashboard/accounting/general-ledger",
+            requiredPermission: "accounting"
+        },
+        {
+            title: "Balance Sheet",
+            href: "/dashboard/accounting/balance-sheet",
+            requiredPermission: "accounting"
+        },
+        {
+            title: "Income Statement",
+            href: "/dashboard/accounting/income-statement",
+            requiredPermission: "accounting"
+        },
+        {
+            title: "Cash Flow",
+            href: "/dashboard/accounting/cash-flow",
+            requiredPermission: "accounting"
+        }
+    ];
 
     return (
         <>
@@ -205,6 +303,9 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
                             </Link>
 
                             <SidebarDropdownLink items={inventoryLinks} title="Inventory" icon={BaggageClaim} setShowSidebar={setShowSidebar} />
+                            {/* <SidebarDropdownLink items={accountingLinks} title="Accounting" icon={BarChart4} /> */}
+                            <SidebarDropdownLink items={salesLinks} title="Sales" icon={BadgeDollarSign} setShowSidebar={setShowSidebar} />
+                            <SidebarDropdownLink items={purchaseLinks} title="Purchases" icon={ShoppingCart} setShowSidebar={setShowSidebar} />
                         </nav>
                         <SubscriptionCard />
                     </div>
