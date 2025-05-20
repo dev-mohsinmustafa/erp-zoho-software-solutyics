@@ -7,12 +7,12 @@ import { getData } from "@/lib/getData";
 
 const NewProduct = async ({ initialData = {}, isUpdate = false }) => {
   const TAG = "NewProducts.js"
-  
-  const categoriesData = getData("categories");
-  const unitsData = getData("units");
-  const brandsData = getData("brands");
-  const warehousesData = getData("warehouse");
-  const suppliersData = getData("suppliers");
+
+  const categoriesData = getData("inventory/categories");
+  const unitsData = getData("inventory/units");
+  const brandsData = getData("inventory/brands");
+  const warehousesData = getData("inventory/warehouse");
+  const suppliersData = getData("inventory/suppliers");
 
 
   // instead of this we use 
@@ -22,7 +22,7 @@ const NewProduct = async ({ initialData = {}, isUpdate = false }) => {
     categoriesData, unitsData, brandsData, warehousesData, suppliersData
   ])
 
- 
+
 
   return (
     <div>
@@ -37,7 +37,7 @@ const NewProduct = async ({ initialData = {}, isUpdate = false }) => {
 
         {/* Now remove this form code after creating CreatingForm.jsx component */}
 
-        <CreateProductForm categories={categories} units={units} brands={brands} warehouses={warehouses} suppliers={suppliers} initialData ={initialData} isUpdate = {isUpdate}/>
+        <CreateProductForm categories={categories} units={units} brands={brands} warehouses={warehouses} suppliers={suppliers} initialData={initialData} isUpdate={isUpdate} />
 
 
 

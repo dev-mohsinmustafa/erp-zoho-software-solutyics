@@ -101,9 +101,9 @@ const CreateProductForm = ({ categories, units, brands, suppliers, warehouses, i
     data.imageUrl = imageUrl;
     console.log("Formdata", data);
     if (isUpdate) {
-      makePutRequest(setLoading, `/api/products/${initialData.id}`, data, "Product", reset, redirect);
+      makePutRequest(setLoading, `/api/inventory/products/${initialData.id}`, data, "Product", reset, redirect);
     } else {
-      makePostRequest(setLoading, "/api/products", data, "Product", reset);
+      makePostRequest(setLoading, "/api/inventory/products", data, "Product", reset);
       setImageUrl("");
     }
   }

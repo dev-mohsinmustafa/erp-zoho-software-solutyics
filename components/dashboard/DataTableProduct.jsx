@@ -101,7 +101,7 @@ const DataTableProduct = ({ data = [], columns = [], resourceTitle }) => {
                                             <td className="px-6 py-4 text-right flex items-center space-x-4">
 
                                                 {/* View Button */}
-                                                {/* <Link href={`/dashboard/inventory/${resourceTitle}/view/${item.id}`}
+                                                {/* <Link href={`/dashboard/${resourceTitle}/view/${item.id}`}
                                                     className="font-medium text-green-600 dark:text-green-500 flex items-center space-x-1">
                                                     <Eye className="w-4 h-4" />
                                                     <span>View</span>
@@ -109,7 +109,7 @@ const DataTableProduct = ({ data = [], columns = [], resourceTitle }) => {
 
                                                 {/* Conditionally Render View Button for Sales Only */}
                                                 {resourceTitle === "sales" && (
-                                                    <Link href={`/dashboard/inventory/${resourceTitle}/view/${item.id}`}
+                                                    <Link href={`/dashboard/${resourceTitle}/view/${item.id}`}
                                                         className="font-medium text-green-600 dark:text-green-500 flex items-center space-x-1">
                                                         <Eye className="w-4 h-4" />
                                                         <span>View</span>
@@ -120,7 +120,7 @@ const DataTableProduct = ({ data = [], columns = [], resourceTitle }) => {
                                                 {/* For hiding edit button in adjustments */}
                                                 {
                                                     resourceTitle.includes("adjustments") ? ("") : (
-                                                        <Link href={`/dashboard/inventory/${resourceTitle}/update/${item.id}`}
+                                                        <Link href={`/dashboard/${resourceTitle}/update/${item.id}`}
                                                             className="font-medium text-blue-600 dark:text-blue-500 flex items-center space-x-1">
                                                             <Pencil className="w-4 h-4" />
                                                             <span>Edit</span>

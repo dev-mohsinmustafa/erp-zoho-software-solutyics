@@ -23,7 +23,7 @@ const Products = async () => {
       {/* I need a Table that show all the brands */}
       {/* Table */}
       <div className="my-4 p-8">
-        <DataTableProduct data={products} columns={columns} resourceTitle={"products"} />
+        <DataTableProduct data={products} columns={columns} resourceTitle={"inventory/products"} />
       </div>
     </div>
   )
