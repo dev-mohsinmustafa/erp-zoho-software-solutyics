@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 import FormTextInput from "@/components/formInputs/FormTextInput";
 import { Trash2 } from "lucide-react";
 
-const NewMaterialRequest = memo(() => {
+const NewMaterialRequest = memo(({ initialData = {}, isUpdate = false }) => {
     const [loading, setLoading] = useState(false);
     const { data: session } = useSession();
     const router = useRouter();
@@ -24,12 +24,13 @@ const NewMaterialRequest = memo(() => {
         formState: { errors }
     } = useForm({
         defaultValues: {
-            department: "",
-            remarks: "",
-            status: "Pending",
+            ...initialData,
+            // department: "",
+            // remarks: "",
+            // status: "Pending",
             requestDate: new Date().toISOString().split('T')[0],
-            requestedBy: session?.user?.name || '',
-            items: [{ itemId: "", name: "", quantity: "", unit: "" }]
+            // requestedBy: session?.user?.name || '',
+            // items: [{ itemId: "", name: "", quantity: "", unit: "" }]
         },
     });
 
@@ -50,9 +51,9 @@ const NewMaterialRequest = memo(() => {
             status: "Pending"
         };
         if (isUpdate) {
-            makePutRequest(setLoading, `/api/material-request-form/${initialData.id}`, formattedData, "Material Request", reset, redirect);
+            makePutRequest(setLoading, `/api/inventory/material-request-form/${initialData.id}`, formattedData, "Material Request", reset, redirect);
         } else {
-            makePostRequest(setLoading, "/api/material-request-form", formattedData, "Material Request", reset,);
+            makePostRequest(setLoading, "/api/inventory/material-request-form", formattedData, "Material Request", reset,);
         }
     }
 
@@ -213,7 +214,7 @@ const NewMaterialRequest = memo(() => {
                     </div>
 
                     <SubmitButton
-                        title="Submit Material Request"
+                        title={isUpdate ? "Update Material Request" : "Submit Material Request"}
                         isLoading={loading}
                     />
                 </form>

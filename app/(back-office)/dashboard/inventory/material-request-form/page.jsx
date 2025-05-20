@@ -18,7 +18,7 @@ const MaterialRequestForm = async () => {
       <FixedHeader title="Material Request Form (MRF)" newLink="/dashboard/inventory/material-request-form/new" />
       {/* Table */}
       <div className="my-4 p-8">
-        <DataTableMRF data={materialRequests} columns={columns} resourceTitle={"material-request-form"} />
+        <DataTableMRF data={materialRequests} columns={columns} resourceTitle={"inventory/material-request-form"} />
       </div>
 
     </div>
