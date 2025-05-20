@@ -10,12 +10,12 @@ const NewPOGoodsReceived = async ({ initialData = {}, isUpdate = false }) => {
 
 
 
-  const categoriesData = getData("categories");
-  const unitsData = getData("units");
-  const brandsData = getData("brands");
-  const warehousesData = getData("warehouse");
-  const suppliersData = getData("suppliers");
-  const purchaseOrdersRequestBasedData = getData("purchase-orders/request-based");
+  const categoriesData = getData("inventory/categories");
+  const unitsData = getData("inventory/units");
+  const brandsData = getData("inventory/brands");
+  const warehousesData = getData("inventory/warehouse");
+  const suppliersData = getData("inventory/suppliers");
+  const purchaseOrdersRequestBasedData = getData("inventory/purchase-orders/request-based");
 
 
 

@@ -59,16 +59,16 @@ const CreatePOGoodsReceivedFormRequestBasedPurchaseOrder = ({ categories, units,
             purchaseRequestId: selectedOrder?.purchaseRequestId
         };
         if (isUpdate) {
-            makePutRequest(setLoading, `/api/poGoods-received/${initialData.id}`, formattedData, "Request Based PO Goods Received", reset, redirect);
+            makePutRequest(setLoading, `/api/inventory/poGoods-received/${initialData.id}`, formattedData, "Request Based PO Goods Received", reset, redirect);
         } else {
             // Update available POs after successful submission
             try {
-                await makePostRequest(setLoading, "/api/poGoods-received", formattedData, "Request Based PO Goods Received", reset);
+                await makePostRequest(setLoading, "/api/inventory/poGoods-received", formattedData, "Request Based PO Goods Received", reset);
                 setAvailablePOs(prev => prev.filter(po => po.id !== data.purchaseOrderId));
                 setSelectedOrder(null);
                 reset(); // Clear the form
 
-            }catch(error){
+            } catch (error) {
                 console.error("Error submitting form:", error);
 
             }

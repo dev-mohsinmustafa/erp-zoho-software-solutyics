@@ -171,7 +171,7 @@ const POGoodsReceived = () => {
         <DataTablePOGoodReceivedRequestBasedPurchaseOrder
           data={filteredGoodReceived}
           columns={columns}
-          resourceTitle="poGoods-received"
+          resourceTitle="inventory/poGoods-received"
         />
       </div>
     </div>
