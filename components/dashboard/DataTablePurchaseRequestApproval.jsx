@@ -210,7 +210,11 @@ const DataTablePurchaseRequestApproval = ({ data = [], columns = [], resourceTit
                                                                                     ? 'bg-green-100 text-green-800'
                                                                                     : item[columnName].toLowerCase() === 'rejected'
                                                                                         ? 'bg-red-100 text-red-800'
-                                                                                        : 'bg-yellow-100 text-yellow-800'
+                                                                                        : item[columnName].toLowerCase() === 'open'
+                                                                                            ? 'bg-purple-100 text-purple-800'
+                                                                                            : item[columnName].toLowerCase() === 'received'
+                                                                                                ? 'bg-cyan-100 text-cyan-800'
+                                                                                                : 'bg-yellow-100 text-yellow-800'
                                                                                     }`}>
                                                                                     {item[columnName]}
                                                                                 </span>

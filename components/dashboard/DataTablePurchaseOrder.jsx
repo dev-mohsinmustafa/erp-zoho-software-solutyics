@@ -64,7 +64,7 @@ const DataTablePurchaseOrder = ({ data = [], columns = [], resourceTitle }) => {
         setShowModal(false);
         setLoading(true);
         try {
-            const response = await fetch(`/api/purchase-orders`, {
+            const response = await fetch(`/api/inventory/purchase-orders`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -157,10 +157,26 @@ const DataTablePurchaseOrder = ({ data = [], columns = [], resourceTitle }) => {
                                                                             new Date(item[columnName]).toLocaleDateString()
                                                                         )
                                                                         :
-                                                                        (
-                                                                            // Otherwise, display the value as is
-                                                                            item[columnName]
-                                                                        )
+                                                                        columnName === "orderStatus" ?
+                                                                            (
+                                                                                <span className={`px-2 py-1 rounded text-sm ${item[columnName].toLowerCase() === 'approved'
+                                                                                    ? 'bg-green-100 text-green-800'
+                                                                                    : item[columnName].toLowerCase() === 'rejected'
+                                                                                        ? 'bg-red-100 text-red-800'
+                                                                                        : item[columnName].toLowerCase() === 'open'
+                                                                                            ? 'bg-purple-100 text-purple-800'
+                                                                                            : item[columnName].toLowerCase() === 'received'
+                                                                                                ? 'bg-cyan-100 text-cyan-800'
+                                                                                                : 'bg-yellow-100 text-yellow-800'
+                                                                                    }`}>
+                                                                                    {item[columnName]}
+                                                                                </span>
+                                                                            )
+                                                                            :
+                                                                            (
+                                                                                // Otherwise, display the value as is
+                                                                                item[columnName]
+                                                                            )
                                                             }
                                                         </td>
                                                     )
@@ -191,7 +207,7 @@ const DataTablePurchaseOrder = ({ data = [], columns = [], resourceTitle }) => {
                                             <td className="px-6 py-4 text-right flex items-center space-x-4">
 
                                                 {/* View Button */}
-                                                {/* <Link href={`/dashboard/inventory/${resourceTitle}/view/${item.id}`}
+                                                {/* <Link href={`/dashboard/${resourceTitle}/view/${item.id}`}
                                                     className="font-medium text-green-600 dark:text-green-500 flex items-center space-x-1">
                                                     <Eye className="w-4 h-4" />
                                                     <span>View</span>
@@ -199,14 +215,14 @@ const DataTablePurchaseOrder = ({ data = [], columns = [], resourceTitle }) => {
 
                                                 {/* Conditionally Render View Button for Sales Only */}
                                                 {resourceTitle === "sales" && (
-                                                    <Link href={`/dashboard/inventory/${resourceTitle}/view/${item.id}`}
+                                                    <Link href={`/dashboard/${resourceTitle}/view/${item.id}`}
                                                         className="font-medium text-green-600 dark:text-green-500 flex items-center space-x-1">
                                                         <Eye className="w-4 h-4" />
                                                         <span>View</span>
                                                     </Link>
                                                 )}
                                                 {/* {["sales", "purchase-requests"].includes(resourceTitle) && (
-                                                    <Link href={`/dashboard/inventory/${resourceTitle}/view/${item.id}`}
+                                                    <Link href={`/dashboard/${resourceTitle}/view/${item.id}`}
                                                         className="font-medium text-green-600 dark:text-green-500 flex items-center space-x-1">
                                                         <Eye className="w-4 h-4" />
                                                         <span>View</span>
@@ -218,7 +234,7 @@ const DataTablePurchaseOrder = ({ data = [], columns = [], resourceTitle }) => {
                                                 {/* For hiding edit button in adjustments */}
                                                 {
                                                     !resourceTitle.includes("adjustments") ? ("") : (
-                                                        <Link href={`/dashboard/inventory/${resourceTitle}/update/${item.id}`}
+                                                        <Link href={`/dashboard/${resourceTitle}/update/${item.id}`}
                                                             className="font-medium text-blue-600 dark:text-blue-500 flex items-center space-x-1">
                                                             <Pencil className="w-4 h-4" />
                                                             <span>Edit</span>
@@ -228,7 +244,7 @@ const DataTablePurchaseOrder = ({ data = [], columns = [], resourceTitle }) => {
 
                                                 {/* ✅ New Create GRN Button (Only for purchase orders with 'open' status) */}
                                                 {resourceTitle === "purchase-orders" && item.orderStatus === "open" && (
-                                                    <Link href={`/dashboard/inventory/${resourceTitle}/create-grn/${item.id}`}
+                                                    <Link href={`/dashboard/${resourceTitle}/create-grn/${item.id}`}
                                                         className="font-medium text-purple-600 dark:text-purple-500 flex items-center space-x-1 bg-purple-100 px-3 py-2 rounded-md hover:bg-purple-200 transition duration-200">
                                                         <span>Create GRN</span>
                                                     </Link>

@@ -82,9 +82,9 @@ const CreatePurchaseOrdersForm = ({ categories, units, brands, suppliers, wareho
             goodsStatus: data.goodsStatus, // ✅ Include status in submission
         };
         if (isUpdate) {
-            makePutRequest(setLoading, `/api/purchase-orders/${initialData.id}`, formattedData, "Purchase Order", reset, redirect);
+            makePutRequest(setLoading, `/api/inventory/purchase-orders/${initialData.id}`, formattedData, "Purchase Order", reset, redirect);
         } else {
-            makePostRequest(setLoading, "/api/purchase-orders", formattedData, "Purchase Order", reset);
+            makePostRequest(setLoading, "/api/inventory/purchase-orders", formattedData, "Purchase Order", reset);
         }
     }
 
@@ -113,79 +113,79 @@ const CreatePurchaseOrdersForm = ({ categories, units, brands, suppliers, wareho
                 {/* Show fields only when a supplier is selected */}
                 {/* {selectedSupplier && (
                     <> */}
-                        <SelectInput label="Select the Purchase Request Order" name="purchaseRequestId" register={register} errors={errors}
-                            className="w-full" options={
-                                [
-                                    { id: "", title: "Select Purchase Request" }, // Add default option
-                                ...purchaseRequests.map((req) => ({
+                <SelectInput label="Select the Purchase Request Order" name="purchaseRequestId" register={register} errors={errors}
+                    className="w-full" options={
+                        [
+                            { id: "", title: "Select Purchase Request" }, // Add default option
+                            ...purchaseRequests.map((req) => ({
                                 id: req.id,
                                 title: req.purchaseOrder
                             }))
                         ]
-                            } />
+                    } />
 
-                        {/* Show fields only if a purchase request is selected */}
+                {/* Show fields only if a purchase request is selected */}
 
-                        <TextInput label="Purchase Receive#" name="purchaseReceive" register={register} errors={errors}
-                            className="w-full"
-                        />
-                        {/* <TextInput label="Reference#" name="reference" register={register} errors={errors}
+                <TextInput label="Purchase Receive#" name="purchaseReceive" register={register} errors={errors}
+                    className="w-full"
+                />
+                {/* <TextInput label="Reference#" name="reference" register={register} errors={errors}
                     className="w-full"
                 /> */}
 
-                        {/* Title */}
+                {/* Title */}
 
-                        {/* Order Received Date */}
-                        <TextInput
-                            label="Order Date"
-                            name="orderDate"
-                            register={register}
-                            errors={errors}
-                            className="w-full"
-                            type="date"
-                        />
-                        {/* Order Received By */}
-                        <TextInput label="Order By" name="title" register={register} errors={errors}
-                            className="w-full"
-                        />
-
-
-                        {/* Select */}
-                        <SelectInput
-                            label="Order Status"
-                            name="orderStatus"
-                            register={register}
-                            errors={errors}
-                            className="w-full"
-                            options={status}
-                        />
-
-                        <SelectInput label="Select the Item Category" name="categoryId" register={register} errors={errors}
-                            className="w-full" options={categories} />
+                {/* Order Received Date */}
+                <TextInput
+                    label="Order Date"
+                    name="orderDate"
+                    register={register}
+                    errors={errors}
+                    className="w-full"
+                    type="date"
+                />
+                {/* Order Received By */}
+                <TextInput label="Order By" name="title" register={register} errors={errors}
+                    className="w-full"
+                />
 
 
+                {/* Select */}
+                <SelectInput
+                    label="Order Status"
+                    name="orderStatus"
+                    register={register}
+                    errors={errors}
+                    className="w-full"
+                    options={status}
+                />
 
-                        <TextInput label="Item Quantity" name="qty" register={register} errors={errors} className="w-full" />
-                        <SelectInput label="Select the Item Unit" name="unitId" register={register} errors={errors}
-                            className="w-full" options={units} />
-                        <SelectInput label="Select the Item Brand" name="brandId" register={register} errors={errors}
-                            className="w-full" options={brands} />
+                <SelectInput label="Select the Item Category" name="categoryId" register={register} errors={errors}
+                    className="w-full" options={categories} />
 
 
 
-
-                        <SelectInput label="Select the Item Warehouse" name="warehouseId" register={register} errors={errors}
-                            className="w-full" options={warehouses} />
+                <TextInput label="Item Quantity" name="qty" register={register} errors={errors} className="w-full" />
+                <SelectInput label="Select the Item Unit" name="unitId" register={register} errors={errors}
+                    className="w-full" options={units} />
+                <SelectInput label="Select the Item Brand" name="brandId" register={register} errors={errors}
+                    className="w-full" options={brands} />
 
 
 
 
+                <SelectInput label="Select the Item Warehouse" name="warehouseId" register={register} errors={errors}
+                    className="w-full" options={warehouses} />
 
-                        <TextareaInput label="Goods Received Remarks" name="description" register={register} errors={errors} />
-                        {/* <TextareaInput label="Item Notes" name="notes" register={register} errors={errors} /> */}
 
 
-                    {/* </> */}
+
+
+                <TextareaInput label="Goods Received Remarks" name="description" register={register} errors={errors} />
+                {/* <TextareaInput label="Item Notes" name="notes" register={register} errors={errors} /> */}
+
+
+                {/* </> */}
                 {/* )} */}
 
             </div>

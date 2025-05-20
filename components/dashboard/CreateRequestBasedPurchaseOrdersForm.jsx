@@ -88,9 +88,9 @@ const CreateRequestBasedPurchaseOrdersForm = ({ categories, units, brands, suppl
             goodsStatus: data.goodsStatus, // ✅ Include status in submission
         };
         if (isUpdate) {
-            makePutRequest(setLoading, `/api/purchase-orders/${initialData.id}`, formattedData, "Purchase Order", reset, redirect);
+            makePutRequest(setLoading, `/api/inventory/purchase-orders/${initialData.id}`, formattedData, "Purchase Order", reset, redirect);
         } else {
-            makePostRequest(setLoading, "/api/purchase-orders/request-based", formattedData, "Purchase Order", reset);
+            makePostRequest(setLoading, "/api/inventory/purchase-orders/request-based", formattedData, "Purchase Order", reset);
             setAvailablePRs(prev => prev.filter(pr => pr.id !== data.purchaseRequestId));
             setSelectedRequest(null);
         }

@@ -17,7 +17,7 @@ const RequestBasedPurchaseOrders = async () => {
         {/* I need a Table that show all the items */}
         {/* Table */}
         <div className="my-4 p-8">
-          <DataTableRequestBasedPurchaseOrder data={purchaseOrders} columns={columns} resourceTitle="purchase-orders/request-based" />
+          <DataTableRequestBasedPurchaseOrder data={purchaseOrders} columns={columns} resourceTitle="inventory/purchase-orders/request-based" />
         </div>
       </div>
     </>
