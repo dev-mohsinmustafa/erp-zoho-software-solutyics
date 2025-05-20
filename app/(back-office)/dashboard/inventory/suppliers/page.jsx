@@ -25,11 +25,11 @@ const Suppliers = async () => {
       {/* I need a Table that show all the suppliers */}
       {/* Table */}
       <div className="my-4 p-8">
-        <DataTable data={suppliers} columns={columns} resourceTitle={"suppliers"} />
+        <DataTable data={suppliers} columns={columns} resourceTitle={"inventory/suppliers"} />
       </div>
       <div className="my-4 p-8">
         <h2 className="py-4 text-xl font-semibold">Show All Purchase Orders </h2>
-        <DataTableRequestBasedPurchaseOrder data={purchaseOrdersRB} columns={columnsPurchaseOrderRB} resourceTitle={"purchase-orders/request-based"} />
+        {/* <DataTableRequestBasedPurchaseOrder data={purchaseOrdersRB} columns={columnsPurchaseOrderRB} resourceTitle={"inventory/purchase-orders/request-based"} /> */}
       </div>
     </div>
   )

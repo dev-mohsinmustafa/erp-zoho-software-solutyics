@@ -25,9 +25,9 @@ const NewSupplier = ({ initialData = {}, isUpdate = false }) => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: initialData,
   });
-  
+
   const router = useRouter();
-  function redirect(){
+  function redirect() {
     router.push("/dashboard/inventory/suppliers");
   }
   async function onSubmit(data) {
@@ -35,9 +35,9 @@ const NewSupplier = ({ initialData = {}, isUpdate = false }) => {
     //  make a function apiRequest in lib to reuse code
     // api/suppliers this is folder name
     if (isUpdate) {
-      makePutRequest(setLoading, `/api/suppliers/${initialData.id}`, data, "Supplier", reset, redirect);
-    }else{
-      makePostRequest(setLoading, "/api/suppliers", data, "Supplier", reset);
+      makePutRequest(setLoading, `/api/inventory/suppliers/${initialData.id}`, data, "Supplier", reset, redirect);
+    } else {
+      makePostRequest(setLoading, "/api/inventory/suppliers", data, "Supplier", reset);
     }
 
     // setLoading(true);
@@ -103,7 +103,7 @@ const NewSupplier = ({ initialData = {}, isUpdate = false }) => {
           </div>
 
           {/* Submit Button */}
-          <SubmitButton title={isUpdate? "Updated Supplier" : "New Supplier"} isLoading={loading} />
+          <SubmitButton title={isUpdate ? "Updated Supplier" : "New Supplier"} isLoading={loading} />
 
         </form>
       </div>
