@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 // suppliers,
-const CreatePurchaseRequestsForm = ({ categories, units, brands, warehouses, initialData = {}, isUpdate = false }) => {
+const CreatePurchaseRequestsForm = ({ categories, units, brands,  warehouses, initialData = {}, isUpdate = false }) => {
     console.log("Initial Data", initialData);
 
     const status = [
@@ -48,9 +48,9 @@ const CreatePurchaseRequestsForm = ({ categories, units, brands, warehouses, ini
             status: data.status, // ✅ Include status in submission
         };
         if (isUpdate) {
-            makePutRequest(setLoading, `/api/inventory/purchase-requests/${initialData.id}`, formattedData, "Purchase Request", reset, redirect);
+            makePutRequest(setLoading, `/api/purchase-requests/${initialData.id}`, formattedData, "Purchase Request", reset, redirect);
         } else {
-            makePostRequest(setLoading, "/api/inventory/purchase-requests", formattedData, "Purchase Request", reset);
+            makePostRequest(setLoading, "/api/purchase-requests", formattedData, "Purchase Request", reset);
         }
     }
 

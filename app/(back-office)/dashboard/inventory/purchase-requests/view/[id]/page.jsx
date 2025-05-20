@@ -24,7 +24,7 @@ const ViewPurchaseRequest = () => {
             console.log("Fetching purchase request for ID:", id); // ✅ Log API fetch attempt
 
             try {
-                const data = await getData(`inventory/purchase-requests/${id}`);
+                const data = await getData(`purchase-requests/${id}`);
                 console.log("Fetched Purchase Request Data:", data); // ✅ Log API response
 
                 setPurchaseRequest(data);
@@ -71,22 +71,22 @@ const ViewPurchaseRequest = () => {
     return (
         <div className="p-8 bg-gray-100 min-h-screen">
 
-
+        
             <FixedHeader title="Purchase Request Details" newLink="/dashboard/inventory/purchase-requests/new" />
 
             <div className="bg-white p-6 shadow-md rounded-lg">
-                {/* <div className="max-w-3xl mx-auto bg-white p-6 shadow-lg rounded-lg"> */}
+            {/* <div className="max-w-3xl mx-auto bg-white p-6 shadow-lg rounded-lg"> */}
 
                 {/* ✅ Solutyics Logo */}
                 <div className="flex justify-center mb-6">
-                    <Image
-                        src="/logo.png" // ✅ Replace with your logo path
-                        alt="Solutyics Logo"
-                        width={150}
-                        height={50}
-                        className="object-contain"
-                    />
-                </div>
+                <Image
+                    src="/logo.png" // ✅ Replace with your logo path
+                    alt="Solutyics Logo"
+                    width={150}
+                    height={50}
+                    className="object-contain"
+                />
+            </div>
 
                 <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Purchase Request Details</h1>
 
