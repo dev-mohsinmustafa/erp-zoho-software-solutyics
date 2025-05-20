@@ -68,7 +68,7 @@ const ApprovalRequests = () => {
         </div>
         <div className="my-4 p-8 relative">
           {loading ? <LoadingSpinner message="Loading pending requests, please wait..." /> : null}
-          <DataTablePurchaseRequestApproval data={purchaseRequests} columns={columns} resourceTitle="purchase-requests" onStatusUpdate={handleStatusUpdate}
+          <DataTablePurchaseRequestApproval data={purchaseRequests} columns={columns} resourceTitle="inventory/purchase-requests" onStatusUpdate={handleStatusUpdate}
           />
         </div>
         <div className="px-8">
@@ -76,7 +76,7 @@ const ApprovalRequests = () => {
         </div>
         <div className="my-4 p-8 relative">
           {loading ? <LoadingSpinner message="Loading approved requests, please wait..." /> : null}
-          <DataTablePurchaseRequestApproved data={approvalRequests} columns={columnsApprovalRequests} resourceTitle="approval-requests" />
+          <DataTablePurchaseRequestApproved data={approvalRequests} columns={columnsApprovalRequests} resourceTitle="inventory/approval-requests" />
         </div>
       </div>
     </RoleGuard>
