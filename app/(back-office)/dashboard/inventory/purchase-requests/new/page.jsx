@@ -8,13 +8,13 @@ import { getData } from "@/lib/getData";
 const NewPurchaseRequest = async ({ initialData = {}, isUpdate = false }) => {
   const TAG = "NewPurchaseRequest.js"
 
-  const categoriesData = getData("categories");
-  const unitsData = getData("units");
-  const brandsData = getData("brands");
-  const warehousesData = getData("warehouse");
-  // const suppliersData = getData("suppliers");
+  const categoriesData = getData("inventory/categories");
+  const unitsData = getData("inventory/units");
+  const brandsData = getData("inventory/brands");
+  const warehousesData = getData("inventory/warehouse");
+  // const suppliersData = getData("inventory/suppliers");
 
-  
+
 
 
   // instead of this we use 
@@ -22,7 +22,7 @@ const NewPurchaseRequest = async ({ initialData = {}, isUpdate = false }) => {
   // 2- 
   // suppliersData
   const [categories, units, brands, warehouses, suppliers] = await Promise.all([
-    categoriesData, unitsData, brandsData, warehousesData, 
+    categoriesData, unitsData, brandsData, warehousesData,
   ])
 
 
@@ -40,10 +40,10 @@ const NewPurchaseRequest = async ({ initialData = {}, isUpdate = false }) => {
 
         {/* Now remove this form code after creating CreatingForm.jsx component */}
 
-        <CreatePurchaseRequestsForm categories={categories} units={units} brands={brands} warehouses={warehouses}  initialData ={initialData} isUpdate = {isUpdate}/>
+        <CreatePurchaseRequestsForm categories={categories} units={units} brands={brands} warehouses={warehouses} initialData={initialData} isUpdate={isUpdate} />
         {/* suppliers={suppliers} */}
 
-        
+
       </div>
 
     </div>
