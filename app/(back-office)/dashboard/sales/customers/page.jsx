@@ -3,7 +3,7 @@ import FixedHeader from "@/components/dashboard/FixedHeader";
 import { getData } from "@/lib/getData";
 
 const Customers = async () => {
-    const customersData = getData("customers");
+    const customersData = getData("sales/customers");
     const columns = ["customerCode", "name", "phone", "email", "address", "status"];
 
     const customerTypes = [
@@ -25,7 +25,7 @@ const Customers = async () => {
                 <DataTable
                     data={customers}
                     columns={columns}
-                    resourceTitle={"customers"}
+                    resourceTitle={"sales/customers"}
                     statusOptions={customerStatus}
                     typeOptions={customerTypes}
                 />
