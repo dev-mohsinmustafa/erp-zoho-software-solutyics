@@ -10,7 +10,7 @@ const PurchaseRequests = async () => {
   return (
     <div>
       {/* Fixed Header */}
-      <FixedHeader title="Purchase Request Management" newLink="/dashboard/inventory/purchase-requests/new" />
+      <FixedHeader title="Mohsin Purchase Request Management" newLink="/dashboard/inventory/purchase-requests/new" />
       {/* I need a Table that show all the items */}
       {/* Table */}
       <div className="my-4 p-8">
