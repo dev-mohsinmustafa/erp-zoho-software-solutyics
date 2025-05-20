@@ -150,9 +150,9 @@ const CreateStockAdjustmentForm = ({ items, warehouses, initialData = {}, isUpda
                 quantity: parseFloat(data.quantity)
             };
             if (isUpdate) {
-                makePutRequest(setLoading, `/api/stock-adjustments/${initialData.id}`, formattedData, 'Stock Adjustment', reset, redirect);
+                makePutRequest(setLoading, `/api/inventory/stock-adjustments/${initialData.id}`, formattedData, 'Stock Adjustment', reset, redirect);
             } else {
-                makePostRequest(setLoading, '/api/stock-adjustments', formattedData, 'Stock Adjustment', reset);
+                makePostRequest(setLoading, '/api/inventory/stock-adjustments', formattedData, 'Stock Adjustment', reset);
             }
             //
         }

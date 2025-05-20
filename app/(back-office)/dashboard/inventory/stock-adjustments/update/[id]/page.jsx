@@ -2,13 +2,13 @@ import { getData } from "@/lib/getData";
 import NewStockAdjustment from "../../new/page";
 
 
-const UpdateStockAdjustment = async({ params: { id } }) => {
+const UpdateStockAdjustment = async ({ params: { id } }) => {
     const TAG = "UpdateStockAdjustment.js"
-    const data = await getData(`stock-adjustments/${id}`);
+    const data = await getData(`inventory/stock-adjustments/${id}`);
     console.log(TAG, "data", data);
-     
+
     return (
-        <NewStockAdjustment initialData={data} isUpdate={true}/>
+        <NewStockAdjustment initialData={data} isUpdate={true} />
     )
 }
 

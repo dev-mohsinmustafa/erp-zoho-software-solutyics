@@ -13,7 +13,7 @@ const NewUser = ({ initialData = {}, isUpdate = false }) => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: initialData,
   });
-  
+
   // For redirecting to page
   const router = useRouter();
   function redirect() {
@@ -55,24 +55,24 @@ const NewUser = ({ initialData = {}, isUpdate = false }) => {
             <TextInput label="User Company Name" name="companyName" register={register} errors={errors}
               className="w-full"
             />
-             <TextInput label="User Email" name="email" type="email" register={register} errors={errors}
+            <TextInput label="User Email" name="email" type="email" register={register} errors={errors}
               className="w-full"
             />
-                {/* Password Field - Only show for new users */}
+            {/* Password Field - Only show for new users */}
             {!isUpdate && (
-              <TextInput 
-                label="Password" 
-                name="password" 
-                type="password" 
-                register={register} 
+              <TextInput
+                label="Password"
+                name="password"
+                type="password"
+                register={register}
                 errors={errors}
                 className="w-full"
                 required={true}
               />
             )}
 
-             {/* Role Selection */}
-             <div className="w-full">
+            {/* Role Selection */}
+            <div className="w-full">
               <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 User Role
               </label>
@@ -95,7 +95,7 @@ const NewUser = ({ initialData = {}, isUpdate = false }) => {
               )}
             </div>
 
-         
+
 
           </div>
 

@@ -177,7 +177,7 @@ const StockAdjustments = () => {
           // data={stockAdjustments} 
           data={filteredStocks}
           columns={columns}
-          resourceTitle={"stock-adjustments"}
+          resourceTitle={"inventory/stock-adjustments"}
         />
       </div>
 

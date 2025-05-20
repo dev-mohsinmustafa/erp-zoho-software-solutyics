@@ -15,7 +15,7 @@ const Users = () => {
   async function fetchData() {
     setLoading(true);
     try {
-      const data = await getData("inventory/user");
+      const data = await getData("user");
       setUsers(data);
     } catch (error) {
       console.error("Error fetching users:", error);
