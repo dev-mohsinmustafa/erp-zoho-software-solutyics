@@ -98,15 +98,15 @@ const NewSale = async ({ initialData = {}, isUpdate = false }) => {
   // const warehouses = await getData("warehouse");
   // const suppliers = await getData("suppliers");
 
-  const categoriesData = getData("categories");
-  const unitsData = getData("units");
-  const brandsData = getData("brands");
-  const warehousesData = getData("warehouse");
-  const suppliersData = getData("suppliers");
-  const itemsData = getData("items");
-  const productsData = getData("products");
+  const categoriesData = getData("inventory/categories");
+  const unitsData = getData("inventory/units");
+  const brandsData = getData("inventory/brands");
+  const warehousesData = getData("inventory/warehouse");
+  const suppliersData = getData("inventory/suppliers");
+  const itemsData = getData("inventory/items");
+  const productsData = getData("inventory/products");
 
-  
+
 
 
   // instead of this we use 
@@ -127,7 +127,7 @@ const NewSale = async ({ initialData = {}, isUpdate = false }) => {
   //   makePostRequest(setLoading, "/api/items", data, "Item", reset);
   // }
 
-   // Log fetched data
+  // Log fetched data
   //  console.log(TAG, "Categories:", categories);
   //  console.log(TAG, "Units:", units);
   //  console.log(TAG, "Brands:", brands);
@@ -147,7 +147,7 @@ const NewSale = async ({ initialData = {}, isUpdate = false }) => {
 
         {/* Now remove this form code after creating CreatingForm.jsx component */}
 
-        <CreateSaleForm categories={categories} units={units} brands={brands} warehouses={warehouses} suppliers={suppliers} items={items} products={products} initialData ={initialData} isUpdate = {isUpdate}/>
+        <CreateSaleForm categories={categories} units={units} brands={brands} warehouses={warehouses} suppliers={suppliers} items={items} products={products} initialData={initialData} isUpdate={isUpdate} />
 
 
         {/* <form onSubmit={handleSubmit(onSubmit)}> */}

@@ -18,7 +18,7 @@ const ViewSale = () => {
     useEffect(() => {
         const fetchSale = async () => {
             try {
-                const data = await getData(`sales/${id}`);
+                const data = await getData(`inventory/sales/${id}`);
                 setSale(data);
             } catch (error) {
                 console.error("Error fetching sale:", error);

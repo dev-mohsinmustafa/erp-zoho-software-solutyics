@@ -102,9 +102,9 @@ const CreateItemForm = ({ categories, units, brands, suppliers, warehouses, init
     data.imageUrl = imageUrl;
     console.log("Formdata", data);
     if (isUpdate) {
-      makePutRequest(setLoading, `/api/items/${initialData.id}`, data, "Item", reset, redirect);
+      makePutRequest(setLoading, `/api/inventory/items/${initialData.id}`, data, "Item", reset, redirect);
     } else {
-      makePostRequest(setLoading, "/api/items", data, "Item", reset);
+      makePostRequest(setLoading, "/api/inventory/items", data, "Item", reset);
       setImageUrl("");
     }
   }
@@ -147,7 +147,7 @@ const CreateItemForm = ({ categories, units, brands, suppliers, warehouses, init
           errors={errors}
           className="w-full"
           options={suppliers}
-          // defaultValue={initialData?.suppliers || []}
+        // defaultValue={initialData?.suppliers || []}
         />
 
 
@@ -191,8 +191,8 @@ const CreateItemForm = ({ categories, units, brands, suppliers, warehouses, init
             </div> */}
 
         {/* Upload thing */}
-        <ImageInput label="Item Image" imageUrl={imageUrl} setImageUrl={setImageUrl} endpoint="imageUploader"
-        />
+        {/* <ImageInput label="Item Image" imageUrl={imageUrl} setImageUrl={setImageUrl} endpoint="imageUploader"
+        /> */}
       </div>
 
 

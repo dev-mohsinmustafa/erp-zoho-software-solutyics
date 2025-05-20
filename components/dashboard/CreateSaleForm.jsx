@@ -45,9 +45,9 @@ const CreateSaleForm = ({ categories, units, brands, suppliers, warehouses, item
             customerName: data.title,  // Ensure correct field is sent
         };
         if (isUpdate) {
-            makePutRequest(setLoading, `/api/sales/${initialData.id}`, formattedData, "Sale", reset, redirect);
+            makePutRequest(setLoading, `/api/inventory/sales/${initialData.id}`, formattedData, "Sale", reset, redirect);
         } else {
-            makePostRequest(setLoading, "/api/sales", formattedData, "Sale", reset);
+            makePostRequest(setLoading, "/api/inventory/sales", formattedData, "Sale", reset);
             // setImageUrl("");
         }
     }

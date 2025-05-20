@@ -17,7 +17,7 @@ const Items = async () => {
             ...item,
             suppliers: item.itemSuppliers?.map(itemSupplier => itemSupplier.supplier.title).join(", " || "-")
           }))}
-          columns={columns} resourceTitle={"items"} />
+          columns={columns} resourceTitle={"inventory/items"} />
       </div>
     </div>
   )

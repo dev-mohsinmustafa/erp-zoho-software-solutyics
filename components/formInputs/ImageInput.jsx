@@ -3,7 +3,7 @@ import { Pencil } from "lucide-react";
 
 import Image from "next/image";
 
-const ImageInput = ({label,  className="col-span-full", imageUrl="", setImageUrl, endpoint="imageUploader" }) => {
+const ImageInput = ({ label, className = "col-span-full", imageUrl = "", setImageUrl, endpoint = "imageUploader" }) => {
     return (
         <div className={className}>
             <div className="flex justify-between items-center mb-4">

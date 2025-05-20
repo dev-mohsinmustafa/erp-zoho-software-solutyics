@@ -186,7 +186,7 @@ const Sales = () => {
 
       <div className="my-4 p-8 relative">
         {loading ? <LoadingSpinner message="Loading sales data, please wait..." /> : null}
-        <DataTableSales data={filteredSales} columns={columns} resourceTitle={"sales"}
+        <DataTableSales data={filteredSales} columns={columns} resourceTitle={"inventory/sales"}
           onRefresh={fetchData}
         />
       </div>

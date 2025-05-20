@@ -98,11 +98,11 @@ const NewItem = async ({ initialData = {}, isUpdate = false }) => {
   // const warehouses = await getData("warehouse");
   // const suppliers = await getData("suppliers");
 
-  const categoriesData = getData("categories");
-  const unitsData = getData("units");
-  const brandsData = getData("brands");
-  const warehousesData = getData("warehouse");
-  const suppliersData = getData("suppliers");
+  const categoriesData = getData("inventory/categories");
+  const unitsData = getData("inventory/units");
+  const brandsData = getData("inventory/brands");
+  const warehousesData = getData("inventory/warehouse");
+  const suppliersData = getData("inventory/suppliers");
 
 
   // instead of this we use 
@@ -136,7 +136,7 @@ const NewItem = async ({ initialData = {}, isUpdate = false }) => {
 
         {/* Now remove this form code after creating CreatingForm.jsx component */}
 
-        <CreateItemForm categories={categories} units={units} brands={brands} warehouses={warehouses} suppliers={suppliers} initialData ={initialData} isUpdate = {isUpdate}/>
+        <CreateItemForm categories={categories} units={units} brands={brands} warehouses={warehouses} suppliers={suppliers} initialData={initialData} isUpdate={isUpdate} />
 
 
         {/* <form onSubmit={handleSubmit(onSubmit)}> */}
