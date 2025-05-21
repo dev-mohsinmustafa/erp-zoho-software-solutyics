@@ -655,18 +655,19 @@ model MaterialRequirementApproval {
 
 model Customer {
     id           String   @id @default(auto()) @map("_id") @db.ObjectId
-    customerCode  String      @unique
-    name          String
-    type          String      // INDIVIDUAL or COMPANY
-    status        String      // ACTIVE or INACTIVE
-    phone         String?
-    email         String?
-    address       String?
-    taxID         String?
-    paymentTerms  String?
-    notes         String?
-  
-    
-    createdAt     DateTime    @default(now())
-    updatedAt     DateTime    @updatedAt
+    customerCode String   @unique
+    name        String
+    email       String?
+    phone       String?
+    website     String?
+    reference   String?
+    taxNumber       String?
+    currency    String
+    address     String?
+    town        String?
+    postalCode  String?
+    province    String?
+    notes       String?
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
 }

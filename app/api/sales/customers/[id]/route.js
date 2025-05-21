@@ -1,19 +1,19 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/db";
+import db from "@/lib/db";
 
 // GET single customer
 export async function GET(request, { params }) {
     try {
-        const customer = await prisma.customer.findUnique({
+        const customer = await db.customer.findUnique({
             where: {
                 id: params.id
             }
         });
-        
+
         if (!customer) {
             return NextResponse.json({ message: "Customer not found" }, { status: 404 });
         }
-        
+
         return NextResponse.json(customer);
     } catch (error) {
         return NextResponse.json({ message: "Failed to fetch customer", error }, { status: 500 });
@@ -24,22 +24,52 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
     try {
         const data = await request.json();
-        const customer = await prisma.customer.update({
+
+        // Check if customer exists
+        const existingCustomer = await db.customer.findUnique({
+            where: {
+                id: params.id
+            }
+        });
+
+        if (!existingCustomer) {
+            return NextResponse.json({ message: "Customer not found" }, { status: 404 });
+        }
+
+        // Check if new customer code conflicts with other customers
+        if (data.customerCode !== existingCustomer.customerCode) {
+            const codeConflict = await db.customer.findUnique({
+                where: {
+                    customerCode: data.customerCode
+                }
+            });
+
+            if (codeConflict) {
+                return NextResponse.json(
+                    { message: "Customer code already exists" },
+                    { status: 400 }
+                );
+            }
+        }
+
+        const customer = await db.customer.update({
             where: {
                 id: params.id
             },
             data: {
                 customerCode: data.customerCode,
                 name: data.name,
-                type: data.type,
-                status: data.status,
-                phone: data.phone,
                 email: data.email,
+                phone: data.phone,
+                website: data.website,
+                reference: data.reference,
+                taxNumber: data.taxNumber,
+                currency: data.currency,
                 address: data.address,
-                taxID: data.taxID,
-                paymentTerms: data.paymentTerms,
-                notes: data.notes,
-                updatedAt: new Date()
+                town: data.town,
+                postalCode: data.postalCode,
+                province: data.province,
+                notes: data.notes
             }
         });
         return NextResponse.json(customer);
@@ -48,16 +78,3 @@ export async function PUT(request, { params }) {
     }
 }
 
-// DELETE customer
-export async function DELETE(request, { params }) {
-    try {
-        await prisma.customer.delete({
-            where: {
-                id: params.id
-            }
-        });
-        return NextResponse.json({ message: "Customer deleted successfully" });
-    } catch (error) {
-        return NextResponse.json({ message: "Failed to delete customer", error }, { status: 500 });
-    }
-}

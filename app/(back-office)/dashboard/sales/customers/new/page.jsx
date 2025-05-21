@@ -13,18 +13,23 @@ import { useForm } from "react-hook-form";
 const NewCustomer = ({ initialData = {}, isUpdate = false }) => {
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
-        defaultValues: initialData,
+        defaultValues: {
+            ...initialData,
+        }
     });
 
-    const customerTypes = [
-        { id: "INDIVIDUAL", name: "Individual" },
-        { id: "COMPANY", name: "Company" }
+    const currencies = [
+        { id: "USD", title: "US Dollar" },
+        { id: "EUR", title: "Euro" },
+        { id: "GBP", title: "British Pound" },
+        { id: "PKR", title: "Pakistani Rupee" },
+        { id: "AED", title: "United Arab Emirates Dirham" },
+        { id: "SAR", title: "Saudi Arabian Riyal" },
+        { id: "QAR", title: "Qatari Riyal" },
+        { id: "OMR", title: "Omani Riyal" },
+        // Add more currencies as needed
     ];
 
-    const customerStatus = [
-        { id: "ACTIVE", name: "Active" },
-        { id: "INACTIVE", name: "Inactive" }
-    ];
 
     const router = useRouter();
     function redirect() {
@@ -33,9 +38,9 @@ const NewCustomer = ({ initialData = {}, isUpdate = false }) => {
 
     async function onSubmit(data) {
         if (isUpdate) {
-            makePutRequest(setLoading, `/api/customers/${initialData.id}`, data, "Customer", reset, redirect);
+            makePutRequest(setLoading, `/api/sales/customers/${initialData.id}`, data, "Customer", reset, redirect);
         } else {
-            makePostRequest(setLoading, "/api/customers", data, "Customer", reset);
+            makePostRequest(setLoading, "/api/sales/customers", data, "Customer", reset);
         }
     }
 
@@ -45,89 +50,136 @@ const NewCustomer = ({ initialData = {}, isUpdate = false }) => {
 
             <div className="w-full max-w-3xl p-4 bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 mx-auto my-3">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                        <TextInput
-                            label="Customer Code"
-                            name="customerCode"
-                            register={register}
-                            errors={errors}
-                            className="w-full"
-                        />
-                        <TextInput
-                            label="Customer Name"
-                            name="name"
-                            register={register}
-                            errors={errors}
-                            className="w-full"
-                        />
-                        <SelectInput
-                            label="Customer Type"
-                            name="type"
-                            register={register}
-                            errors={errors}
-                            className="w-full"
-                            options={customerTypes.map(type => ({
-                                id: type.id,
-                                title: type.name
-                            }))}
-                        />
+                    <div className="space-y-8">
+                        {/* General Section */}
+                        <div>
+                            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-1">General</h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                Your client's contact information will appear in invoices and their profiles. You can also allow your clients to login to track the invoices you send them.
+                            </p>
+                            <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                                <TextInput
+                                    label="Customer Code"
+                                    name="customerCode"
+                                    register={register}
+                                    errors={errors}
+                                    className="w-full"
+                                    type="number"
+                                />
+                                <TextInput
+                                    label="Customer Name"
+                                    name="name"
+                                    register={register}
+                                    errors={errors}
+                                    className="w-full"
+                                />
+                                <TextInput
+                                    label="Email"
+                                    name="email"
+                                    type="email"
+                                    register={register}
+                                    errors={errors}
+                                    className="w-full"
+                                />
+                                <TextInput
+                                    label="Phone"
+                                    name="phone"
+                                    register={register}
+                                    errors={errors}
+                                    className="w-full"
+                                />
+                                <TextInput
+                                    label="Website"
+                                    name="website"
+                                    register={register}
+                                    errors={errors}
+                                    className="w-full"
+                                />
+                                <TextInput
+                                    label="Reference"
+                                    name="reference"
+                                    register={register}
+                                    errors={errors}
+                                    className="w-full"
+                                />
+                            </div>
+                        </div>
 
-                        <SelectInput
-                            label="Status"
-                            name="status"
-                            register={register}
-                            errors={errors}
-                            className="w-full"
-                            options={customerStatus.map(status => ({
-                                id: status.id,
-                                title: status.name
-                            }))}
-                        />
+                        {/* Billing Section */}
+                        <div>
+                            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-1">Billing</h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                The tax number appears in every invoice issued to the customer. The selected currency becomes the default currency for this customer.
+                            </p>
+                            <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                                <TextInput
+                                    label="Tax Number"
+                                    name="taxNumber"
+                                    register={register}
+                                    errors={errors}
+                                    className="w-full"
+                                />
+                                {/* Select */}
+                                <SelectInput label="Select the Currency Type" name="currency" register={register} errors={errors}
+                                    className="w-full" options={currencies} />
 
-                        <TextInput
-                            label="Phone"
-                            name="phone"
-                            register={register}
-                            errors={errors}
-                            className="w-full"
-                        />
-                        <TextInput
-                            label="Email"
-                            name="email"
-                            type="email"
-                            register={register}
-                            errors={errors}
-                            className="w-full"
-                        />
-                        <TextInput
-                            label="Address"
-                            name="address"
-                            register={register}
-                            errors={errors}
-                            className="w-full"
-                        />
-                        <TextInput
-                            label="Tax ID/VAT Number"
-                            name="taxID"
-                            register={register}
-                            errors={errors}
-                            className="w-full"
-                        />
-                        <TextareaInput
-                            label="Payment Terms"
-                            name="paymentTerms"
-                            register={register}
-                            errors={errors}
-                        />
-                        <TextareaInput
-                            label="Notes"
-                            name="notes"
-                            register={register}
-                            errors={errors}
-                        />
+
+                            </div>
+                        </div>
+
+                        {/* Address Section */}
+                        <div>
+                            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-1">Address</h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                The address is required for the invoices, so you need to add billing address details for your customer.
+                            </p>
+                            <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                                <div className="sm:col-span-2">
+                                    <TextInput
+                                        label="Address"
+                                        name="address"
+                                        register={register}
+                                        errors={errors}
+                                        className="w-full"
+                                    />
+                                </div>
+                                <TextInput
+                                    label="Town/City"
+                                    name="town"
+                                    register={register}
+                                    errors={errors}
+                                    className="w-full"
+                                />
+                                <TextInput
+                                    label="Postal / Zip Code"
+                                    name="postalCode"
+                                    register={register}
+                                    errors={errors}
+                                    className="w-full"
+                                />
+                                <TextInput
+                                    label="Province / State"
+                                    name="province"
+                                    register={register}
+                                    errors={errors}
+                                    className="w-full"
+                                />
+                                <div className="sm:col-span-2">
+                                    <TextareaInput
+                                        label="Notes"
+                                        name="notes"
+                                        register={register}
+                                        errors={errors}
+                                        className="w-full"
+                                    />
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <SubmitButton title={isUpdate ? "Update Customer" : "New Customer"} isLoading={loading} />
+                    <div className="mt-6">
+                        <SubmitButton title={isUpdate ? "Update Customer" : "New Customer"} isLoading={loading} />
+                    </div>
                 </form>
             </div>
         </div>
