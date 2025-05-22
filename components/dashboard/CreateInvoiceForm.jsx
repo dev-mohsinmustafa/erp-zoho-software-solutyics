@@ -244,16 +244,23 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
 
                                                 const selectedItem = items.find(item => item.id === e.target.value);
                                                 console.log("All Inventory Items:", items); // Add this line
-                                                if (selectedItem) {
-                                                    console.log("SELECTED ITEM", selectedItem)
-                                                    // Update all fields for this item
-                                                    setValue(`items.${index}.itemId`, selectedItem.id);
+                                                // if (selectedItem) {
+                                                //     console.log("SELECTED ITEM", selectedItem)
+                                                //     // Update all fields for this item
+                                                //     setValue(`items.${index}.itemId`, selectedItem.id);
+                                                //     setValue(`items.${index}.title`, selectedItem.title);
+                                                //     setValue(`items.${index}.price`, parseFloat(selectedItem.salePrice));
+                                                //     setValue(`items.${index}.quantity`, 1);
+                                                //     // Fix: Calculate amount using the quantity we're setting (1)
+                                                //     setValue(`items.${index}.amount`, parseFloat(selectedItem.salePrice * 1));
+                                                //     // setValue(`items.${index}.amount`, selectedItem.salePrice * selectedItem.quantity);
+                                                // }
+                                                  if (selectedItem) {
+                                                    setValue(`items.${index}.price`, selectedItem.salePrice);
                                                     setValue(`items.${index}.title`, selectedItem.title);
-                                                    setValue(`items.${index}.price`, parseFloat(selectedItem.salePrice));
-                                                    setValue(`items.${index}.quantity`, 1);
-                                                    // Fix: Calculate amount using the quantity we're setting (1)
-                                                    setValue(`items.${index}.amount`, parseFloat(selectedItem.salePrice * 1));
-                                                    // setValue(`items.${index}.amount`, selectedItem.salePrice * selectedItem.quantity);
+                                                    // Calculate amount based on quantity and price
+                                                    const quantity = watch(`items.${index}.quantity`) || 1;
+                                                    setValue(`items.${index}.amount`, quantity * selectedItem.salePrice);
                                                 }
                                             }}
                                             options={[

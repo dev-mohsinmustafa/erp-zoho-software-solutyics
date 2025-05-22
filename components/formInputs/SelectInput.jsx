@@ -5,6 +5,7 @@ export default function SelectInput({
   register,
   className = "sm:col-span-2",
   options = [],
+  onChange
 }) {
   return (
     <div className={className}>
@@ -19,6 +20,10 @@ export default function SelectInput({
           {...register(`${name}`)}
           id={name}
           name={name}
+          onChange={(e) => {
+            register(`${name}`).onChange(e); // Handle react-hook-form onChange
+            if (onChange) onChange(e); // Handle custom onChange
+          }}
           className="block w-full rounded-md border-0 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
         >
           {/* {options.map((option, i) => {
