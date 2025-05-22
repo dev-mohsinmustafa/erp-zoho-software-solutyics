@@ -11,7 +11,7 @@ const CustomerInvoices = () => {
     useEffect(() => {
         const fetchInvoices = async () => {
             try {
-                const data = await getData('sales/customers/invoices');
+                const data = await getData('sales/customers');
                 setInvoices(data);
             } catch (error) {
                 console.error('Error fetching invoices:', error);

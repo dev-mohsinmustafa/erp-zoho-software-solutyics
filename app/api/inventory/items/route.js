@@ -64,8 +64,8 @@ export async function POST(request) {
                 unitId: itemData.unitId,
                 brandId: itemData.brandId,
                 supplierId: itemData.supplierIds[0], // Use the first supplier as primary
-                // buyingPrice: parseFloat(itemData.buyingPrice),
-                // sellingPrice: parseFloat(itemData.sellingPrice),
+                purchasePrice: parseFloat(itemData.purchasePrice),
+                salePrice: parseFloat(itemData.salePrice),
                 reOrderPoint: parseInt(itemData.reOrderPoint),
                 warehouseId: itemData.warehouseId,
                 // imageUrl: itemData.imageUrl,
