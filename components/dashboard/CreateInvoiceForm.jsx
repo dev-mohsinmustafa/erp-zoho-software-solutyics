@@ -32,7 +32,11 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
             name: session?.user?.name?.toUpperCase() || '',
             email: session?.user?.email || '',
             address: session?.user?.companyName || '',
-            items: initialData.items || [{ itemId: "", title: "", quantity: 1, price: 0, amount: 0 }]
+            items: initialData.items || [{ itemId: "", title: "", quantity: 1, price: 0, amount: 0 }],
+            discount: 0,
+            discountAmount: 0,
+            currency: "PKR",
+            
         }
     });
     // console.log("WATCH DATA", watch()); // Log all form values
@@ -94,22 +98,6 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
     // }, []);
 
 
-    // Add this effect to watch and update amounts
-    useEffect(() => {
-        const subscription = watch((value, { name }) => {
-            if (name?.includes('quantity') || name?.includes('price')) {
-                const index = parseInt(name.split('.')[1]);
-                const item = value.items[index];
-                if (item.quantity && item.price) {
-                    setValue(`items.${index}.amount`, item.quantity * item.price);
-                }
-            }
-        });
-        return () => subscription.unsubscribe();
-    }, [watch, setValue]);
-
-    // Watch for changes in purchaseRequestId
-    const selectedItemId = watch("itemId");
 
     return (
         <div>
@@ -244,24 +232,17 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
 
                                                 const selectedItem = items.find(item => item.id === e.target.value);
                                                 console.log("All Inventory Items:", items); // Add this line
-                                                // if (selectedItem) {
-                                                //     console.log("SELECTED ITEM", selectedItem)
-                                                //     // Update all fields for this item
-                                                //     setValue(`items.${index}.itemId`, selectedItem.id);
-                                                //     setValue(`items.${index}.title`, selectedItem.title);
-                                                //     setValue(`items.${index}.price`, parseFloat(selectedItem.salePrice));
-                                                //     setValue(`items.${index}.quantity`, 1);
-                                                //     // Fix: Calculate amount using the quantity we're setting (1)
-                                                //     setValue(`items.${index}.amount`, parseFloat(selectedItem.salePrice * 1));
-                                                //     // setValue(`items.${index}.amount`, selectedItem.salePrice * selectedItem.quantity);
-                                                // }
-                                                  if (selectedItem) {
-                                                    setValue(`items.${index}.price`, selectedItem.salePrice);
-                                                    setValue(`items.${index}.title`, selectedItem.title);
-                                                    // Calculate amount based on quantity and price
-                                                    const quantity = watch(`items.${index}.quantity`) || 1;
-                                                    setValue(`items.${index}.amount`, quantity * selectedItem.salePrice);
-                                                }
+                                                
+                                                if (selectedItem) {
+                                                        console.log("SELECTED ITEM", selectedItem)
+                                                        setValue(`items.${index}.itemId`, selectedItem.id);
+                                                        setValue(`items.${index}.title`, selectedItem.title);
+                                                        setValue(`items.${index}.price`, selectedItem.salePrice);
+                                                        // Calculate amount based on quantity and price
+                                                        const quantity = watch(`items.${index}.quantity`) || 1;
+                                                        setValue(`items.${index}.amount`, parseFloat(quantity * selectedItem.salePrice));
+                                                    }
+                                                
                                             }}
                                             options={[
                                                 { id: "", title: "Select an item" },
@@ -341,6 +322,87 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                             </button>
                         </div>
                     </div>
+
+                    
+
+                    {/* Calculations Section */}
+                    <div className="flex flex-col gap-4 items-end">
+                        <div className="w-full max-w-xs">
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-gray-700">Subtotal</span>
+                                <span className="font-medium">
+                                    Rs{watch('items')?.reduce((sum, item) => sum + (Number(item.amount) || 0), 0).toFixed(2)}
+                                </span>
+                            </div>
+
+                            <div className="flex items-center gap-2 mb-2">
+                                <div className="flex-1">
+                                    <FormTextInput
+                                        label="Discount"
+                                        name="discount"
+                                        type="number"
+                                        register={register}
+                                        errors={errors}
+                                        className="w-full"
+                                        onChange={(e) => {
+                                            const discountValue = Number(e.target.value) || 0;
+                                            setValue('discount', discountValue);
+                                            const subtotal = watch('items')?.reduce((sum, item) => sum + (Number(item.amount) || 0), 0);
+                                            const discountAmount = (discountValue / 100) * subtotal;
+                                            setValue('discountAmount', discountAmount);
+                                        }}
+                                    />
+                                </div>
+                                <div className="flex items-center gap-1 mt-8">
+                                    <span>%</span>
+                                    <span className="text-gray-700">Rs</span>
+                                    <span>{watch('discountAmount')?.toFixed(2) || '0.00'}</span>
+                                </div>
+                            </div>
+
+                            {/* <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
+                                <span className="text-gray-700">Total</span>
+                                <span className="font-medium">
+                                    Rs{(
+                                        watch('items')?.reduce((sum, item) => sum + (Number(item.amount) || 0), 0) -
+                                        (watch('discountAmount') || 0)
+                                    ).toFixed(2)}
+                                </span>
+                            </div> */}
+
+                           
+                            <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
+                                <div className="flex items-center gap-2">
+                                    <span className="text-gray-700">Total</span>
+                                    <SelectInput
+                                        name="currency"
+                                        register={register}
+                                        className="w-40"
+                                        options={[
+                                            { id: "PKR", title: "Pakistan Rupee" },
+                                            { id: "USD", title: "US Dollar" },
+                                            { id: "EUR", title: "Euro" },
+                                            { id: "GBP", title: "British Pound" }
+                                        ]}
+                                    />
+                                </div>
+                                <span className="font-medium">
+                                    Rs{(
+                                        watch('items')?.reduce((sum, item) => sum + (Number(item.amount) || 0), 0) -
+                                        (watch('discountAmount') || 0)
+                                    ).toFixed(2)}
+                                </span>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+
+
+                   
+
 
                     {/* Additional Information */}
                     <div>
