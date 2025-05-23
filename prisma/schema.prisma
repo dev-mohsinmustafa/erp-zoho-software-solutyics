@@ -58,6 +58,9 @@ model Item {
 
   materialRequirementApprovals MaterialRequirementApproval[]
 
+  invoiceItems InvoiceItem[]
+
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -668,6 +671,65 @@ model Customer {
     postalCode  String?
     province    String?
     notes       String?
+    
+    invoices     Invoice[]
+
     createdAt   DateTime  @default(now())
     updatedAt   DateTime  @updatedAt
 }
+
+
+
+
+
+
+// Invoice Model
+model Invoice {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  title         String    @default("Invoice")
+  invoiceNumber String    @unique
+  invoiceDate   DateTime
+  dueDate       DateTime
+  orderNumber   String?
+  status        String    @default("Draft") // Add status field
+
+  
+  // Company Information
+  name          String
+  email         String
+  address       String
+  
+  // Customer Information
+  customer      Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId    String    @db.ObjectId
+  
+  // Items in the invoice
+  items         InvoiceItem[]
+  
+  // Financial details
+  currency      String    @default("PKR")
+  discount      Float     @default(0)
+  discountAmount Float    @default(0)
+  subTotal      Float     @default(0)
+  total         Float     @default(0)
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+// Invoice Item Model
+model InvoiceItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  invoice   Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  invoiceId String   @db.ObjectId
+  item      Item     @relation(fields: [itemId], references: [id])
+  itemId    String   @db.ObjectId
+  title     String
+  quantity  Int
+  price     Float
+  amount    Float
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+

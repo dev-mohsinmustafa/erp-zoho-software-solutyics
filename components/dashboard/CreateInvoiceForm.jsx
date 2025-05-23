@@ -36,7 +36,11 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
             discount: 0,
             discountAmount: 0,
             currency: "PKR",
-            
+            invoiceDate: new Date().toISOString().split('T')[0], // Set today as default invoice date
+            dueDate: new Date().toISOString().split('T')[0],
+            invoiceNumber: `INV-${Date.now()}`, // Generate unique invoice number
+            status: "Pending" // Add default status
+
         }
     });
     // console.log("WATCH DATA", watch()); // Log all form values
@@ -232,17 +236,17 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
 
                                                 const selectedItem = items.find(item => item.id === e.target.value);
                                                 console.log("All Inventory Items:", items); // Add this line
-                                                
+
                                                 if (selectedItem) {
-                                                        console.log("SELECTED ITEM", selectedItem)
-                                                        setValue(`items.${index}.itemId`, selectedItem.id);
-                                                        setValue(`items.${index}.title`, selectedItem.title);
-                                                        setValue(`items.${index}.price`, selectedItem.salePrice);
-                                                        // Calculate amount based on quantity and price
-                                                        const quantity = watch(`items.${index}.quantity`) || 1;
-                                                        setValue(`items.${index}.amount`, parseFloat(quantity * selectedItem.salePrice));
-                                                    }
-                                                
+                                                    console.log("SELECTED ITEM", selectedItem)
+                                                    setValue(`items.${index}.itemId`, selectedItem.id);
+                                                    setValue(`items.${index}.title`, selectedItem.title);
+                                                    setValue(`items.${index}.price`, selectedItem.salePrice);
+                                                    // Calculate amount based on quantity and price
+                                                    const quantity = watch(`items.${index}.quantity`) || 1;
+                                                    setValue(`items.${index}.amount`, parseFloat(quantity * selectedItem.salePrice));
+                                                }
+
                                             }}
                                             options={[
                                                 { id: "", title: "Select an item" },
@@ -323,7 +327,7 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                         </div>
                     </div>
 
-                    
+
 
                     {/* Calculations Section */}
                     <div className="flex flex-col gap-4 items-end">
@@ -360,7 +364,7 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                                 </div>
                             </div>
 
-                            {/* <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
+                            <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
                                 <span className="text-gray-700">Total</span>
                                 <span className="font-medium">
                                     Rs{(
@@ -368,10 +372,10 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                                         (watch('discountAmount') || 0)
                                     ).toFixed(2)}
                                 </span>
-                            </div> */}
+                            </div>
 
-                           
-                            <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
+
+                            {/* <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
                                 <div className="flex items-center gap-2">
                                     <span className="text-gray-700">Total</span>
                                     <SelectInput
@@ -392,7 +396,7 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                                         (watch('discountAmount') || 0)
                                     ).toFixed(2)}
                                 </span>
-                            </div>
+                            </div> */}
 
 
 
@@ -401,7 +405,7 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
 
 
 
-                   
+
 
 
                     {/* Additional Information */}

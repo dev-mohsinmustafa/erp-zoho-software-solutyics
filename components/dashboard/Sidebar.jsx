@@ -155,26 +155,26 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             href: "/dashboard/sales/customers",
             requiredPermission: "customers"
         },
-        {
-            title: "Sales Orders",
-            href: "/dashboard/sales/orders",
-            requiredPermission: "sales-orders"
-        },
+        // {
+        //     title: "Sales Orders",
+        //     href: "/dashboard/sales/orders",
+        //     requiredPermission: "sales-orders"
+        // },
         {
             title: "Invoices",
             href: "/dashboard/sales/invoices",
             requiredPermission: "invoices"
         },
-        {
-            title: "Sales Returns",
-            href: "/dashboard/sales/returns",
-            requiredPermission: "sales-returns"
-        },
-        {
-            title: "Credit Notes",
-            href: "/dashboard/sales/credit-notes",
-            requiredPermission: "credit-notes"
-        },
+        // {
+        //     title: "Sales Returns",
+        //     href: "/dashboard/sales/returns",
+        //     requiredPermission: "sales-returns"
+        // },
+        // {
+        //     title: "Credit Notes",
+        //     href: "/dashboard/sales/credit-notes",
+        //     requiredPermission: "credit-notes"
+        // },
         // {
         //     title: "Sales Orders",
         //     href: "/",
