@@ -16,7 +16,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import MultiSelectInput from "../formInputs/MultiSelectInput";
 
-const CreateItemForm = ({ categories, units, brands, suppliers, warehouses, initialData = {}, isUpdate = false }) => {
+const CreateItemForm = ({ categories, units, brands, suppliers, warehouses, taxes, initialData = {}, isUpdate = false }) => {
   console.log("Initial Data", initialData);
 
   // const [imageUrl, setImageUrl] = useState("");
@@ -163,8 +163,16 @@ const CreateItemForm = ({ categories, units, brands, suppliers, warehouses, init
         <TextInput label="Item Dimensions in cm (20 x 30 x 100)" name="dimensions" register={register} errors={errors}
           className="w-full"
         />
-        <TextInput label="Item Tax Rate in %" name="taxRate" register={register} errors={errors}
+        {/* <TextInput label="Item Tax Rate in %" name="taxRate" register={register} errors={errors}
           className="w-full" type="number"
+        /> */}
+        <SelectInput label="Select the Taxes" name="taxId" register={register} errors={errors}
+          className="w-full"
+          // options={taxes} 
+          options={taxes.map(tax => ({
+            id: tax.id,
+            title: `${tax.title} (${tax.rate}%)`
+          }))}
         />
 
 

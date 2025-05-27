@@ -71,7 +71,8 @@ export async function POST(request) {
                 // imageUrl: itemData.imageUrl,
                 weight: parseFloat(itemData.weight),
                 dimensions: itemData.dimensions,
-                taxRate: parseFloat(itemData.taxRate),
+                taxId: itemData.taxId,
+                // taxRate: parseFloat(itemData.taxRate),
                 notes: itemData.notes,
                 // Create the itemSuppliers relationships
                 itemSuppliers: {

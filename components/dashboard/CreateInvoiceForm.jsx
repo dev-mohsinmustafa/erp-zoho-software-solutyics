@@ -125,6 +125,7 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                                 errors={errors}
                                 className="w-full"
                                 defaultValue="Invoice"
+                                readOnly
                             />
                             <TextInput
                                 label="Company Address"
@@ -133,6 +134,7 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                                 errors={errors}
                                 className="w-full"
                                 defaultValue={companyName || ''}
+                                readOnly
                             />
                             <TextInput
                                 label="Email"
@@ -141,6 +143,7 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                                 errors={errors}
                                 className="w-full"
                                 defaultValue={email || ''}
+                                readOnly
                             />
                             <TextInput
                                 label="User Name"
@@ -149,6 +152,7 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                                 errors={errors}
                                 className="w-full"
                                 defaultValue={name || ''}
+                                readOnly
                             />
 
 
@@ -434,3 +438,20 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
 };
 
 export default CreateInvoiceForm;
+
+
+const [taxes, setTaxes] = useState([]);
+
+// Add useEffect to fetch taxes
+useEffect(() => {
+    const fetchTaxes = async () => {
+        try {
+            const response = await fetch('/api/sales/taxes');
+            const data = await response.json();
+            setTaxes(data);
+        } catch (error) {
+            console.error('Error fetching taxes:', error);
+        }
+    };
+    fetchTaxes();
+}, []);

@@ -40,7 +40,7 @@ model Item {
   //imageUrl                 String
   weight                   Float?
   dimensions               String?
-  taxRate                  Float
+  //taxRate                  Float
   notes                    String?
   // Relationships
   addStockAdjustments      AddStockAdjustment[]
@@ -59,6 +59,10 @@ model Item {
   materialRequirementApprovals MaterialRequirementApproval[]
 
   invoiceItems InvoiceItem[]
+  
+  tax                     Tax      @relation(fields: [taxId], references: [id], onDelete: Cascade)
+  taxId                   String   @db.ObjectId
+
 
 
   createdAt DateTime @default(now())
@@ -733,3 +737,45 @@ model InvoiceItem {
   updatedAt DateTime @updatedAt
 }
 
+
+
+
+
+// Banking Account Model
+model Account {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  type           String   // 'bank' or 'credit-card'
+  number         String   @unique
+  currency       String
+  openingBalance Float
+  currentBalance Float    @default(0)
+  isDefault      Boolean  @default(false)
+  status         String   @default("Active") // Active or Inactive
+  
+  // Bank Details
+  bankName       String?
+  bankPhone      String?
+  bankAddress    String?
+  
+  // Timestamps
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+
+
+// Tax Model
+model Tax {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  rate        Float
+  type        String   // "percentage" or "fixed"
+  description String?
+  isDefault   Boolean  @default(false)
+  items       Item[]   // Make this an array relation
+
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

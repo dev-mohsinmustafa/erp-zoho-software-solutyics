@@ -278,6 +278,37 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
         }
     ];
 
+    const bankingLinks = [
+        {
+            title: "Accounts",
+            href: "/dashboard/banking/accounts",
+            requiredPermission: "banking-accounts"
+        },
+        {
+            title: "Transactions",
+            href: "/dashboard/banking/transactions",
+            requiredPermission: "banking-transactions"
+        },
+        {
+            title: "Transfers",
+            href: "/dashboard/banking/transfers",
+            requiredPermission: "banking-transfers"
+        },
+        {
+            title: "Reconciliations",
+            href: "/dashboard/banking/reconciliations",
+            requiredPermission: "banking-reconciliations"
+        },
+        {
+            title: "Taxes",
+            href: "/dashboard/banking/taxes",
+            requiredPermission: "banking-taxes"
+        }
+    ].filter(link => {
+        return (!link.adminOnly || session?.user?.role === "admin") ||
+            (link.requiredPermission && session?.user?.permissions?.[link.requiredPermission]);
+    });
+
     return (
         <>
             <RoleGuard allowedRoles={["admin", "user"]}>
@@ -303,7 +334,8 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
                             </Link>
 
                             <SidebarDropdownLink items={inventoryLinks} title="Inventory" icon={BaggageClaim} setShowSidebar={setShowSidebar} />
-                            {/* <SidebarDropdownLink items={accountingLinks} title="Accounting" icon={BarChart4} /> */}
+                            {/* <SidebarDropdownLink items={accountingLinks} title="Accounting" icon={BarChart4} setShowSidebar={setShowSidebar} /> */}
+                            <SidebarDropdownLink items={bankingLinks} title="Banking" icon={DollarSignIcon} setShowSidebar={setShowSidebar} />
                             <SidebarDropdownLink items={salesLinks} title="Sales" icon={BadgeDollarSign} setShowSidebar={setShowSidebar} />
                             <SidebarDropdownLink items={purchaseLinks} title="Purchases" icon={ShoppingCart} setShowSidebar={setShowSidebar} />
                         </nav>

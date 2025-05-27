@@ -54,7 +54,8 @@ export async function PUT(request, { params: { id } }) {
                 // imageUrl: itemData.imageUrl,
                 weight: parseFloat(itemData.weight),
                 dimensions: itemData.dimensions,
-                taxRate: parseFloat(itemData.taxRate),
+                // taxRate: parseFloat(itemData.taxRate),
+                taxId: itemData.taxId,
                 notes: itemData.notes,
             }
         });
