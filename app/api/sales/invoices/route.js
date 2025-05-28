@@ -31,7 +31,8 @@ export async function POST(request) {
         // Calculate totals
         const subTotal = data.items.reduce((acc, item) => acc + item.amount, 0);
         const discountAmount = (data.discount / 100) * subTotal;
-        const total = subTotal - discountAmount;
+        const totalTaxAmount = data.items.reduce((acc, item) => acc + (item.taxAmount || 0), 0);
+        const total = subTotal - discountAmount + totalTaxAmount;
 
         // Create invoice with items
         const invoice = await db.invoice.create({
@@ -49,6 +50,7 @@ export async function POST(request) {
                 discount: parseFloat(data.discount),
                 discountAmount: discountAmount,
                 subTotal: subTotal,
+                totalTaxAmount: totalTaxAmount,
                 total: total,
                 items: {
                     create: data.items.map(item => ({
@@ -56,7 +58,9 @@ export async function POST(request) {
                         title: item.title,
                         quantity: parseInt(item.quantity),
                         price: parseFloat(item.price),
-                        amount: parseFloat(item.amount)
+                        amount: parseFloat(item.amount),
+                        taxRate: parseFloat(item.taxRate || 0),
+                        taxAmount: parseFloat(item.taxAmount || 0)
                     }))
                 }
             },

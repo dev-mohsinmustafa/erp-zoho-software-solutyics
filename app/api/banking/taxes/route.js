@@ -16,7 +16,7 @@ export async function POST(req) {
 
         const tax = await db.tax.create({
             data: {
-                title: data.title,
+                name: data.name,
                 rate: parseFloat(data.rate),
                 type: data.type,
                 description: data.description,
@@ -45,33 +45,6 @@ export async function GET() {
         console.error("Error fetching taxes:", error);
         return NextResponse.json(
             { error: "Error fetching taxes" },
-            { status: 500 }
-        );
-    }
-}
-
-// DELETE: Delete a tax
-export async function DELETE(req) {
-    try {
-        const url = new URL(req.url);
-        const id = url.searchParams.get("id");
-
-        if (!id) {
-            return NextResponse.json(
-                { error: "Tax ID is required" },
-                { status: 400 }
-            );
-        }
-
-        const tax = await db.tax.delete({
-            where: { id: id }
-        });
-
-        return NextResponse.json(tax);
-    } catch (error) {
-        console.error("Error deleting tax:", error);
-        return NextResponse.json(
-            { error: "Error deleting tax" },
             { status: 500 }
         );
     }

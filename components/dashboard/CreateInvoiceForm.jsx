@@ -24,6 +24,8 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
     const [loading, setLoading] = useState(false);
     const [customers, setCustomers] = useState([]);
     // const [inventoryItems, setInventoryItems] = useState([]);
+    const [taxes, setTaxes] = useState([]); // Add this line to create a state for taxes
+
 
     const { register, handleSubmit, control, reset, setValue, watch, formState: { errors } } = useForm({
         defaultValues: {
@@ -32,7 +34,7 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
             name: session?.user?.name?.toUpperCase() || '',
             email: session?.user?.email || '',
             address: session?.user?.companyName || '',
-            items: initialData.items || [{ itemId: "", title: "", quantity: 1, price: 0, amount: 0 }],
+            items: initialData.items || [{ itemId: "", title: "", quantity: 1, price: 0, amount: 0, taxRate: 0, taxAmount: 0 }],
             discount: 0,
             discountAmount: 0,
             currency: "PKR",
@@ -102,6 +104,20 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
     // }, []);
 
 
+    // Add useEffect to fetch taxes
+    useEffect(() => {
+        const fetchTaxes = async () => {
+            try {
+                const response = await fetch('/api/banking/taxes');
+                const data = await response.json();
+                setTaxes(data);
+                console.log("TAXES DATA", data);
+            } catch (error) {
+                console.error('Error fetching taxes:', error);
+            }
+        };
+        fetchTaxes();
+    }, []);
 
     return (
         <div>
@@ -242,13 +258,27 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                                                 console.log("All Inventory Items:", items); // Add this line
 
                                                 if (selectedItem) {
-                                                    console.log("SELECTED ITEM", selectedItem)
+                                                    // console.log("SELECTED ITEM", selectedItem)
+                                                    // setValue(`items.${index}.itemId`, selectedItem.id);
+                                                    // setValue(`items.${index}.title`, selectedItem.title);
+                                                    // setValue(`items.${index}.price`, selectedItem.salePrice);
+                                                    // Calculate amount based on quantity and price
+                                                    // const quantity = watch(`items.${index}.quantity`) || 1;
+                                                    // setValue(`items.${index}.amount`, parseFloat(quantity * selectedItem.salePrice));
+                                                    const quantity = watch(`items.${index}.quantity`) || 1;
+                                                    const price = selectedItem.salePrice;
+                                                    const amount = quantity * price;
+
+                                                    // Assume selectedItem.taxRate exists. If it's fetched from API, ensure it's part of `items`.
+                                                    const taxRate = selectedItem.tax?.rate || 0;
+                                                    const taxAmount = (taxRate / 100) * amount;
+
                                                     setValue(`items.${index}.itemId`, selectedItem.id);
                                                     setValue(`items.${index}.title`, selectedItem.title);
-                                                    setValue(`items.${index}.price`, selectedItem.salePrice);
-                                                    // Calculate amount based on quantity and price
-                                                    const quantity = watch(`items.${index}.quantity`) || 1;
-                                                    setValue(`items.${index}.amount`, parseFloat(quantity * selectedItem.salePrice));
+                                                    setValue(`items.${index}.price`, price);
+                                                    setValue(`items.${index}.amount`, amount);
+                                                    setValue(`items.${index}.taxRate`, taxRate);
+                                                    setValue(`items.${index}.taxAmount`, taxAmount);
                                                 }
 
                                             }}
@@ -312,6 +342,30 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                                             readOnly
                                         />
                                     </div>
+                                    <div className="w-full sm:w-1/5">
+                                        <SelectInput
+                                            label="Tax Rate"
+                                            name={`items.${index}.taxRate`}
+                                            register={register}
+                                            errors={errors}
+                                            className="w-full"
+                                            onChange={(e) => {
+                                                const taxRate = Number(e.target.value) || 0;
+                                                setValue(`items.${index}.taxRate`, taxRate);
+                                                const amount = watch(`items.${index}.amount`) || 0;
+                                                const taxAmount = (taxRate / 100) * amount;
+                                                setValue(`items.${index}.taxAmount`, taxAmount);
+                                            }}
+                                            options={[
+                                                { id: "", title: "Select a tax rate" },
+                                                ...taxes.map(tax => ({
+                                                    id: tax.rate,
+                                                    // title: item.title,
+                                                    title: `${tax.title} (TAX: ${tax.rate}%)`
+                                                }))
+                                            ]}
+                                        />
+                                    </div>
                                     <button
                                         type="button"
                                         onClick={() => remove(index)}
@@ -323,7 +377,7 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                             ))}
                             <button
                                 type="button"
-                                onClick={() => append({ itemId: "", title: "", quantity: 1, price: 0, amount: 0 })}
+                                onClick={() => append({ itemId: "", title: "", quantity: 1, price: 0, amount: 0, taxRate: 0, taxAmount: 0 })}
                                 className="text-blue-600 hover:text-blue-700 font-medium text-sm"
                             >
                                 + Add Item
@@ -340,6 +394,14 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                                 <span className="text-gray-700">Subtotal</span>
                                 <span className="font-medium">
                                     Rs{watch('items')?.reduce((sum, item) => sum + (Number(item.amount) || 0), 0).toFixed(2)}
+                                </span>
+                            </div>
+
+                            {/* Add Tax Total row */}
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-gray-700">Tax Total</span>
+                                <span className="font-medium">
+                                    Rs{watch('items')?.reduce((sum, item) => sum + (Number(item.taxAmount) || 0), 0).toFixed(2)}
                                 </span>
                             </div>
 
@@ -370,9 +432,16 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
 
                             <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
                                 <span className="text-gray-700">Total</span>
-                                <span className="font-medium">
+                                {/* <span className="font-medium">
                                     Rs{(
                                         watch('items')?.reduce((sum, item) => sum + (Number(item.amount) || 0), 0) -
+                                        (watch('discountAmount') || 0)
+                                    ).toFixed(2)}
+                                </span> */}
+                                <span className="font-medium">
+                                    Rs{(
+                                        watch('items')?.reduce((sum, item) => sum + (Number(item.amount) || 0), 0) +
+                                        watch('items')?.reduce((sum, item) => sum + (Number(item.taxAmount) || 0), 0) -
                                         (watch('discountAmount') || 0)
                                     ).toFixed(2)}
                                 </span>
@@ -438,20 +507,3 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
 };
 
 export default CreateInvoiceForm;
-
-
-const [taxes, setTaxes] = useState([]);
-
-// Add useEffect to fetch taxes
-useEffect(() => {
-    const fetchTaxes = async () => {
-        try {
-            const response = await fetch('/api/sales/taxes');
-            const data = await response.json();
-            setTaxes(data);
-        } catch (error) {
-            console.error('Error fetching taxes:', error);
-        }
-    };
-    fetchTaxes();
-}, []);

@@ -36,7 +36,9 @@ export async function PUT(request, { params }) {
         // Calculate totals
         const subTotal = data.items.reduce((acc, item) => acc + item.amount, 0);
         const discountAmount = (data.discount / 100) * subTotal;
-        const total = subTotal - discountAmount;
+        const totalTaxAmount = data.items.reduce((acc, item) => acc + (item.taxAmount || 0), 0);
+
+        const total = subTotal - discountAmount + totalTaxAmount;
 
         // First, delete existing items
         await db.invoiceItem.deleteMany({
@@ -63,6 +65,7 @@ export async function PUT(request, { params }) {
                 discount: parseFloat(data.discount),
                 discountAmount: discountAmount,
                 subTotal: subTotal,
+                totalTaxAmount: totalTaxAmount,
                 total: total,
                 items: {
                     create: data.items.map(item => ({
@@ -70,7 +73,9 @@ export async function PUT(request, { params }) {
                         title: item.title,
                         quantity: parseInt(item.quantity),
                         price: parseFloat(item.price),
-                        amount: parseFloat(item.amount)
+                        amount: parseFloat(item.amount),
+                        taxRate: parseFloat(item.taxRate || 0),
+                        taxAmount: parseFloat(item.taxAmount || 0)
                     }))
                 }
             },

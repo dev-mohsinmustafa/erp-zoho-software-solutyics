@@ -105,6 +105,7 @@ export async function GET(request) {
                 category: true, // Returns all fields for all categories
                 warehouse: true, // Returns all warehouses fields
                 supplier: true,
+                tax: true,
                 itemSuppliers: {
                     include: {
                         supplier: true
