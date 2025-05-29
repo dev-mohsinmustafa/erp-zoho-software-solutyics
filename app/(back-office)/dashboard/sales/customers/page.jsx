@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import LoadingSpinner from "@/components/dashboard/LoadingSpinner";
 
 const Customers = () => {
     const [customers, setCustomers] = useState([]);
@@ -31,9 +32,9 @@ const Customers = () => {
         fetchData();
     }, []);
 
-    if (loading) {
-        return <div className="flex justify-center items-center h-screen">Loading...</div>;
-    }
+    // if (loading) {
+    //     return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    // }
 
     return (
         <div>
@@ -113,7 +114,9 @@ const Customers = () => {
             </div>
 
             {/* Existing Customer Table */}
-            <div className="my-4 p-8">
+            <div className="my-4 p-8 relative">
+                {loading ? <LoadingSpinner message="Loading customers data, please wait..." /> : null}
+
                 <DataTableSalesCustomers
                     data={customers}
                     columns={columns}
