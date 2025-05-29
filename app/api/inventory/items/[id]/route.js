@@ -51,7 +51,7 @@ export async function PUT(request, { params: { id } }) {
                 salePrice: parseFloat(itemData.salePrice),
                 reOrderPoint: parseInt(itemData.reOrderPoint),
                 warehouseId: itemData.warehouseId,
-                // imageUrl: itemData.imageUrl,
+                imageUrl: itemData.imageUrl,
                 weight: parseFloat(itemData.weight),
                 dimensions: itemData.dimensions,
                 // taxRate: parseFloat(itemData.taxRate),

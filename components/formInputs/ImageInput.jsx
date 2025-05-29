@@ -39,25 +39,8 @@ const ImageInput = ({ label, className = "col-span-full", imageUrl = "", setImag
                         setImageUrl(res[0].ufsUrl);
                         // Do something with the response
                         console.log("Files: ", res);
-                        console.log("Upload Completed");
                     }}
-                    onUploadError={(error) => {
-                        // Do something with the error.
-                        console.log(`ERROR! ${error.message}`);
-                        alert("Error uploading file: " + error.message);
-                    }}
-                    onUploadBegin={() => {
-                        console.log("Upload starting...");
-                    }}
-                    appearance={{
-                        button: "bg-blue-600 p-2 text-white rounded-lg",
-                        allowedContent: "text-gray-600 text-sm",
-                        container: "mt-2 border-2 border-dashed border-gray-300 rounded-lg p-8"
-                    }}
-                    content={{
-                        button: "Choose File",
-                        allowedContent: "Image files only (max 4MB)"
-                    }}
+
                 />
             )}
         </div>

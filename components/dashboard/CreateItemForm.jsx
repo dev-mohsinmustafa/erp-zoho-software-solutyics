@@ -199,8 +199,8 @@ const CreateItemForm = ({ categories, units, brands, suppliers, warehouses, taxe
             </div> */}
 
         {/* Upload thing */}
-        {/* <ImageInput label="Item Image" imageUrl={imageUrl} setImageUrl={setImageUrl} endpoint="imageUploader"
-        /> */}
+        <ImageInput label="Item Image" imageUrl={imageUrl} setImageUrl={setImageUrl} endpoint="imageUploader"
+        />
       </div>
 
 

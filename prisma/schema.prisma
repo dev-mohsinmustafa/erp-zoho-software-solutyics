@@ -37,7 +37,7 @@ model Item {
   itemSuppliers           ItemSupplier[]
   reOrderPoint             Int
   location                 String?
-  //imageUrl                 String
+  imageUrl                 String
   weight                   Float?
   dimensions               String?
   //taxRate                  Float
