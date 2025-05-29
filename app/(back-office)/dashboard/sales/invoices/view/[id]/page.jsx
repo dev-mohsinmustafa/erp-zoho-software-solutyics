@@ -121,7 +121,7 @@ const ViewInvoice = () => {
         <div className="p-8">
             <FixedHeader title="Invoice Details" newLink="/dashboard/sales/invoices/new" />
 
-            <div className="bg-white p-6 shadow-md rounded-lg">
+            <div className="bg-white p-6 shadow-md rounded-lg relative">
                 {loading ? (
                     <LoadingSpinner message="Loading invoice details, please wait..." />
                 ) : (
