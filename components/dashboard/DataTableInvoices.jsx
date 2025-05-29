@@ -1,11 +1,35 @@
 "use client"
-import { Eye, Pencil, } from "lucide-react"
+import { Eye, Mail, Pencil, } from "lucide-react"
 import Link from "next/link"
 import DeleteBtn from "./DeleteBtn"
 import { memo, useEffect } from 'react';
+import toast from "react-hot-toast";
 
 const DataTableInvoices = memo(({ data = [], columns = [], resourceTitle }) => {
+    const handleMarkAsSent = async (id) => {
+        try {
+            const response = await fetch(`/api/sales/invoices/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: 'sent' })
+            });
 
+            if (response.ok) {
+                // Refresh the page to show updated status
+                toast.success('Status updated to SENT');
+                window.location.reload();
+            } else {
+                console.error('Failed to update invoice status');
+                toast.error('Failed to update invoice status');
+            }
+        } catch (error) {
+            console.error('Error updating invoice status:', error);
+            toast.error('Error updating invoice status');
+
+        }
+    };
 
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -114,7 +138,14 @@ const DataTableInvoices = memo(({ data = [], columns = [], resourceTitle }) => {
 
 
 
-
+                                                {item.status.toLowerCase() === 'draft' && (
+                                                    <button
+                                                        onClick={() => handleMarkAsSent(item.id)}
+                                                        className="font-medium text-blue-600 dark:text-blue-500 flex items-center space-x-1"
+                                                    >
+                                                        <span>Mark Sent</span>
+                                                    </button>
+                                                )}
 
 
 

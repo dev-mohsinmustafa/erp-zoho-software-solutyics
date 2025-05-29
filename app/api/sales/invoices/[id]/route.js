@@ -114,3 +114,19 @@ export async function PUT(request, { params }) {
 //     }
 // }
 
+
+
+export async function PATCH(request, { params }) {
+    try {
+        const { status } = await request.json();
+
+        const invoice = await db.invoice.update({
+            where: { id: params.id },
+            data: { status },
+        });
+
+        return NextResponse.json(invoice);
+    } catch (error) {
+        return NextResponse.json({ message: "Failed to update status", error }, { status: 500 });
+    }
+}

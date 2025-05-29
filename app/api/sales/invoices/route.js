@@ -99,3 +99,8 @@ export async function DELETE(request) {
         return NextResponse.json({ error, message: "Failed to Delete the Invoice" }, { status: 500 });
     }
 }
+
+
+
+
+
