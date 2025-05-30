@@ -28,6 +28,11 @@ export async function POST(request) {
     try {
         const data = await request.json();
 
+        // Generate a transaction ID if not provided
+        if (!data.transactionId) {
+            data.transactionId = `POS-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        }
+
         // Calculate totals
         const subTotal = data.items.reduce((acc, item) => acc + item.amount, 0);
         const discountAmount = (data.discount / 100) * subTotal;
