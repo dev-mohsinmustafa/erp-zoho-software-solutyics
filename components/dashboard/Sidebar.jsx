@@ -309,6 +309,50 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             (link.requiredPermission && session?.user?.permissions?.[link.requiredPermission]);
     });
 
+
+    const posLinks = [
+        {
+            title: "All Point of Sales",
+            href: "/dashboard/pos",
+            requiredPermission: "pos"
+        },
+        {
+            title: "Point of Sales",
+            href: "/dashboard/pos/point-of-sales",
+            requiredPermission: "pos"
+        },
+        {
+            title: "POS Terminal",
+            href: "/dashboard/pos/terminal",
+            requiredPermission: "pos-terminal"
+        },
+        {
+            title: "Sales History",
+            href: "/dashboard/pos/sales-history",
+            requiredPermission: "pos-sales-history"
+        },
+        {
+            title: "Cash Management",
+            href: "/dashboard/pos/cash-management",
+            requiredPermission: "pos-cash-management"
+        },
+        {
+            title: "Shift Reports",
+            href: "/dashboard/pos/shift-reports",
+            requiredPermission: "pos-shift-reports"
+        },
+        {
+            title: "POS Settings",
+            href: "/dashboard/pos/settings",
+            adminOnly: true,
+            requiredPermission: "pos-settings"
+        }
+    ].filter(link => {
+        return (!link.adminOnly || session?.user?.role === "admin") ||
+            (link.requiredPermission && session?.user?.permissions?.[link.requiredPermission]);
+    });
+
+
     return (
         <>
             <RoleGuard allowedRoles={["admin", "user"]}>
@@ -335,6 +379,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
 
                             <SidebarDropdownLink items={inventoryLinks} title="Inventory" icon={BaggageClaim} setShowSidebar={setShowSidebar} />
                             {/* <SidebarDropdownLink items={accountingLinks} title="Accounting" icon={BarChart4} setShowSidebar={setShowSidebar} /> */}
+                            <SidebarDropdownLink items={posLinks} title="Point of Sales" icon={ShoppingBasket} setShowSidebar={setShowSidebar} />
                             <SidebarDropdownLink items={bankingLinks} title="Banking" icon={Landmark} setShowSidebar={setShowSidebar} />
                             <SidebarDropdownLink items={salesLinks} title="Sales" icon={BadgeDollarSign} setShowSidebar={setShowSidebar} />
                             <SidebarDropdownLink items={purchaseLinks} title="Purchases" icon={ShoppingCart} setShowSidebar={setShowSidebar} />

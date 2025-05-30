@@ -63,6 +63,10 @@ model Item {
   tax                     Tax      @relation(fields: [taxId], references: [id], onDelete: Cascade)
   taxId                   String   @db.ObjectId
 
+  //after adding point PointOfSale section
+  pointOfSaleItems PointOfSaleItem[]
+
+
 
 
   createdAt DateTime @default(now())
@@ -677,6 +681,9 @@ model Customer {
     notes       String?
     
     invoices     Invoice[]
+    
+    pointOfSales  PointOfSale[]
+
 
     createdAt   DateTime  @default(now())
     updatedAt   DateTime  @updatedAt
@@ -785,4 +792,47 @@ model Tax {
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+
+
+// Point of Sale Model
+model PointOfSale {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  address         String?
+  email           String?
+  name            String
+  customer        Customer? @relation(fields: [customerId], references: [id])
+  customerId      String?   @db.ObjectId
+  transactionDate DateTime
+  transactionId   String    @unique
+  currency        String
+  paymentMethod   String
+  status          String    @default("Pending")
+  discount        Float     @default(0)
+  discountAmount  Float     @default(0)
+  subTotal        Float
+  totalTaxAmount  Float     @default(0)
+  total           Float
+  items           PointOfSaleItem[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+// Point of Sale Item Model
+model PointOfSaleItem {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  pointOfSale    PointOfSale @relation(fields: [pointOfSaleId], references: [id], onDelete: Cascade)
+  pointOfSaleId  String     @db.ObjectId
+  item           Item       @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId         String     @db.ObjectId
+  title          String
+  quantity       Int
+  price          Float
+  amount         Float
+  taxRate        Float      @default(0)
+  taxAmount      Float      @default(0)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 }
