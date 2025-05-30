@@ -1,6 +1,6 @@
 "use client"
 
-import { BadgeDollarSign, BaggageClaim, BarChart4, Cable, ChevronLeft, DollarSignIcon, Files, Home, PlusCircle, ShoppingBag, ShoppingBasket, ShoppingCart, X } from 'lucide-react';
+import { BadgeDollarSign, BaggageClaim, BarChart4, Cable, ChevronLeft, DollarSignIcon, Files, Home, Landmark, PlusCircle, ShoppingBag, ShoppingBasket, ShoppingCart, X } from 'lucide-react';
 import Link from 'next/link';
 import SubscriptionCard from './SubscriptionCard';
 
@@ -335,7 +335,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
 
                             <SidebarDropdownLink items={inventoryLinks} title="Inventory" icon={BaggageClaim} setShowSidebar={setShowSidebar} />
                             {/* <SidebarDropdownLink items={accountingLinks} title="Accounting" icon={BarChart4} setShowSidebar={setShowSidebar} /> */}
-                            <SidebarDropdownLink items={bankingLinks} title="Banking" icon={DollarSignIcon} setShowSidebar={setShowSidebar} />
+                            <SidebarDropdownLink items={bankingLinks} title="Banking" icon={Landmark} setShowSidebar={setShowSidebar} />
                             <SidebarDropdownLink items={salesLinks} title="Sales" icon={BadgeDollarSign} setShowSidebar={setShowSidebar} />
                             <SidebarDropdownLink items={purchaseLinks} title="Purchases" icon={ShoppingCart} setShowSidebar={setShowSidebar} />
                         </nav>
