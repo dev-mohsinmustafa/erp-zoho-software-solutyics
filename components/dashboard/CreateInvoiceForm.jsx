@@ -39,9 +39,12 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
             discountAmount: 0,
             currency: "PKR",
             invoiceDate: new Date().toISOString().split('T')[0], // Set today as default invoice date
+            transactionDate: new Date().toISOString().split('T')[0],
             dueDate: new Date().toISOString().split('T')[0],
             invoiceNumber: `INV-${Date.now()}`, // Generate unique invoice number
-            status: "Pending" // Add default status
+            status: "Pending", // Add default status
+            orderNumber: `ORD-${Date.now()}`, // Add this line to generate auto order number
+            transactionId: `TXN-${Date.now()}`,
 
         }
     });
@@ -233,6 +236,39 @@ const CreateInvoiceForm = ({ items, initialData = {}, isUpdate = false }) => {
                                 register={register}
                                 errors={errors}
                                 className="w-full"
+                            />
+                            <TextInput
+                                label="Transaction Date"
+                                name="transactionDate"
+                                type="date"
+                                register={register}
+                                errors={errors}
+                                className="w-full"
+                            />
+                            {/* Add Transaction ID field */}
+                            <TextInput
+                                label="Transaction ID"
+                                name="transactionId"
+                                register={register}
+                                errors={errors}
+                                className="w-full"
+                                readOnly
+                            />
+                            {/* Add Payment Method field */}
+                            <SelectInput
+                                label="Payment Method"
+                                name="paymentMethod"
+                                register={register}
+                                errors={errors}
+                                className="w-full"
+                                options={[
+                                    { id: "Cash", title: "Cash" },
+                                    { id: "Credit Card", title: "Credit Card" },
+                                    { id: "Debit Card", title: "Debit Card" },
+                                    // { id: "Bank Transfer", title: "Bank Transfer" },
+                                    { id: "Mobile Payment", title: "Mobile Payment" },
+                                    { id: "Cheque", title: "Cheque" }
+                                ]}
                             />
                         </div>
                     </div>

@@ -6,7 +6,8 @@ import { getData } from "@/lib/getData";
 import { useEffect, useState } from "react";
 
 const CustomerPointofSales = () => {
-    const columns = ["transactionId", "invoiceNumber", "invoiceDate", "dueDate", "status", "customer.name", "total", "paymentMethod"];
+    // "transactionId", "transactionDate", 
+    const columns = ["customer.name", "invoiceNumber", "invoiceDate", "total", "status", "paymentMethod"];
 
     const [pointOfSales, setPointOfSales] = useState([]);
     const [loading, setLoading] = useState(true);

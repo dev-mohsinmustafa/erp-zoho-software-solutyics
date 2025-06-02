@@ -1,5 +1,5 @@
 "use client"
-import { Eye, Mail, Pencil, } from "lucide-react"
+import { CheckCircle, Eye, Mail, Pencil, } from "lucide-react"
 import Link from "next/link"
 import DeleteBtn from "./DeleteBtn"
 import { memo, useEffect } from 'react';
@@ -30,6 +30,31 @@ const DataTablePointofSales = memo(({ data = [], columns = [], resourceTitle }) 
 
         }
     };
+
+
+    const handleMarkAsPaid = async (id) => {
+        try {
+            const response = await fetch(`/api/pos/point-of-sales/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: 'Paid' })
+            });
+
+            if (response.ok) {
+                toast.success('Status updated to PAID');
+                window.location.reload();
+            } else {
+                console.error('Failed to update payment status');
+                toast.error('Failed to update payment status');
+            }
+        } catch (error) {
+            console.error('Error updating payment status:', error);
+            toast.error('Error updating payment status');
+        }
+    };
+
 
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -85,7 +110,9 @@ const DataTablePointofSales = memo(({ data = [], columns = [], resourceTitle }) 
                                                     return (
                                                         <td key={index} className="px-6 py-4">
                                                             {columnName.includes(".") ?
-                                                                (columnName.split(".").reduce((obj, key) => obj[key], item)) :
+                                                                (columnName === "customer.name" ?
+                                                                    (item.customer?.name || "No Customer (Walk-in)") :
+                                                                    columnName.split(".").reduce((obj, key) => obj[key], item)) :
 
                                                                 columnName === "imageUrl" ?
                                                                     (
@@ -95,7 +122,7 @@ const DataTablePointofSales = memo(({ data = [], columns = [], resourceTitle }) 
                                                                             className="w-12 h-12 object-cover rounded-full" />
                                                                     )
                                                                     :
-                                                                    columnName === "createdAt" || columnName === "updatedAt" || columnName === "invoiceDate" || columnName === "dueDate"
+                                                                    columnName === "createdAt" || columnName === "updatedAt" || columnName === "invoiceDate" || columnName === "dueDate" || columnName === "transactionDate"
                                                                         ?
                                                                         (
                                                                             // Convert date columns to a more readable format 
@@ -138,12 +165,25 @@ const DataTablePointofSales = memo(({ data = [], columns = [], resourceTitle }) 
 
 
 
+
+
                                                 {item.status.toLowerCase() === 'draft' && (
                                                     <button
                                                         onClick={() => handleMarkAsSent(item.id)}
                                                         className="font-medium text-blue-600 dark:text-blue-500 flex items-center space-x-1"
                                                     >
                                                         <span>Mark Sent</span>
+                                                    </button>
+                                                )}
+
+
+                                                {item.status.toLowerCase() !== 'paid' && (
+                                                    <button
+                                                        onClick={() => handleMarkAsPaid(item.id)}
+                                                        className="font-medium text-emerald-600 dark:text-emerald-500 hover: underline flex items-center space-x-1"
+                                                    >
+                                                        <CheckCircle className="w-4 h-4" />
+                                                        <span>Mark Paid</span>
                                                     </button>
                                                 )}
 

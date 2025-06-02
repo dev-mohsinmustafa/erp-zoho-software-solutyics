@@ -1,27 +1,6 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
 
-// GET all invoices
-export async function GET() {
-    try {
-        const invoices = await db.invoice.findMany({
-            include: {
-                customer: true,
-                items: {
-                    include: {
-                        item: true
-                    }
-                }
-            },
-            orderBy: {
-                createdAt: 'desc'
-            }
-        });
-        return NextResponse.json(invoices);
-    } catch (error) {
-        return NextResponse.json({ message: "Failed to fetch invoices", error }, { status: 500 });
-    }
-}
 
 // POST new invoice
 export async function POST(request) {
@@ -34,18 +13,25 @@ export async function POST(request) {
         const totalTaxAmount = data.items.reduce((acc, item) => acc + (item.taxAmount || 0), 0);
         const total = subTotal - discountAmount + totalTaxAmount;
 
+        // Set status to "Paid" if payment method is "Cash"
+        const status = data.paymentMethod === "Cash" ? "Paid" : "Draft";
+
         // Create invoice with items
         const invoice = await db.invoice.create({
             data: {
                 title: data.title,
-                invoiceNumber: data.invoiceNumber,
+                customerId: data.customerId,
                 invoiceDate: new Date(data.invoiceDate),
+                invoiceNumber: data.invoiceNumber,
                 dueDate: new Date(data.dueDate),
                 orderNumber: data.orderNumber,
+                transactionDate: new Date(data.transactionDate),
+                transactionId: data.transactionId,
+                paymentMethod: data.paymentMethod,
+                status: status,
                 name: data.name,
                 email: data.email,
                 address: data.address,
-                customerId: data.customerId,
                 currency: data.currency,
                 discount: parseFloat(data.discount),
                 discountAmount: discountAmount,
@@ -79,6 +65,27 @@ export async function POST(request) {
 
 
 
+// GET all invoices
+export async function GET() {
+    try {
+        const invoices = await db.invoice.findMany({
+            include: {
+                customer: true,
+                items: {
+                    include: {
+                        item: true
+                    }
+                }
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
+        return NextResponse.json(invoices);
+    } catch (error) {
+        return NextResponse.json({ message: "Failed to fetch invoices", error }, { status: 500 });
+    }
+}
 
 
 

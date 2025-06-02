@@ -1,37 +1,13 @@
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
 
-// GET all POS transactions
-export async function GET() {
-    try {
-        const transactions = await db.pointOfSale.findMany({
-            include: {
-                customer: true,
-                items: {
-                    include: {
-                        item: true
-                    }
-                }
-            },
-            orderBy: {
-                createdAt: 'desc'
-            }
-        });
-        return NextResponse.json(transactions);
-    } catch (error) {
-        return NextResponse.json({ message: "Failed to fetch POS transactions", error }, { status: 500 });
-    }
-}
 
 // POST new POS transaction
 export async function POST(request) {
     try {
         const data = await request.json();
 
-        // Generate a transaction ID if not provided
-        if (!data.transactionId) {
-            data.transactionId = `POS-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-        }
+
 
         // Calculate totals
         const subTotal = data.items.reduce((acc, item) => acc + item.amount, 0);
@@ -46,12 +22,16 @@ export async function POST(request) {
         const transaction = await db.pointOfSale.create({
             data: {
                 transactionId: data.transactionId,
+                invoiceNumber: data.invoiceNumber,
+                invoiceDate: new Date(data.invoiceDate),
                 title: data.title,
                 transactionDate: new Date(data.transactionDate),
                 name: data.name,
                 email: data.email,
                 address: data.address,
-                customerId: data.customerId,  // Optional field
+                // customerId: data.customerId,  // Optional field
+                // Only include customerId if it's provided and not empty
+                ...(data.customerId ? { customerId: data.customerId } : {}),
                 currency: data.currency,
                 paymentMethod: data.paymentMethod,
                 status: status,
@@ -84,6 +64,32 @@ export async function POST(request) {
         return NextResponse.json({ message: "Failed to create POS transaction", error }, { status: 500 });
     }
 }
+
+
+
+// GET all POS transactions
+export async function GET() {
+    try {
+        const transactions = await db.pointOfSale.findMany({
+            include: {
+                customer: true,
+                items: {
+                    include: {
+                        item: true
+                    }
+                }
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
+        return NextResponse.json(transactions);
+    } catch (error) {
+        return NextResponse.json({ message: "Failed to fetch POS transactions", error }, { status: 500 });
+    }
+}
+
+
 
 // DELETE POS transaction
 export async function DELETE(request) {

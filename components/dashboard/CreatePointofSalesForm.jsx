@@ -39,9 +39,10 @@ const CreatePointofSalesForm = ({ items, initialData = {}, isUpdate = false }) =
             invoiceDate: new Date().toISOString().split('T')[0],
             transactionDate: new Date().toISOString().split('T')[0],
             invoiceNumber: `INV-${Date.now()}`,
+            orderNumber: `ORD-${Date.now()}`, // Add this line to generate auto order number
             status: "Pending",
             // Add new fields
-            transactionID: `TXN-${Date.now()}`,
+            transactionId: `TXN-${Date.now()}`,
             paymentMethod: "Cash"
         }
     });
@@ -176,7 +177,7 @@ const CreatePointofSalesForm = ({ items, initialData = {}, isUpdate = false }) =
 
                             {/* Add Customer Select */}
                             <SelectInput
-                                label="Select Customer"
+                                label="Select Customer (Optional)"
                                 name="customerId"
                                 register={register}
                                 errors={errors}
@@ -225,7 +226,7 @@ const CreatePointofSalesForm = ({ items, initialData = {}, isUpdate = false }) =
                             {/* Add Transaction ID field */}
                             <TextInput
                                 label="Transaction ID"
-                                name="transactionID"
+                                name="transactionId"
                                 register={register}
                                 errors={errors}
                                 className="w-full"
@@ -241,11 +242,11 @@ const CreatePointofSalesForm = ({ items, initialData = {}, isUpdate = false }) =
                                 className="w-full"
                                 options={[
                                     { id: "Cash", title: "Cash" },
-                                    { id: "Credit Card", title: "Credit Card" },
-                                    { id: "Debit Card", title: "Debit Card" },
+                                    // { id: "Credit Card", title: "Credit Card" },
+                                    // { id: "Debit Card", title: "Debit Card" },
                                     // { id: "Bank Transfer", title: "Bank Transfer" },
-                                    { id: "Mobile Payment", title: "Mobile Payment" },
-                                    // { id: "Check", title: "Check" }
+                                    // { id: "Mobile Payment", title: "Mobile Payment" },
+                                    // { id: "Cheque", title: "Cheque" }
                                 ]}
                             />
                         </div>

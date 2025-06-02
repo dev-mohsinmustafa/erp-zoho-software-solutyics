@@ -702,6 +702,9 @@ model Invoice {
   invoiceDate   DateTime
   dueDate       DateTime
   orderNumber   String?
+  transactionDate DateTime
+  transactionId   String    @unique
+  paymentMethod   String
   status        String    @default("Draft") // Add status field
 
   
@@ -805,6 +808,9 @@ model PointOfSale {
   name            String
   customer        Customer? @relation(fields: [customerId], references: [id])
   customerId      String?   @db.ObjectId
+  invoiceDate   DateTime
+  invoiceNumber String    @unique
+  orderNumber   String?
   transactionDate DateTime
   transactionId   String    @unique
   currency        String

@@ -55,6 +55,7 @@ export async function PUT(request, { params }) {
             data: {
                 title: data.title,
                 invoiceDate: new Date(data.invoiceDate),
+                invoiceNumber: data.invoiceNumber,
                 dueDate: new Date(data.dueDate),
                 orderNumber: data.orderNumber,
                 name: data.name,
