@@ -729,6 +729,10 @@ model Invoice {
   
   totalTaxAmount  Float   @default(0)
 
+
+  receivings InvoiceReceiving[]
+
+
   
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -842,3 +846,27 @@ model PointOfSaleItem {
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
 }
+
+
+
+
+
+// Invoice Receiving Model
+model InvoiceReceiving {
+  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
+  receivingNumber      String   @unique
+  receivingDate        DateTime
+  invoice              Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  invoiceId            String   @db.ObjectId
+  paymentMethod        String
+  amountReceived       Float
+  remainingBalance     Float
+  paymentStatus        String
+  bankName             String?
+  chequeNumber         String?
+  transactionReference String?
+  notes                String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+

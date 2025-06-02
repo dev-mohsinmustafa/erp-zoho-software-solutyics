@@ -165,6 +165,11 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             href: "/dashboard/sales/invoices",
             requiredPermission: "invoices"
         },
+        {
+            title: "Receiving",
+            href: "/dashboard/sales/receiving",
+            requiredPermission: "sales-receiving"
+        },
         // {
         //     title: "Sales Returns",
         //     href: "/dashboard/sales/returns",
@@ -203,6 +208,39 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
         //     title: "Credit Notes",
         //     href: "/",
         // },
+    ].filter(link => {
+        return (!link.adminOnly || session?.user?.role === "admin") ||
+            (link.requiredPermission && session?.user?.permissions?.[link.requiredPermission]);
+    });
+
+    // Add this with your other link arrays (near line 250)
+    const receivingLinks = [
+        {
+            title: "All Receiving",
+            href: "/dashboard/receiving",
+            requiredPermission: "receiving"
+        },
+        {
+            title: "Purchase Order Receiving",
+            href: "/dashboard/receiving/po-receiving",
+            requiredPermission: "po-receiving"
+        },
+        {
+            title: "Direct Receiving",
+            href: "/dashboard/receiving/direct-receiving",
+            requiredPermission: "direct-receiving"
+        },
+        {
+            title: "Receiving History",
+            href: "/dashboard/receiving/history",
+            requiredPermission: "receiving-history"
+        },
+        {
+            title: "Receiving Reports",
+            href: "/dashboard/receiving/reports",
+            adminOnly: true,
+            requiredPermission: "receiving-reports"
+        },
     ].filter(link => {
         return (!link.adminOnly || session?.user?.role === "admin") ||
             (link.requiredPermission && session?.user?.permissions?.[link.requiredPermission]);
@@ -346,7 +384,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             href: "/dashboard/pos/settings",
             adminOnly: true,
             requiredPermission: "pos-settings"
-        }
+        },
     ].filter(link => {
         return (!link.adminOnly || session?.user?.role === "admin") ||
             (link.requiredPermission && session?.user?.permissions?.[link.requiredPermission]);
@@ -382,6 +420,8 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
                             <SidebarDropdownLink items={posLinks} title="Point of Sales" icon={ShoppingBasket} setShowSidebar={setShowSidebar} />
                             <SidebarDropdownLink items={bankingLinks} title="Banking" icon={Landmark} setShowSidebar={setShowSidebar} />
                             <SidebarDropdownLink items={salesLinks} title="Sales" icon={BadgeDollarSign} setShowSidebar={setShowSidebar} />
+                            <SidebarDropdownLink items={receivingLinks} title="Receiving" icon={ShoppingBag} setShowSidebar={setShowSidebar} />
+
                             <SidebarDropdownLink items={purchaseLinks} title="Purchases" icon={ShoppingCart} setShowSidebar={setShowSidebar} />
                         </nav>
                         <SubscriptionCard />

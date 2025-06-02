@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { ShoppingCart, DollarSign, Clock, Settings, CreditCard, Users } from 'lucide-react';
 
 const PointOfSalesDashboard = () => {
+    const { data: session } = useSession();
     const [transactions, setTransactions] = useState([]);
     const [salesStats, setSalesStats] = useState({
         todaySales: 0,
@@ -62,7 +63,7 @@ const PointOfSalesDashboard = () => {
     const statsCards = [
         {
             title: "Today's Sales",
-            value: `PKR. ${salesStats.todaySales.toFixed(2)}`,
+            value: `$${salesStats.todaySales.toFixed(2)}`,
             icon: DollarSign,
             color: "bg-green-500"
         },
@@ -167,14 +168,14 @@ const PointOfSalesDashboard = () => {
                             <tr key={index}>
                                 <td className="px-6 py-4 whitespace-nowrap">{transaction.transactionId}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{transaction.customer?.name || 'Walk-in Customer'}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">Rs.{transaction.total.toFixed(2)}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">${transaction.total.toFixed(2)}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{transaction.paymentMethod}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <span className={`px-2 py-1 text-xs font-semibold rounded-full ${transaction.status === 'Completed' || transaction.status === 'Paid'
-                                        ? 'text-green-800 bg-green-100'
-                                        : transaction.status === 'Pending'
-                                            ? 'text-yellow-800 bg-yellow-100'
-                                            : 'text-gray-800 bg-gray-100'
+                                            ? 'text-green-800 bg-green-100'
+                                            : transaction.status === 'Pending'
+                                                ? 'text-yellow-800 bg-yellow-100'
+                                                : 'text-gray-800 bg-gray-100'
                                         }`}>
                                         {transaction.status}
                                     </span>
