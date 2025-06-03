@@ -28,7 +28,7 @@ const PurchasesOrderPage = () => {
     return (
         <div>
             {/* Fixed Header */}
-            <FixedHeader title="Purchase Orders" newLink="/dashboard/purchases/orders/new" />
+            <FixedHeader title="Purchases Orders" newLink="/dashboard/purchases/orders/new" />
             {/* Table */}
             <div className="my-4 p-8 relative">
                 {loading ? <LoadingSpinner message="Loading purchases orders data, please wait..." /> : null}

@@ -161,12 +161,12 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
         //     requiredPermission: "sales-orders"
         // },
         {
-            title: "Invoices",
+            title: "Sales/Invoices",
             href: "/dashboard/sales/invoices",
             requiredPermission: "invoices"
         },
         {
-            title: "Receiving",
+            title: "Sales Receiving",
             href: "/dashboard/sales/receiving",
             requiredPermission: "sales-receiving"
         },
@@ -271,7 +271,12 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             title: "Supplier",
             href: "/dashboard/purchases/suppliers",
             requiredPermission: "suppliers"
-        }
+        },
+        {
+            title: "Purchase Receiving",
+            href: "/dashboard/purchases/receiving",
+            requiredPermission: "purchases-receiving"
+        },
     ].filter(link => {
         return (!link.adminOnly || session?.user?.role === "admin") ||
             (link.requiredPermission && session?.user?.permissions?.[link.requiredPermission]);
