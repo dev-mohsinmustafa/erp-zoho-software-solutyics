@@ -1,23 +1,23 @@
 "use client";
-import DataTableInvoices from "@/components/dashboard/DataTableInvoices";
+import DataTablePurchases from "@/components/dashboard/DataTablePurchases";
 import FixedHeader from "@/components/dashboard/FixedHeader";
 import LoadingSpinner from "@/components/dashboard/LoadingSpinner";
 import { getData } from "@/lib/getData";
 import { useEffect, useState } from "react";
 
 const PurchasesOrderPage = () => {
-    // const invoices = await getData("sales/invoices");
-    const columns = ["invoiceNumber", "invoiceDate", "dueDate", "status", "customer.name", "total"];
+    // const columns = ["purchaseOrderNumber", "orderDate", "expectedDeliveryDate", "status", "supplier.title", "total"];
+    const columns = ["purchaseOrderNumber", "orderDate", "expectedDeliveryDate",];
 
-    const [invoices, setInvoices] = useState([]);
+    const [purchases, setPurchases] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getData("sales/invoices");
-                setInvoices(data);
+                const data = await getData("purhases/orders");
+                setPurchases(data);
             } catch (error) {
-                console.error("Error fetching invoices:", error);
+                console.error("Error fetching purchases:", error);
             } finally {
                 setLoading(false);
             }
@@ -32,12 +32,11 @@ const PurchasesOrderPage = () => {
             <FixedHeader title="Purchase Orders" newLink="/dashboard/purchases/orders/new" />
             {/* Table */}
             <div className="my-4 p-8 relative">
-                {loading ? <LoadingSpinner message="Loading invoices data, please wait..." /> : null}
-                <DataTableInvoices
-                    data={invoices}
+                {loading ? <LoadingSpinner message="Loading purchases orders data, please wait..." /> : null}
+                <DataTablePurchases
+                    data={purchases}
                     columns={columns}
-                    resourceTitle="sales/invoices"
-                // resourceTitle="purchases/orders"
+                    resourceTitle="purchases/orders"
                 />
             </div>
         </div>

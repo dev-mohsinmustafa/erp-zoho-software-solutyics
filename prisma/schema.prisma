@@ -67,6 +67,8 @@ model Item {
   pointOfSaleItems PointOfSaleItem[]
 
 
+// Purchases Order Section after Sales Orders
+  purchasesOrderItems PurchasesOrdersItem[] 
 
 
   createdAt DateTime @default(now())
@@ -241,6 +243,10 @@ model Supplier {
   products   Product[]
 
   requestBasedPurchaseOrders RequestBasedPurchaseOrder[]
+
+// Purchases Order Section after Sales Orders
+   purchasesOrders PurchasesOrders[] // Add this line
+
 }
 
 
@@ -870,3 +876,43 @@ model InvoiceReceiving {
   updatedAt            DateTime @updatedAt
 }
 
+
+
+
+
+// Purchase Order Model
+model PurchasesOrders {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  supplierId         String   @db.ObjectId
+  supplier           Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  purchaseOrderNumber String
+  orderDate          DateTime
+  expectedDeliveryDate       DateTime
+  referenceNumber    String?
+  status             String   @default("Draft") // Draft, Confirmed, Received, Cancelled
+  items             PurchasesOrdersItem[]
+  subTotal          Float
+  totalTaxAmount    Float
+  discount          Float    @default(0)
+  discountAmount    Float    @default(0)
+  total             Float
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+// Purchase Order Item Model
+model PurchasesOrdersItem {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  purchasesOrders  PurchasesOrders @relation(fields: [purchasesOrdersId], references: [id], onDelete: Cascade)
+  purchasesOrdersId String       @db.ObjectId
+  item           Item         @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  itemId         String       @db.ObjectId
+  title          String
+  quantity       Int
+  price          Float
+  amount         Float
+  taxRate        Float
+  taxAmount      Float
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
