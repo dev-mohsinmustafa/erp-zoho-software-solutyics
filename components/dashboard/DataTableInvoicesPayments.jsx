@@ -6,54 +6,54 @@ import { memo, useEffect } from 'react';
 import toast from "react-hot-toast";
 
 const DataTableInvoicesPayments = memo(({ data = [], columns = [], resourceTitle }) => {
-    const handleMarkAsSent = async (id) => {
-        try {
-            const response = await fetch(`/api/sales/invoices/${id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ status: 'sent' })
-            });
+    // const handleMarkAsSent = async (id) => {
+    //     try {
+    //         const response = await fetch(`/api/sales/invoices/${id}`, {
+    //             method: 'PATCH',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ status: 'sent' })
+    //         });
 
-            if (response.ok) {
-                // Refresh the page to show updated status
-                toast.success('Status updated to SENT');
-                window.location.reload();
-            } else {
-                console.error('Failed to update invoice status');
-                toast.error('Failed to update invoice status');
-            }
-        } catch (error) {
-            console.error('Error updating invoice status:', error);
-            toast.error('Error updating invoice status');
+    //         if (response.ok) {
+    //             // Refresh the page to show updated status
+    //             toast.success('Status updated to SENT');
+    //             window.location.reload();
+    //         } else {
+    //             console.error('Failed to update invoice status');
+    //             toast.error('Failed to update invoice status');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error updating invoice status:', error);
+    //         toast.error('Error updating invoice status');
 
-        }
-    };
+    //     }
+    // };
 
 
-    const handleMarkAsPaid = async (id) => {
-        try {
-            const response = await fetch(`/api/sales/invoices/${id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ status: 'Paid' })
-            });
+    // const handleMarkAsPaid = async (id) => {
+    //     try {
+    //         const response = await fetch(`/api/sales/invoices/${id}`, {
+    //             method: 'PATCH',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ status: 'Paid' })
+    //         });
 
-            if (response.ok) {
-                toast.success('Status updated to PAID');
-                window.location.reload();
-            } else {
-                console.error('Failed to update payment status');
-                toast.error('Failed to update payment status');
-            }
-        } catch (error) {
-            console.error('Error updating payment status:', error);
-            toast.error('Error updating payment status');
-        }
-    };
+    //         if (response.ok) {
+    //             toast.success('Status updated to PAID');
+    //             window.location.reload();
+    //         } else {
+    //             console.error('Failed to update payment status');
+    //             toast.error('Failed to update payment status');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error updating payment status:', error);
+    //         toast.error('Error updating payment status');
+    //     }
+    // };
 
 
     return (
@@ -120,25 +120,25 @@ const DataTableInvoicesPayments = memo(({ data = [], columns = [], resourceTitle
                                                                             className="w-12 h-12 object-cover rounded-full" />
                                                                     )
                                                                     :
-                                                                    columnName === "createdAt" || columnName === "updatedAt" || columnName === "invoiceDate" || columnName === "dueDate"
+                                                                    columnName === "createdAt" || columnName === "updatedAt" || columnName === "invoiceDate" || columnName === "receivingDate"
                                                                         ?
                                                                         (
                                                                             // Convert date columns to a more readable format 
                                                                             new Date(item[columnName]).toLocaleDateString()
                                                                         )
                                                                         :
-                                                                        columnName === "status" ?
+                                                                        columnName === "paymentStatus" ?
                                                                             (
-                                                                                <span className={`px-2 py-1 rounded text-sm ${item[columnName].toLowerCase() === 'draft'
+                                                                                <span className={`px-2 py-1 rounded text-sm ${item[columnName]?.toLowerCase() === 'pending'
                                                                                     ? 'bg-[#ECECEC]  text-gray-800'
-                                                                                    : item[columnName].toLowerCase() === 'sent'
+                                                                                    : item[columnName]?.toLowerCase() === 'partial'
                                                                                         ? 'bg-[#B80000] text-white'
-                                                                                        : item[columnName].toLowerCase() === 'paid'
+                                                                                        : item[columnName]?.toLowerCase() === 'paid'
                                                                                             ? 'bg-[#63914A] text-white'
 
                                                                                             : 'bg-yellow-100 text-yellow-800'
                                                                                     }`}>
-                                                                                    {item[columnName]}
+                                                                                    {item[columnName] || 'N/A'}
                                                                                 </span>
                                                                             )
                                                                             :
@@ -163,7 +163,7 @@ const DataTableInvoicesPayments = memo(({ data = [], columns = [], resourceTitle
 
 
 
-                                                {item.status.toLowerCase() === 'draft' && (
+                                                {/* {item.status.toLowerCase() === 'draft' && (
                                                     <button
                                                         onClick={() => handleMarkAsSent(item.id)}
                                                         className="font-medium text-blue-600 dark:text-blue-500 flex items-center space-x-1"
@@ -180,7 +180,7 @@ const DataTableInvoicesPayments = memo(({ data = [], columns = [], resourceTitle
                                                         <CheckCircle className="w-4 h-4" />
                                                         <span>Mark Paid</span>
                                                     </button>
-                                                )}
+                                                )} */}
 
 
 

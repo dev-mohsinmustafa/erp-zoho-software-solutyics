@@ -51,3 +51,41 @@ export async function GET() {
         return NextResponse.json({ message: "Failed to fetch receivings", error }, { status: 500 });
     }
 }
+
+export async function DELETE(request) {
+    try {
+        // Get the ID from search Params like in invoices route
+        const id = request.nextUrl.searchParams.get("id");
+
+        // First get the receiving record to check invoice details
+        const receiving = await db.invoiceReceiving.findUnique({
+            where: { id },
+            include: { invoice: true }
+        });
+
+        if (!receiving) {
+            return NextResponse.json({ message: "Receiving not found" }, { status: 404 });
+        }
+
+        // Delete the receiving record
+        const deletedReceiving = await db.invoiceReceiving.delete({
+            where: { id }
+        });
+
+        // Check if we need to update invoice status
+        if (receiving.paymentStatus === 'Paid') {
+            await db.invoice.update({
+                where: { id: receiving.invoiceId },
+                data: { status: 'Pending' }
+            });
+        }
+
+        return NextResponse.json(deletedReceiving);
+    } catch (error) {
+        console.log(error);
+        return NextResponse.json(
+            { error, message: "Failed to delete receiving" },
+            { status: 500 }
+        );
+    }
+}

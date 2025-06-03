@@ -28,7 +28,7 @@ const NewInvoiceReceivePayment = async ({ initialData = {}, isUpdate = false }) 
         <div>
 
             {/* Header */}
-            <FormHeader title={isUpdate ? "Update Invoice Payment" : "New Invoice Payment"} href="/dashboard/sales/receiving" />
+            <FormHeader title={isUpdate ? "Update Invoice Receiving Payment" : "New Invoice Receiving Payment"} href="/dashboard/sales/receiving" />
 
 
             {/* Form */}

@@ -1,87 +1,35 @@
 "use client"
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSession } from 'next-auth/react';
+// import { Card } from '@/components/ui/card';
 import { ShoppingCart, DollarSign, Clock, Settings, CreditCard, Users } from 'lucide-react';
 
 const PointOfSalesDashboard = () => {
     const { data: session } = useSession();
-    const [transactions, setTransactions] = useState([]);
-    const [salesStats, setSalesStats] = useState({
-        todaySales: 0,
-        activeOrders: 0,
-        pendingPayments: 0,
-        totalCustomers: new Set()
-    });
 
-    useEffect(() => {
-        fetchTransactions();
-    }, []);
-
-    const fetchTransactions = async () => {
-        try {
-            const response = await fetch('/api/pos/point-of-sales');
-            const data = await response.json();
-            setTransactions(data);
-
-            // Calculate dashboard statistics
-            const today = new Date().toISOString().split('T')[0];
-            const stats = data.reduce((acc, transaction) => {
-                // Today's sales
-                if (transaction.transactionDate.split('T')[0] === today) {
-                    acc.todaySales += transaction.total;
-                }
-                // Active orders (not completed)
-                if (transaction.status !== 'Completed') {
-                    acc.activeOrders++;
-                }
-                // Pending payments
-                if (transaction.status === 'Pending') {
-                    acc.pendingPayments++;
-                }
-                // Unique customers
-                if (transaction.customerId) {
-                    acc.totalCustomers.add(transaction.customerId);
-                }
-                return acc;
-            }, {
-                todaySales: 0,
-                activeOrders: 0,
-                pendingPayments: 0,
-                totalCustomers: new Set()
-            });
-
-            setSalesStats({
-                ...stats,
-                totalCustomers: stats.totalCustomers.size
-            });
-        } catch (error) {
-            console.error('Error fetching transactions:', error);
-        }
-    };
-
-    const statsCards = [
+    const salesStats = [
         {
             title: "Today's Sales",
-            value: `$${salesStats.todaySales.toFixed(2)}`,
+            value: "$1,234.56",
             icon: DollarSign,
             color: "bg-green-500"
         },
         {
             title: "Active Orders",
-            value: salesStats.activeOrders.toString(),
+            value: "12",
             icon: ShoppingCart,
             color: "bg-blue-500"
         },
         {
             title: "Pending Payments",
-            value: salesStats.pendingPayments.toString(),
+            value: "3",
             icon: Clock,
             color: "bg-yellow-500"
         },
         {
             title: "Total Customers",
-            value: salesStats.totalCustomers.toString(),
+            value: "156",
             icon: Users,
             color: "bg-purple-500"
         }
@@ -120,7 +68,7 @@ const PointOfSalesDashboard = () => {
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                {statsCards.map((stat, index) => (
+                {salesStats.map((stat, index) => (
                     <div key={index} className="bg-white rounded-lg shadow-md p-6">
                         <div className="flex items-center justify-between">
                             <div>
@@ -164,24 +112,25 @@ const PointOfSalesDashboard = () => {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                        {transactions.slice(0, 5).map((transaction, index) => (
-                            <tr key={index}>
-                                <td className="px-6 py-4 whitespace-nowrap">{transaction.transactionId}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{transaction.customer?.name || 'Walk-in Customer'}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">${transaction.total.toFixed(2)}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{transaction.paymentMethod}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${transaction.status === 'Completed' || transaction.status === 'Paid'
-                                            ? 'text-green-800 bg-green-100'
-                                            : transaction.status === 'Pending'
-                                                ? 'text-yellow-800 bg-yellow-100'
-                                                : 'text-gray-800 bg-gray-100'
-                                        }`}>
-                                        {transaction.status}
-                                    </span>
-                                </td>
-                            </tr>
-                        ))}
+                        {/* Sample transaction data - Replace with actual data */}
+                        <tr>
+                            <td className="px-6 py-4 whitespace-nowrap">#TRX001</td>
+                            <td className="px-6 py-4 whitespace-nowrap">John Doe</td>
+                            <td className="px-6 py-4 whitespace-nowrap">$125.00</td>
+                            <td className="px-6 py-4 whitespace-nowrap">Credit Card</td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                                <span className="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Completed</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="px-6 py-4 whitespace-nowrap">#TRX002</td>
+                            <td className="px-6 py-4 whitespace-nowrap">Jane Smith</td>
+                            <td className="px-6 py-4 whitespace-nowrap">$75.50</td>
+                            <td className="px-6 py-4 whitespace-nowrap">Cash</td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                                <span className="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Completed</span>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

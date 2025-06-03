@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 
-const CreateInvoiceReceivePaymentForm = ({ items, initialData = {}, isUpdate = false }) => {
+const CreateInvoiceReceivePaymentForm = ({ initialData = {}, isUpdate = false }) => {
     const [loading, setLoading] = useState(false);
     const [invoices, setInvoices] = useState([]);
     const [selectedInvoice, setSelectedInvoice] = useState(null);
@@ -59,7 +59,7 @@ const CreateInvoiceReceivePaymentForm = ({ items, initialData = {}, isUpdate = f
         }
     };
 
-    const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm({
         defaultValues: {
             ...initialData,
             invoiceNumber: initialData?.invoiceNumber || "",
@@ -203,32 +203,36 @@ const CreateInvoiceReceivePaymentForm = ({ items, initialData = {}, isUpdate = f
                     <h3 className="text-lg font-medium text-gray-900 mb-4">Payment Reference</h3>
                     <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
                         <TextInput
-                            label="Bank Name"
+                            label="Bank Name (Optional)"
                             name="bankName"
                             register={register}
                             errors={errors}
                             className="w-full"
+                            IsRequired={false}
                         />
                         <TextInput
-                            label="Cheque Number"
+                            label="Cheque Number (Optional)"
                             name="chequeNumber"
                             register={register}
                             errors={errors}
                             className="w-full"
+                            IsRequired={false}
                         />
                         <TextInput
-                            label="Transaction Reference"
+                            label="Transaction Reference (Optional)"
                             name="transactionReference"
                             register={register}
                             errors={errors}
                             className="w-full"
+                            IsRequired={false}
                         />
                         <TextInput
-                            label="Notes"
+                            label="Notes (Optional)"
                             name="notes"
                             register={register}
                             errors={errors}
                             className="w-full"
+                            IsRequired={false}
                         />
                     </div>
                 </div>
