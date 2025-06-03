@@ -6,15 +6,14 @@ import { getData } from "@/lib/getData";
 import { useEffect, useState } from "react";
 
 const PurchasesOrderPage = () => {
-    // const columns = ["purchaseOrderNumber", "orderDate", "expectedDeliveryDate", "status", "supplier.title", "total"];
-    const columns = ["purchaseOrderNumber", "orderDate", "expectedDeliveryDate",];
+    const columns = ["purchaseOrderNumber", "orderDate", "expectedDeliveryDate", "status", "supplier.title", "total"];
 
     const [purchases, setPurchases] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getData("purhases/orders");
+                const data = await getData("purchases/orders");
                 setPurchases(data);
             } catch (error) {
                 console.error("Error fetching purchases:", error);

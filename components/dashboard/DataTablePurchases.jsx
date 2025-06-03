@@ -6,54 +6,54 @@ import { memo, useEffect } from 'react';
 import toast from "react-hot-toast";
 
 const DataTablePurchases = memo(({ data = [], columns = [], resourceTitle }) => {
-    // const handleMarkAsSent = async (id) => {
-    //     try {
-    //         const response = await fetch(`/api/purchases/orders/${id}`, {
-    //             method: 'PATCH',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ status: 'sent' })
-    //         });
+    const handleMarkAsSent = async (id) => {
+        try {
+            const response = await fetch(`/api/purchases/orders/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: 'sent' })
+            });
 
-    //         if (response.ok) {
-    //             // Refresh the page to show updated status
-    //             toast.success('Status updated to SENT');
-    //             window.location.reload();
-    //         } else {
-    //             console.error('Failed to update purchases orders status');
-    //             toast.error('Failed to update purchases orders status');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error updating purchases orders status:', error);
-    //         toast.error('Error updating purchases orders status');
+            if (response.ok) {
+                // Refresh the page to show updated status
+                toast.success('Status updated to SENT');
+                window.location.reload();
+            } else {
+                console.error('Failed to update purchases orders status');
+                toast.error('Failed to update purchases orders status');
+            }
+        } catch (error) {
+            console.error('Error updating purchases orders status:', error);
+            toast.error('Error updating purchases orders status');
 
-    //     }
-    // };
+        }
+    };
 
 
-    // const handleMarkAsPaid = async (id) => {
-    //     try {
-    //         const response = await fetch(`/api/purchases/orders/${id}`, {
-    //             method: 'PATCH',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ status: 'Paid' })
-    //         });
+    const handleMarkAsPaid = async (id) => {
+        try {
+            const response = await fetch(`/api/purchases/orders/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: 'Paid' })
+            });
 
-    //         if (response.ok) {
-    //             toast.success('Status updated to PAID');
-    //             window.location.reload();
-    //         } else {
-    //             console.error('Failed to update payment status');
-    //             toast.error('Failed to update payment status');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error updating payment status:', error);
-    //         toast.error('Error updating payment status');
-    //     }
-    // };
+            if (response.ok) {
+                toast.success('Status updated to PAID');
+                window.location.reload();
+            } else {
+                console.error('Failed to update payment status');
+                toast.error('Failed to update payment status');
+            }
+        } catch (error) {
+            console.error('Error updating payment status:', error);
+            toast.error('Error updating payment status');
+        }
+    };
 
 
     return (
@@ -163,7 +163,7 @@ const DataTablePurchases = memo(({ data = [], columns = [], resourceTitle }) => 
 
 
 
-                                                {/* {item.status.toLowerCase() === 'draft' && (
+                                                {item.status.toLowerCase() === 'draft' && (
                                                     <button
                                                         onClick={() => handleMarkAsSent(item.id)}
                                                         className="font-medium text-blue-600 dark:text-blue-500 flex items-center space-x-1"
@@ -180,7 +180,7 @@ const DataTablePurchases = memo(({ data = [], columns = [], resourceTitle }) => 
                                                         <CheckCircle className="w-4 h-4" />
                                                         <span>Mark Paid</span>
                                                     </button>
-                                                )} */}
+                                                )}
 
 
 
