@@ -7,7 +7,7 @@ import { useParams } from "next/navigation";
 import LoadingSpinner from "@/components/dashboard/LoadingSpinner";
 
 
-const ViewInvoiceReceivePayment = () => {
+const ViewPurchaseReceivePayment = () => {
     const [payment, setPayment] = useState(null);
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
@@ -16,7 +16,7 @@ const ViewInvoiceReceivePayment = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await getData(`sales/receiving/${id}`);
+                const data = await getData(`purchases/receiving/${id}`);
                 setPayment(data);
             } catch (error) {
                 console.error("Error fetching payment:", error);
@@ -46,14 +46,14 @@ const ViewInvoiceReceivePayment = () => {
     };
     return (
         <div>
-            <FormHeader title="View Payment Details" href="/dashboard/sales/receiving" />
+            <FormHeader title="View Payment Details" href="/dashboard/purchases/receiving" />
 
 
 
             <div className="w-full max-w-3xl p-8 bg-white border border-gray-200 rounded-lg shadow-sm mx-auto my-3">
 
                 {loading ? (
-                    <LoadingSpinner message="Loading receiving details, please wait..." />
+                    <LoadingSpinner message="Loading receiving purchases orders details, please wait..." />
                 ) : (
                     <>
                         <div className="grid gap-4 sm:grid-cols-2">
@@ -79,8 +79,8 @@ const ViewInvoiceReceivePayment = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Amount Received</label>
-                                <p className="mt-1 text-sm text-gray-900">{payment.amountReceived}</p>
+                                <label className="block text-sm font-medium text-gray-700">Amount Paid</label>
+                                <p className="mt-1 text-sm text-gray-900">{payment.amountPaid}</p>
                             </div>
 
                             <div>
@@ -128,7 +128,7 @@ const ViewInvoiceReceivePayment = () => {
             {/*  */}
             <div className="min-h-screen bg-gray-50 py-8">
                 {loading ? (
-                    <LoadingSpinner message="Loading receiving details, please wait..." />
+                    <LoadingSpinner message="Loading receiving purchases orders details, please wait..." />
                 ) : (
                     <>
                         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -161,9 +161,9 @@ const ViewInvoiceReceivePayment = () => {
                                             </div>
 
                                             <div>
-                                                <label className="text-sm font-medium text-gray-500">Amount Received</label>
+                                                <label className="text-sm font-medium text-gray-500">Amount Paid</label>
                                                 <p className="mt-1 text-base font-medium text-gray-900">
-                                                    Rs.{Number(payment.amountReceived).toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                                                    Rs.{Number(payment.amountPaid).toLocaleString('en-US', { minimumFractionDigits: 2 })}
                                                 </p>
                                             </div>
 
@@ -218,4 +218,4 @@ const ViewInvoiceReceivePayment = () => {
     );
 };
 
-export default ViewInvoiceReceivePayment;
+export default ViewPurchaseReceivePayment;

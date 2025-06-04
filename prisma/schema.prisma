@@ -896,6 +896,9 @@ model PurchasesOrders {
   discount          Float    @default(0)
   discountAmount    Float    @default(0)
   total             Float
+
+  purchasesOrdersReceivings PurchasesOrdersReceiving[]
+  
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
@@ -915,4 +918,24 @@ model PurchasesOrdersItem {
   taxAmount      Float
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+}
+
+
+
+model PurchasesOrdersReceiving {
+  id                  String    @id @default(auto()) @map("_id") @db.ObjectId
+  receivingNumber     String    @unique
+  receivingDate       DateTime
+  purchasesOrders     PurchasesOrders @relation(fields: [purchasesOrdersId], references: [id])
+  purchasesOrdersId   String    @db.ObjectId
+  paymentMethod       String
+  amountPaid          Float
+  remainingBalance    Float
+  paymentStatus       String
+  bankName            String?
+  chequeNumber        String?
+  transactionReference String?
+  notes               String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 }

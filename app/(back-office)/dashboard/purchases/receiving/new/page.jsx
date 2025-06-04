@@ -1,49 +1,32 @@
 
-// "use client"
-
-import CreateInvoiceReceivePaymentForm from "@/components/dashboard/CreateInvoiceReceivePaymentForm";
+import CreatePurchaseReceivePaymentForm from "@/components/dashboard/CreatePurchaseReceivePaymentForm";
 import FormHeader from "@/components/dashboard/FormHeader";
 import { getData } from "@/lib/getData";
 
+const NewPurchaseReceivePayment = async ({ initialData = {}, isUpdate = false }) => {
+    const purchasesOrdersData = getData("purchases/orders");
 
-const NewInvoiceReceivePayment = async ({ initialData = {}, isUpdate = false }) => {
-    const TAG = "NewInvoiceReceivePayment.js"
-
-    const itemsData = getData("inventory/items");
-
-
-
-
-    // instead of this we use 
-    // PARALLEL FETCHING is more faster and did't block the code
-    // 2- 
-    // suppliersData
-    const [items] = await Promise.all([
-        itemsData,
-    ])
-
+    const [purchasesOrders] = await Promise.all([
+        purchasesOrdersData,
+    ]);
 
 
     return (
         <div>
+            <FormHeader
+                title={isUpdate ? "Update Purchase Order Receiving Payment" : "New Purchase Order Receiving Payment"}
+                href="/dashboard/purchases/receiving"
+            />
 
-            {/* Header */}
-            <FormHeader title={isUpdate ? "Update Invoice Receiving Payment" : "New Invoice Receiving Payment"} href="/dashboard/sales/receiving" />
-
-
-            {/* Form */}
             <div className="w-full max-w-3xl p-4 bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 mx-auto my-3">
-
-
-                {/* Now remove this form code after creating CreatingInvoiceForm.jsx component */}
-
-                <CreateInvoiceReceivePaymentForm items={items} initialData={initialData} isUpdate={isUpdate} />
-
-
+                <CreatePurchaseReceivePaymentForm
+                    purchaseOrders={purchasesOrders}
+                    initialData={initialData}
+                    isUpdate={isUpdate}
+                />
             </div>
-
         </div>
-    )
-}
+    );
+};
 
-export default NewInvoiceReceivePayment;
+export default NewPurchaseReceivePayment;

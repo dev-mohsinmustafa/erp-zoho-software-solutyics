@@ -29,7 +29,7 @@ const CustomerInvoices = () => {
     return (
         <div>
             {/* Fixed Header */}
-            <FixedHeader title="Customer Invoices" newLink="/dashboard/sales/invoices/new" />
+            <FixedHeader title="Customer Sales/Invoices Orders" newLink="/dashboard/sales/invoices/new" />
             {/* Table */}
             <div className="my-4 p-8 relative">
                 {loading ? <LoadingSpinner message="Loading invoices data, please wait..." /> : null}

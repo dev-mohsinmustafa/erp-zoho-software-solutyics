@@ -5,7 +5,7 @@ import LoadingSpinner from "@/components/dashboard/LoadingSpinner";
 import { getData } from "@/lib/getData";
 import { useEffect, useState } from "react";
 
-const ReceivingPage = () => {
+const SalesReceivingPage = () => {
   // const invoices = await getData("sales/invoices");
   // const columns = ["invoiceNumber", "invoiceDate", "transactionDate", "transactionId", "status", "customer.name", "total"];
   const columns = ["receivingNumber", "receivingDate", "paymentMethod", "amountReceived", "remainingBalance", "paymentStatus"];
@@ -44,4 +44,4 @@ const ReceivingPage = () => {
   )
 }
 
-export default ReceivingPage;
+export default SalesReceivingPage;

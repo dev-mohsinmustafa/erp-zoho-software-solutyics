@@ -28,7 +28,7 @@ const NewInvoice = async ({ initialData = {}, isUpdate = false }) => {
         <div>
 
             {/* Header */}
-            <FormHeader title={isUpdate ? "Update Invoice" : "New Invoice"} href="/dashboard/sales/invoices" />
+            <FormHeader title={isUpdate ? "Update Sale/Invoice Order" : "New Sale/Invoice Order"} href="/dashboard/sales/invoices" />
 
 
             {/* Form */}

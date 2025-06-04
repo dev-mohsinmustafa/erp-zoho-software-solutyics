@@ -7,52 +7,50 @@ import SubmitButton from "@/components/formInputs/SubmitButton";
 import TextareaInput from "@/components/formInputs/TextareaInput";
 import TextInput from "@/components/formInputs/TextInput";
 import { makePostRequest, makePutRequest } from "@/lib/apiRequest";
-import { Trash2 } from "lucide-react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-const CreateInvoiceReceivePaymentForm = ({ initialData = {}, isUpdate = false }) => {
+const CreatePurchaseReceivePaymentForm = ({ initialData = {}, isUpdate = false }) => {
     const [loading, setLoading] = useState(false);
-    const [invoices, setInvoices] = useState([]);
-    const [selectedInvoice, setSelectedInvoice] = useState(null);
+    const [purchaseOrders, setPurchaseOrders] = useState([]);
+    const [selectedPurchaseOrder, setSelectedPurchaseOrder] = useState(null);
 
-    // Fetch invoices
+    // Fetch purchase orders
     useEffect(() => {
-        const fetchInvoices = async () => {
+        const fetchPurchaseOrders = async () => {
             try {
-                const response = await fetch('/api/sales/invoices');
+                const response = await fetch('/api/purchases/orders');
                 const data = await response.json();
-                setInvoices(data);
+                setPurchaseOrders(data);
             } catch (error) {
-                console.error('Error fetching invoices:', error);
+                console.error('Error fetching purchase orders:', error);
             }
         };
-        fetchInvoices();
+        fetchPurchaseOrders();
     }, []);
 
-    // Handle invoice selection
-    const handleInvoiceChange = (e) => {
-        const invoice = invoices.find(inv => inv.id === e.target.value);
-        setSelectedInvoice(invoice);
-        if (invoice) {
-            setValue('invoiceNumber', invoice.invoiceNumber);
-            setValue('remainingBalance', invoice.total);
+    // Handle purchase order selection
+    const handlePurchaseOrderChange = (e) => {
+        const order = purchaseOrders.find(po => po.id === e.target.value);
+        setSelectedPurchaseOrder(order);
+        if (order) {
+            setValue('purchaseOrderNumber', order.purchaseOrderNumber);
+            setValue('remainingBalance', order.total);
         }
     };
 
-    // Update remaining balance when amount received changes
-    const handleAmountReceivedChange = (e) => {
-        const amountReceived = parseFloat(e.target.value) || 0;
-        const total = selectedInvoice ? selectedInvoice.total : 0;
-        const remaining = total - amountReceived;
+    // Update remaining balance when amount paid changes
+    const handleAmountPaidChange = (e) => {
+        const amountPaid = parseFloat(e.target.value) || 0;
+        const total = selectedPurchaseOrder ? selectedPurchaseOrder.total : 0;
+        const remaining = total - amountPaid;
         setValue('remainingBalance', remaining);
 
         // Update payment status
         if (remaining <= 0) {
             setValue('paymentStatus', 'Paid');
-        } else if (amountReceived > 0) {
+        } else if (amountPaid > 0) {
             setValue('paymentStatus', 'Partial');
         } else {
             setValue('paymentStatus', 'Pending');
@@ -62,69 +60,58 @@ const CreateInvoiceReceivePaymentForm = ({ initialData = {}, isUpdate = false })
     const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm({
         defaultValues: {
             ...initialData,
-            invoiceNumber: initialData?.invoiceNumber || "",
-            receivingNumber: `SRCV-${Date.now()}`,
+            purchaseOrderNumber: initialData?.purchaseOrderNumber || "",
+            receivingNumber: `PRCV-${Date.now()}`,
             receivingDate: new Date().toISOString().split('T')[0],
             paymentMethod: "",
-            amountReceived: 0,
+            amountPaid: 0,
             remainingBalance: initialData?.totalAmount || 0,
             paymentStatus: "Partial",
             bankName: "",
             chequeNumber: "",
             transactionReference: "",
             notes: ""
-
-
         }
     });
 
-
-
-
-
     const router = useRouter();
     function redirect() {
-        router.push("/dashboard/sales/receiving");
+        router.push("/dashboard/purchases/receiving");
     }
 
     async function onSubmit(data) {
         if (isUpdate) {
-            makePutRequest(setLoading, `/api/sales/receiving/${initialData.id}`, data, "Payment", reset, redirect);
+            makePutRequest(setLoading, `/api/purchases/receiving/${initialData.id}`, data, "Payment", reset, redirect);
         } else {
-            makePostRequest(setLoading, "/api/sales/receiving", data, "Payment", reset);
+            makePostRequest(setLoading, "/api/purchases/receiving", data, "Payment", reset);
         }
     }
-
-
-
 
     return (
         <div>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-
-
-                {/* Invoice Information */}
+                {/* Purchase Order Information */}
                 <div className="bg-white p-6 rounded-lg shadow-md">
-                    <h3 className="text-lg font-medium text-gray-900 mb-4">Invoice Information</h3>
+                    <h3 className="text-lg font-medium text-gray-900 mb-4">Purchase Order Information</h3>
                     <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
                         <SelectInput
-                            label="Select Invoice"
-                            name="invoiceId"
+                            label="Select Purchase Order"
+                            name="purchasesOrdersId"
                             register={register}
                             errors={errors}
-                            onChange={handleInvoiceChange}
+                            onChange={handlePurchaseOrderChange}
                             options={[
-                                { id: "", title: "Select an invoice" },
-                                ...invoices.map(invoice => ({
-                                    id: invoice.id,
-                                    title: `${invoice.invoiceNumber} - ${invoice.customer?.name || 'N/A'} (${invoice.total} PKR)`
+                                { id: "", title: "Select a purchase order" },
+                                ...purchaseOrders.map(order => ({
+                                    id: order.id,
+                                    title: `${order.purchaseOrderNumber} - ${order.supplier?.title || 'N/A'} (${order.total} PKR)`
                                 }))
                             ]}
                             className="w-full"
                         />
                         <TextInput
-                            label="Invoice Number"
-                            name="invoiceNumber"
+                            label="Purchase Order Number"
+                            name="purchaseOrderNumber"
                             register={register}
                             errors={errors}
                             readOnly
@@ -169,12 +156,12 @@ const CreateInvoiceReceivePaymentForm = ({ initialData = {}, isUpdate = false })
                             className="w-full"
                         />
                         <FormTextInput
-                            label="Amount Received"
-                            name="amountReceived"
+                            label="Amount Paid"
+                            name="amountPaid"
                             type="number"
                             register={register}
                             errors={errors}
-                            onChange={handleAmountReceivedChange}
+                            onChange={handleAmountPaidChange}
                             className="w-full"
                         />
                         <FormTextInput
@@ -196,7 +183,6 @@ const CreateInvoiceReceivePaymentForm = ({ initialData = {}, isUpdate = false })
                         />
                     </div>
                 </div>
-
 
                 {/* Payment Reference */}
                 <div className="bg-white p-6 rounded-lg shadow-md">
@@ -237,14 +223,6 @@ const CreateInvoiceReceivePaymentForm = ({ initialData = {}, isUpdate = false })
                     </div>
                 </div>
 
-
-                <div className="space-y-8">
-
-
-
-
-                </div>
-
                 <div className="mt-6">
                     <SubmitButton title={isUpdate ? "Update Record Payment" : "Record Payment"} isLoading={loading} />
                 </div>
@@ -253,4 +231,4 @@ const CreateInvoiceReceivePaymentForm = ({ initialData = {}, isUpdate = false })
     );
 };
 
-export default CreateInvoiceReceivePaymentForm;
+export default CreatePurchaseReceivePaymentForm;

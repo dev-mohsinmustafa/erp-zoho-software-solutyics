@@ -161,7 +161,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
         //     requiredPermission: "sales-orders"
         // },
         {
-            title: "Sales/Invoices",
+            title: "Sales/Invoices Orders",
             href: "/dashboard/sales/invoices",
             requiredPermission: "invoices"
         },
@@ -253,27 +253,22 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             requiredPermission: "purchases"
         },
         {
-            title: "Purchase Orders",
-            href: "/dashboard/purchases/orders",
-            requiredPermission: "purchase-orders"
-        },
-        {
-            title: "Purchase Returns",
-            href: "/dashboard/purchases/returns",
-            requiredPermission: "purchase-returns"
-        },
-        {
-            title: "Bills",
-            href: "/dashboard/purchases/bills",
-            requiredPermission: "bills"
-        },
-        {
-            title: "Supplier",
+            title: "Suppliers",
             href: "/dashboard/purchases/suppliers",
             requiredPermission: "suppliers"
         },
         {
-            title: "Purchase Receiving",
+            title: "Purchases Orders",
+            href: "/dashboard/purchases/orders",
+            requiredPermission: "purchases-orders"
+        },
+        {
+            title: "Purchases Returns",
+            href: "/dashboard/purchases/returns",
+            requiredPermission: "purchases-returns"
+        },
+        {
+            title: "Purchases Receiving",
             href: "/dashboard/purchases/receiving",
             requiredPermission: "purchases-receiving"
         },
