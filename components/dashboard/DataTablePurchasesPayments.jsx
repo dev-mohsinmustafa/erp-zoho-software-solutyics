@@ -130,9 +130,9 @@ const DataTablePurchasesPayments = memo(({ data = [], columns = [], resourceTitl
                                                                         columnName === "paymentStatus" ?
                                                                             (
                                                                                 <span className={`px-2 py-1 rounded text-sm ${item[columnName]?.toLowerCase() === 'pending'
-                                                                                    ? 'bg-[#ECECEC]  text-gray-800'
+                                                                                    ? 'text-gray-500 bg-gray-100'
                                                                                     : item[columnName]?.toLowerCase() === 'partial'
-                                                                                        ? 'bg-[#B80000] text-white'
+                                                                                        ? 'text-yellow-600 bg-yellow-100'
                                                                                         : item[columnName]?.toLowerCase() === 'paid'
                                                                                             ? 'bg-[#63914A] text-white'
 
