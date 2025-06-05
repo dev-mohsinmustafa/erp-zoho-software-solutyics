@@ -13,6 +13,8 @@ const Purchases = () => {
     totalSuppliers: 0,
     averageOrderValue: 0
   });
+  const [recentPurchases, setRecentPurchases] = useState([]);
+
 
   const cards = [
     {
@@ -88,6 +90,8 @@ const Purchases = () => {
           totalSuppliers,
           averageOrderValue
         });
+        // Set recent purchases data (last 10 purchases)
+        setRecentPurchases(purchasesData.slice(0, 10));
       } catch (error) {
         console.error('Error fetching metrics:', error);
       }
@@ -148,6 +152,55 @@ const Purchases = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
+              {recentPurchases.map((purchase, index) => (
+                <tr key={index}>
+                  <td className="px-6 py-4 whitespace-nowrap">{purchase.orderNumber}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{purchase.supplier?.name || 'N/A'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">PKR {purchase.total?.toFixed(2) || '0.00'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {new Date(purchase.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${purchase.status?.toLowerCase() === 'completed'
+                        ? 'text-green-800 bg-green-100'
+                        : purchase.status?.toLowerCase() === 'draft'
+                          ? 'text-gray-800 bg-gray-100'
+                          : purchase.status?.toLowerCase() === 'pending'
+                            ? 'text-yellow-800 bg-yellow-100'
+                            : purchase.status?.toLowerCase() === 'cancelled'
+                              ? 'text-red-800 bg-red-100'
+                              : 'text-yellow-800 bg-yellow-100'
+                      }`}>
+                      {purchase.status?.charAt(0).toUpperCase() + purchase.status?.slice(1) || 'Pending'}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+              {recentPurchases.length === 0 && (
+                <tr>
+                  <td colSpan="5" className="px-6 py-4 text-center text-gray-500">
+                    No recent purchases found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Recent Purchase Orders */}
+        <h2 className="text-2xl font-semibold mb-6">Recent Purchase Orders</h2>
+        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
               {/* Sample purchase order data - Replace with actual data */}
               <tr>
                 <td className="px-6 py-4 whitespace-nowrap">#PO001</td>
@@ -170,6 +223,7 @@ const Purchases = () => {
             </tbody>
           </table>
         </div>
+
       </div>
     </RoleGuard>
   );

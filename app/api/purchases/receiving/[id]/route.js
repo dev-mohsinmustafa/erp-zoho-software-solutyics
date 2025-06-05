@@ -57,7 +57,7 @@ export async function PUT(request, { params }) {
         } else if (data.paymentStatus === 'Partial') {
             await db.purchasesOrders.update({
                 where: { id: data.purchaseOrderId },
-                data: { status: 'Partially Paid' }
+                data: { status: 'Partial' }
             });
         }
 
