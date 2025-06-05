@@ -13,6 +13,9 @@ const SalesDashboard = () => {
     averageOrderValue: 0
   });
 
+  const [recentSales, setRecentSales] = useState([]);
+
+
   const cards = [
     {
       title: "Total Sales",
@@ -90,6 +93,8 @@ const SalesDashboard = () => {
           totalCustomers,
           averageOrderValue
         });
+        // Set recent sales data (last 10 sales)
+        setRecentSales(salesData.slice(0, 10));
       } catch (error) {
         console.error('Error fetching metrics:', error);
       }
@@ -151,28 +156,43 @@ const SalesDashboard = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {/* Sample sales data - Replace with actual data */}
-              <tr>
-                <td className="px-6 py-4 whitespace-nowrap">#INV001</td>
-                <td className="px-6 py-4 whitespace-nowrap">John Doe</td>
-                <td className="px-6 py-4 whitespace-nowrap">PKR 12,500.00</td>
-                <td className="px-6 py-4 whitespace-nowrap">2024-01-20</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Paid</span>
-                </td>
-              </tr>
-              <tr>
-                <td className="px-6 py-4 whitespace-nowrap">#INV002</td>
-                <td className="px-6 py-4 whitespace-nowrap">Jane Smith</td>
-                <td className="px-6 py-4 whitespace-nowrap">PKR 8,750.00</td>
-                <td className="px-6 py-4 whitespace-nowrap">2024-01-19</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="px-2 py-1 text-xs font-semibold text-yellow-800 bg-yellow-100 rounded-full">Pending</span>
-                </td>
-              </tr>
+              {recentSales.map((sale, index) => (
+                <tr key={index}>
+                  <td className="px-6 py-4 whitespace-nowrap">{sale.invoiceNumber}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{sale.customer?.name || 'N/A'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">PKR {sale.total?.toFixed(2) || '0.00'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {new Date(sale.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-2 py-1 text-xs font-semibold rounded-full ${sale.status.toLowerCase() === 'paid'
+                      ? 'text-green-800 bg-green-100'
+                      : sale.status.toLowerCase() === 'draft'
+                        ? 'text-gray-800 bg-gray-100'
+                        : sale.status.toLowerCase() === 'pending'
+                          ? 'text-yellow-800 bg-yellow-100'
+                          : sale.status?.toLowerCase() === 'sent'
+                            ? 'text-blue-800 bg-blue-100'
+                            : 'text-yellow-800 bg-yellow-100'
+                      }`}>
+                      {sale.status?.charAt(0).toUpperCase() + sale.status?.slice(1) || 'Pending'}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+              {recentSales.length === 0 && (
+                <tr>
+                  <td colSpan="5" className="px-6 py-4 text-center text-gray-500">
+                    No recent sales found
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
+
+
+
       </div>
     </RoleGuard>
   );
