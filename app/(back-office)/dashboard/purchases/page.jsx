@@ -144,32 +144,32 @@ const Purchases = () => {
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order Number</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order Date</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {recentPurchases.map((purchase, index) => (
                 <tr key={index}>
-                  <td className="px-6 py-4 whitespace-nowrap">{purchase.orderNumber}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{purchase.supplier?.name || 'N/A'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{purchase.purchaseOrderNumber}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{purchase.supplier?.title}</td>
                   <td className="px-6 py-4 whitespace-nowrap">PKR {purchase.total?.toFixed(2) || '0.00'}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {new Date(purchase.createdAt).toLocaleDateString()}
+                  <td className="px-6 py-4 whitespacec-nowrap">
+                    {purchase.orderDate ? new Date(purchase.orderDate).toLocaleDateString() : "N/A"}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-2 py-1 text-xs font-semibold rounded-full ${purchase.status?.toLowerCase() === 'completed'
-                        ? 'text-green-800 bg-green-100'
-                        : purchase.status?.toLowerCase() === 'draft'
-                          ? 'text-gray-800 bg-gray-100'
-                          : purchase.status?.toLowerCase() === 'pending'
-                            ? 'text-yellow-800 bg-yellow-100'
-                            : purchase.status?.toLowerCase() === 'cancelled'
-                              ? 'text-red-800 bg-red-100'
-                              : 'text-yellow-800 bg-yellow-100'
+                      ? 'text-green-800 bg-green-100'
+                      : purchase.status?.toLowerCase() === 'draft'
+                        ? 'text-gray-800 bg-gray-100'
+                        : purchase.status?.toLowerCase() === 'pending'
+                          ? 'text-yellow-800 bg-yellow-100'
+                          : purchase.status?.toLowerCase() === 'cancelled'
+                            ? 'text-red-800 bg-red-100'
+                            : 'text-yellow-800 bg-yellow-100'
                       }`}>
                       {purchase.status?.charAt(0).toUpperCase() + purchase.status?.slice(1) || 'Pending'}
                     </span>
