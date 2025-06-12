@@ -262,11 +262,11 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
             href: "/dashboard/purchases/orders",
             requiredPermission: "purchases-orders"
         },
-        {
-            title: "Purchases Returns",
-            href: "/dashboard/purchases/returns",
-            requiredPermission: "purchases-returns"
-        },
+        // {
+        //     title: "Purchases Returns",
+        //     href: "/dashboard/purchases/returns",
+        //     requiredPermission: "purchases-returns"
+        // },
         {
             title: "Purchases Receiving",
             href: "/dashboard/purchases/receiving",
@@ -317,26 +317,26 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
     ];
 
     const bankingLinks = [
-        {
-            title: "Accounts",
-            href: "/dashboard/banking/accounts",
-            requiredPermission: "banking-accounts"
-        },
-        {
-            title: "Transactions",
-            href: "/dashboard/banking/transactions",
-            requiredPermission: "banking-transactions"
-        },
-        {
-            title: "Transfers",
-            href: "/dashboard/banking/transfers",
-            requiredPermission: "banking-transfers"
-        },
-        {
-            title: "Reconciliations",
-            href: "/dashboard/banking/reconciliations",
-            requiredPermission: "banking-reconciliations"
-        },
+        // {
+        //     title: "Accounts",
+        //     href: "/dashboard/banking/accounts",
+        //     requiredPermission: "banking-accounts"
+        // },
+        // {
+        //     title: "Transactions",
+        //     href: "/dashboard/banking/transactions",
+        //     requiredPermission: "banking-transactions"
+        // },
+        // {
+        //     title: "Transfers",
+        //     href: "/dashboard/banking/transfers",
+        //     requiredPermission: "banking-transfers"
+        // },
+        // {
+        //     title: "Reconciliations",
+        //     href: "/dashboard/banking/reconciliations",
+        //     requiredPermission: "banking-reconciliations"
+        // },
         {
             title: "Taxes",
             href: "/dashboard/banking/taxes",
